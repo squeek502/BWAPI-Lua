@@ -8,8 +8,7 @@ namespace BWAPI_Lua
 {
 	void bindWeaponType(sol::table module)
 	{
-		auto weaponType = module.create_simple_usertype<WeaponType>(
-			);
+		auto weaponType = module.create_simple_usertype<WeaponType>();
 		bindType<WeaponType>(weaponType);
 		module.set_usertype("WeaponType", weaponType);
 

@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "CommonBindings.h"
 
 using namespace BWAPI;
 
@@ -7,11 +8,10 @@ namespace BWAPI_Lua
 {
 	void bindError(sol::table module)
 	{
-		module.new_simple_usertype<Error>("Error",
-			"new", sol::nil,
-			sol::meta_function::to_string, &Error::toString,
-			sol::meta_function::equal_to, [](const Error& a, const Error& b) { return a == b; }
-		);
+		auto error = module.create_simple_usertype<Error>();
+		bindType<Error>(error);
+		module.set_usertype("Error", error);
+
 		auto errors = module.create_named("Errors",
 			"Unit_Does_Not_Exist", &Errors::Unit_Does_Not_Exist,
 			"Unit_Not_Visible", &Errors::Unit_Not_Visible,

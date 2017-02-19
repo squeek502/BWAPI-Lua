@@ -8,8 +8,7 @@ namespace BWAPI_Lua
 {
 	void bindUnitSizeType(sol::table module)
 	{
-		auto unitSizeType = module.create_simple_usertype<UnitSizeType>(
-		);
+		auto unitSizeType = module.create_simple_usertype<UnitSizeType>();
 		bindType<UnitSizeType>(unitSizeType);
 		module.set_usertype("UnitSizeType", unitSizeType);
 

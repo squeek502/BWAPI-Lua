@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "CommonBindings.h"
 
 using namespace BWAPI;
 
@@ -7,11 +8,10 @@ namespace BWAPI_Lua
 {
 	void bindColor(sol::table module)
 	{
-		module.new_simple_usertype<Color>("Color",
-			"new", sol::nil,
-			sol::meta_function::to_string, &Color::toString,
-			sol::meta_function::equal_to, [](const Color& a, const Color& b) { return a == b; }
-			);
+		auto color = module.create_simple_usertype<Color>();
+		bindType(color);
+		module.set_usertype("Color", color);
+
 		auto colors = module.create_named("Colors",
 			"Red", &Colors::Red,
 			"Blue", &Colors::Blue,

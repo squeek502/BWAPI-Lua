@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "CommonBindings.h"
 
 using namespace BWAPI;
 
@@ -7,13 +8,13 @@ namespace BWAPI_Lua
 {
 	void bindRace(sol::table module)
 	{
-		module.new_simple_usertype<Race>("Race",
-			"new", sol::nil,
-			"getWorker", &Race::getWorker,
-			"getSupplyProvider", &Race::getSupplyProvider,
-			sol::meta_function::to_string, &Race::toString,
-			sol::meta_function::equal_to, [](const Race& a, const Race& b) { return a == b; }
+		auto race = module.create_simple_usertype<Race>(
+			"getRace", &Race::getWorker,
+			"getSupplyProvider", &Race::getSupplyProvider
 		);
+		bindType<Race>(race);
+		module.set_usertype("Race", race);
+
 		auto races = module.create_named("Races",
 			"Zerg", &Races::Zerg,
 			"Terran", &Races::Terran,

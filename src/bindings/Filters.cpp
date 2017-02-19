@@ -10,26 +10,26 @@ namespace BWAPI_Lua
 		module.new_simple_usertype<UnitFilter>("UnitFilter",
 			"new", sol::nil,
 			sol::meta_function::call, [](const UnitFilter& filter, Unit unit) {
-			return filter(unit);
-		}
+				return filter(unit);
+			}
 		);
 		module.new_simple_usertype<PtrUnitFilter>("PtrUnitFilter",
 			"new", sol::nil,
 			sol::meta_function::call, [](const PtrUnitFilter& filter, Unit unit) {
-			return filter(unit);
-		}
+				return filter(unit);
+			}
 		);
 		module.new_simple_usertype<BestUnitFilter>("BestUnitFilter",
 			"new", sol::nil,
 			sol::meta_function::call, [](const BestUnitFilter& filter, Unit unit1, Unit unit2) {
-			return filter(unit1, unit2);
-		}
+				return filter(unit1, unit2);
+			}
 		);
 		module.new_simple_usertype<CompareFilter<Unit, UnitType, UnitType(*)(Unit)>>("UnitTypeCompareFilter",
 			"new", sol::nil,
 			sol::meta_function::call, [](const CompareFilter<Unit, UnitType, UnitType(*)(Unit)>& filter, Unit unit) {
-			return filter(unit);
-		}
+				return filter(unit);
+			}
 		);
 		auto filter = module.create_named("Filter");
 		filter["IsTransport"] = &Filter::IsTransport;
