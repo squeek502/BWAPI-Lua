@@ -9,7 +9,10 @@ namespace BWAPI_Lua
 	void bindRace(sol::table module)
 	{
 		auto race = module.create_simple_usertype<Race>(
-			"getRace", &Race::getWorker,
+			"getWorker", &Race::getWorker,
+			"getCenter", &Race::getCenter,
+			"getRefinery", &Race::getRefinery,
+			"getTransport", &Race::getTransport,
 			"getSupplyProvider", &Race::getSupplyProvider
 		);
 		bindType<Race>(race);
