@@ -7,7 +7,7 @@ inline sol::simple_usertype<SetClass>& bindSetContainer(sol::simple_usertype<Set
 {
 	auto factories = sol::factories(
 		[] { return SetClass(); },
-		[](sol::object obj)
+		[](const sol::object& obj)
 		{
 			if (obj.get_type() == sol::type::table)
 			{

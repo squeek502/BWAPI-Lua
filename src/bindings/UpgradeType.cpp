@@ -9,7 +9,29 @@ namespace BWAPI_Lua
 	void bindUpgradeType(sol::table module)
 	{
 		auto upgradeType = module.create_simple_usertype<UpgradeType>(
-			"getRace", &UpgradeType::getRace
+			"getRace", &UpgradeType::getRace,
+			"mineralPrice", sol::overload(
+				[](const UpgradeType& upgrade) { return upgrade.mineralPrice(); },
+				&UpgradeType::mineralPrice
+			),
+			"mineralPriceFactor", &UpgradeType::mineralPriceFactor,
+			"gasPrice", sol::overload(
+				[](const UpgradeType& upgrade) { return upgrade.gasPrice(); },
+				&UpgradeType::gasPrice
+			),
+			"gasPriceFactor", &UpgradeType::gasPriceFactor,
+			"upgradeTime", sol::overload(
+				[](const UpgradeType& upgrade) { return upgrade.upgradeTime(); },
+				&UpgradeType::upgradeTime
+			),
+			"upgradeTimeFactor", &UpgradeType::upgradeTimeFactor,
+			"maxRepeats", &UpgradeType::maxRepeats,
+			"whatUpgrades", &UpgradeType::whatUpgrades,
+			"whatsRequired", sol::overload(
+				[](const UpgradeType& upgrade) { return upgrade.whatsRequired(); },
+				&UpgradeType::whatsRequired
+			),
+			"whatUses", &UpgradeType::whatUses
 		);
 		bindType<UpgradeType>(upgradeType);
 		module.set_usertype("UpgradeType", upgradeType);
