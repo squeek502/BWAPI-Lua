@@ -16,6 +16,11 @@ namespace BWAPI_Lua
 	void bindUnitset(sol::table module);
 	void bindFilters(sol::table module);
 	void bindPosition(sol::table module);
+	void bindTechType(sol::table module);
+	void bindUpgradeType(sol::table module);
+	void bindUnitSizeType(sol::table module);
+	void bindWeaponType(sol::table module);
 
+	sol::table requireBWAPI(sol::state_view& s);
 	sol::table openBWAPI(sol::this_state s);
 }

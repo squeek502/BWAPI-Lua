@@ -25,75 +25,72 @@ namespace BWAPI_Lua
 			"getLatencyFrames", &Game::getLatencyFrames,
 			"getBuildLocation", sol::overload(
 				[](Game *game, UnitType type, TilePosition desiredPosition)
-		{
-			return game->getBuildLocation(type, desiredPosition);
-		},
+				{
+					return game->getBuildLocation(type, desiredPosition);
+				},
 				[](Game *game, UnitType type, TilePosition desiredPosition, int maxRange)
-		{
-			return game->getBuildLocation(type, desiredPosition, maxRange);
-		},
-			[](Game *game, UnitType type, TilePosition desiredPosition, int maxRange, bool creep)
-		{
-			return game->getBuildLocation(type, desiredPosition, maxRange, creep);
-		}
+				{
+					return game->getBuildLocation(type, desiredPosition, maxRange);
+				},
+				&Game::getBuildLocation
 			),
 			"drawTextScreen", [](Game* game, int x, int y, const char *text) { game->drawTextScreen(x, y, "%s", text); },
 			"drawTextMap", sol::overload(
 				[](Game* game, int x, int y, const char* text)
-		{
-			return game->drawTextMap(x, y, "%s", text);
-		},
+				{
+					return game->drawTextMap(x, y, "%s", text);
+				},
 				[](Game* game, Position pos, const char* text)
-		{
-			return game->drawTextMap(pos, "%s", text);
-		}
+				{
+					return game->drawTextMap(pos, "%s", text);
+				}
 			),
 			"drawBoxMap", sol::overload(
 				[](Game* game, int left, int top, int right, int bottom, Color color)
-		{
-			return game->drawBoxMap(left, top, right, bottom, color);
-		},
+				{
+					return game->drawBoxMap(left, top, right, bottom, color);
+				},
 				[](Game* game, int left, int top, int right, int bottom, Color color, bool isSolid)
-		{
-			return game->drawBoxMap(left, top, right, bottom, color, isSolid);
-		},
-			[](Game* game, Position leftTop, Position rightBottom, Color color)
-		{
-			return game->drawBoxMap(leftTop, rightBottom, color);
-		},
-			[](Game* game, Position leftTop, Position rightBottom, Color color, bool isSolid)
-		{
-			return game->drawBoxMap(leftTop, rightBottom, color, isSolid);
-		}
+				{
+					return game->drawBoxMap(left, top, right, bottom, color, isSolid);
+				},
+				[](Game* game, Position leftTop, Position rightBottom, Color color)
+				{
+					return game->drawBoxMap(leftTop, rightBottom, color);
+				},
+				[](Game* game, Position leftTop, Position rightBottom, Color color, bool isSolid)
+				{
+					return game->drawBoxMap(leftTop, rightBottom, color, isSolid);
+				}
 			),
 			"sendText", [](Game* game, const char *msg) { game->sendText("%s", msg); },
 			"registerEvent", sol::overload(
 				[](Game* game, const sol::function &action)
-		{
-			return game->registerEvent(sol::protected_function(action));
-		},
+				{
+					return game->registerEvent(sol::protected_function(action));
+				},
 				[](Game* game, const sol::function &action, const sol::function& condition)
-		{
-			if (condition.valid())
-				return game->registerEvent(sol::protected_function(action), sol::protected_function(condition));
-			else
-				return game->registerEvent(sol::protected_function(action), nullptr);
-		},
-			[](Game* game, const sol::function &action, const sol::function& condition, int timesToRun)
-		{
-			if (condition.valid())
-				return game->registerEvent(sol::protected_function(action), sol::protected_function(condition), timesToRun);
-			else
-				return game->registerEvent(sol::protected_function(action), nullptr, timesToRun);
-		},
-			[](Game* game, const sol::function &action, const sol::function& condition, int timesToRun, int framesToCheck)
-		{
-			if (condition.valid())
-				return game->registerEvent(sol::protected_function(action), sol::protected_function(condition), timesToRun, framesToCheck);
-			else
-				return game->registerEvent(sol::protected_function(action), nullptr, timesToRun, framesToCheck);
-		}
+				{
+					if (condition.valid())
+						return game->registerEvent(sol::protected_function(action), sol::protected_function(condition));
+					else
+						return game->registerEvent(sol::protected_function(action), nullptr);
+				},
+				[](Game* game, const sol::function &action, const sol::function& condition, int timesToRun)
+				{
+					if (condition.valid())
+						return game->registerEvent(sol::protected_function(action), sol::protected_function(condition), timesToRun);
+					else
+						return game->registerEvent(sol::protected_function(action), nullptr, timesToRun);
+				},
+				[](Game* game, const sol::function &action, const sol::function& condition, int timesToRun, int framesToCheck)
+				{
+					if (condition.valid())
+						return game->registerEvent(sol::protected_function(action), sol::protected_function(condition), timesToRun, framesToCheck);
+					else
+						return game->registerEvent(sol::protected_function(action), nullptr, timesToRun, framesToCheck);
+				}
 			)
-			);
+		);
 	}
 }

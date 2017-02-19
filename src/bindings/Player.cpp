@@ -16,10 +16,7 @@ namespace BWAPI_Lua
 			"getUnits", &PlayerInterface::getUnits,
 			"isNeutral", &PlayerInterface::isNeutral,
 			"incompleteUnitCount", &PlayerInterface::incompleteUnitCount,
-			sol::meta_function::to_string, [](const PlayerInterface* player)
-		{
-			return player->getName();
-		}
+			sol::meta_function::to_string, &PlayerInterface::getName
 		);
 	}
 }

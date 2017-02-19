@@ -6,6 +6,10 @@ using namespace BWAPI_Lua;
 
 namespace BWAPI_Lua
 {
+	sol::table requireBWAPI(sol::state_view& lua) {
+		return lua.require("BWAPI", sol::c_call<decltype(&BWAPI_Lua::openBWAPI), &BWAPI_Lua::openBWAPI>);
+	}
+
 	sol::table openBWAPI(sol::this_state s) {
 		sol::state_view lua(s);
 		sol::table module = lua.create_table();

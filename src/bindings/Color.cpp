@@ -9,7 +9,8 @@ namespace BWAPI_Lua
 	{
 		module.new_simple_usertype<Color>("Color",
 			"new", sol::nil,
-			sol::meta_function::to_string, &Color::toString
+			sol::meta_function::to_string, &Color::toString,
+			sol::meta_function::equal_to, [](const Color& a, const Color& b) { return a == b; }
 			);
 		auto colors = module.create_named("Colors",
 			"Red", &Colors::Red,

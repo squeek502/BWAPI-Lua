@@ -11,7 +11,7 @@ void LuaAIModule::onStart()
 	lua.set_function("__protectederrorhandler", [](std::string msg) { Broodwar << msg << std::endl;  return msg; });
 	sol::protected_function::set_default_handler(lua["__protectederrorhandler"]);
 	lua.open_libraries();
-	lua.require("BWAPI", sol::c_call<decltype(&BWAPI_Lua::openBWAPI), &BWAPI_Lua::openBWAPI>);
+	BWAPI_Lua::requireBWAPI(lua);
 
 	// Redirect print to BWAPI.print
 	lua.script(R"(

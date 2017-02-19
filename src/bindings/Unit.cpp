@@ -27,38 +27,29 @@ namespace BWAPI_Lua
 			"getPowerUp", &UnitInterface::getPowerUp,
 			"gather", &UnitInterface::gather,
 			"train", &UnitInterface::train,
-			"build", sol::overload(
-				[](UnitInterface* unit, UnitType type)
-		{
-			return unit->build(type);
-		},
-				[](UnitInterface* unit, UnitType type, TilePosition target)
-		{
-			return unit->build(type, target);
-		}
-			),
+			"build", sol::overload([](UnitInterface* unit, UnitType type) { return unit->build(type); }, static_cast<bool (UnitInterface::*)(UnitType, TilePosition)>(&UnitInterface::build)),
 			"getPosition", &UnitInterface::getPosition,
 			"getTilePosition", &UnitInterface::getTilePosition,
 			"getClosestUnit", sol::overload(
 				[](const UnitInterface* unit)
-		{
-			return unit->getClosestUnit();
-		},
+				{
+					return unit->getClosestUnit();
+				},
 				[](const UnitInterface* unit, const sol::function& pred)
-		{
-			UnitFilter filter(nullptr);
-			if (pred.valid())
-				filter = UnitFilter(sol::protected_function(pred));
-			return unit->getClosestUnit(filter);
-		},
-			[](const UnitInterface* unit, const sol::function& pred, int radius)
-		{
-			UnitFilter filter(nullptr);
-			if (pred.valid())
-				filter = UnitFilter(sol::protected_function(pred));
-			return unit->getClosestUnit(filter, radius);
-		}
+				{
+					UnitFilter filter(nullptr);
+					if (pred.valid())
+						filter = UnitFilter(sol::protected_function(pred));
+					return unit->getClosestUnit(filter);
+				},
+				[](const UnitInterface* unit, const sol::function& pred, int radius)
+				{
+					UnitFilter filter(nullptr);
+					if (pred.valid())
+						filter = UnitFilter(sol::protected_function(pred));
+					return unit->getClosestUnit(filter, radius);
+				}
 			)
-			);
+		);
 	}
 }

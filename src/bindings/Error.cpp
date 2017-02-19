@@ -10,10 +10,7 @@ namespace BWAPI_Lua
 		module.new_simple_usertype<Error>("Error",
 			"new", sol::nil,
 			sol::meta_function::to_string, &Error::toString,
-			sol::meta_function::equal_to, [](const Error& a, const Error& b)
-		{
-			return a.getID() == b.getID();
-		}
+			sol::meta_function::equal_to, [](const Error& a, const Error& b) { return a == b; }
 		);
 		auto errors = module.create_named("Errors",
 			"Unit_Does_Not_Exist", &Errors::Unit_Does_Not_Exist,

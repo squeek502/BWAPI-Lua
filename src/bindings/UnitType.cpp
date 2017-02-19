@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "CommonBindings.h"
 
 using namespace BWAPI;
 
@@ -7,24 +8,111 @@ namespace BWAPI_Lua
 {
 	void bindUnitType(sol::table module)
 	{
-		module.new_simple_usertype<UnitType>("UnitType",
-			"new", sol::nil,
-			"isWorker", &UnitType::isWorker,
-			"isResourceDepot", &UnitType::isResourceDepot,
-			"getRace", &UnitType::getRace,
+		auto unitType = module.create_simple_usertype<UnitType>(
 			"whatBuilds", [](const UnitType& unitType) {
-			auto pair = unitType.whatBuilds();
-			return std::make_tuple(pair.first, pair.second);
-		},
-			"tileSize", &UnitType::tileSize,
-			"isBuilding", &UnitType::isBuilding,
-			"buildTime", &UnitType::buildTime,
-			sol::meta_function::to_string, &UnitType::toString,
-			sol::meta_function::equal_to, [](const UnitType& a, const UnitType& b)
-		{
-			return a.getID() == b.getID();
-		}
+				auto pair = unitType.whatBuilds();
+				return std::make_tuple(pair.first, pair.second);
+			},
+			"requiredUnits", [](const UnitType& unitType, sol::this_state s) {
+				sol::state_view lua(s);
+				auto tbl = lua.create_table();
+				auto requiredUnits = unitType.requiredUnits();
+				for (auto const& requiredUnit : requiredUnits)
+				{
+					tbl[requiredUnit.first.getID()] = requiredUnit.second;
+				}
+				return tbl;
+			}
 		);
+		bindType<UnitType>(unitType);
+		unitType.set("isWorker", &UnitType::isWorker);
+		unitType.set("isResourceDepot", &UnitType::isResourceDepot);
+		unitType.set("getRace", &UnitType::getRace);
+		unitType.set("tileSize", &UnitType::tileSize);
+		unitType.set("isBuilding", &UnitType::isBuilding);
+		unitType.set("buildTime", &UnitType::buildTime);
+		unitType.set("requiredTech", &UnitType::requiredTech);
+		unitType.set("cloakingTech", &UnitType::cloakingTech);
+		unitType.set("abilities", &UnitType::abilities);
+		unitType.set("upgrades", &UnitType::upgrades);
+		unitType.set("armorUpgrade", &UnitType::armorUpgrade);
+		unitType.set("maxHitPoints", &UnitType::maxHitPoints);
+		unitType.set("maxShields", &UnitType::maxShields);
+		unitType.set("maxEnergy", &UnitType::maxEnergy);
+		unitType.set("armor", &UnitType::armor);
+		unitType.set("mineralPrice", &UnitType::mineralPrice);
+		unitType.set("gasPrice", &UnitType::gasPrice);
+		unitType.set("buildTime", &UnitType::buildTime);
+		unitType.set("supplyRequired", &UnitType::supplyRequired);
+		unitType.set("supplyProvided", &UnitType::supplyProvided);
+		unitType.set("spaceRequired", &UnitType::spaceRequired);
+		unitType.set("spaceProvided", &UnitType::spaceProvided);
+		unitType.set("buildScore", &UnitType::buildScore);
+		unitType.set("destroyScore", &UnitType::destroyScore);
+		unitType.set("size", &UnitType::size);
+		unitType.set("tileWidth", &UnitType::tileWidth);
+		unitType.set("tileHeight", &UnitType::tileHeight);
+		unitType.set("tileSize", &UnitType::tileSize);
+		unitType.set("dimensionLeft", &UnitType::dimensionLeft);
+		unitType.set("dimensionUp", &UnitType::dimensionUp);
+		unitType.set("dimensionRight", &UnitType::dimensionRight);
+		unitType.set("dimensionDown", &UnitType::dimensionDown);
+		unitType.set("width", &UnitType::width);
+		unitType.set("height", &UnitType::height);
+		unitType.set("seekRange", &UnitType::seekRange);
+		unitType.set("sightRange", &UnitType::sightRange);
+		unitType.set("groundWeapon", &UnitType::groundWeapon);
+		unitType.set("maxGroundHits", &UnitType::maxGroundHits);
+		unitType.set("airWeapon", &UnitType::airWeapon);
+		unitType.set("maxAirHits", &UnitType::maxAirHits);
+		unitType.set("topSpeed", &UnitType::topSpeed);
+		unitType.set("acceleration", &UnitType::acceleration);
+		unitType.set("haltDistance", &UnitType::haltDistance);
+		unitType.set("turnRadius", &UnitType::turnRadius);
+		unitType.set("canProduce", &UnitType::canProduce);
+		unitType.set("canAttack", &UnitType::canAttack);
+		unitType.set("canMove", &UnitType::canMove);
+		unitType.set("isFlyer", &UnitType::isFlyer);
+		unitType.set("regeneratesHP", &UnitType::regeneratesHP);
+		unitType.set("isSpellcaster", &UnitType::isSpellcaster);
+		unitType.set("hasPermanentCloak", &UnitType::hasPermanentCloak);
+		unitType.set("isInvincible", &UnitType::isInvincible);
+		unitType.set("isOrganic", &UnitType::isOrganic);
+		unitType.set("isMechanical", &UnitType::isMechanical);
+		unitType.set("isRobotic", &UnitType::isRobotic);
+		unitType.set("isDetector", &UnitType::isDetector);
+		unitType.set("isResourceContainer", &UnitType::isResourceContainer);
+		unitType.set("isResourceDepot", &UnitType::isResourceDepot);
+		unitType.set("isRefinery", &UnitType::isRefinery);
+		unitType.set("isWorker", &UnitType::isWorker);
+		unitType.set("requiresPsi", &UnitType::requiresPsi);
+		unitType.set("requiresCreep", &UnitType::requiresCreep);
+		unitType.set("isTwoUnitsInOneEgg", &UnitType::isTwoUnitsInOneEgg);
+		unitType.set("isBurrowable", &UnitType::isBurrowable);
+		unitType.set("isCloakable", &UnitType::isCloakable);
+		unitType.set("isBuilding", &UnitType::isBuilding);
+		unitType.set("isAddon", &UnitType::isAddon);
+		unitType.set("isFlyingBuilding", &UnitType::isFlyingBuilding);
+		unitType.set("isNeutral", &UnitType::isNeutral);
+		unitType.set("isHero", &UnitType::isHero);
+		unitType.set("isPowerup", &UnitType::isPowerup);
+		unitType.set("isBeacon", &UnitType::isBeacon);
+		unitType.set("isFlagBeacon", &UnitType::isFlagBeacon);
+		unitType.set("isSpecialBuilding", &UnitType::isSpecialBuilding);
+		unitType.set("isSpell", &UnitType::isSpell);
+		unitType.set("producesCreep", &UnitType::producesCreep);
+		unitType.set("producesLarva", &UnitType::producesLarva);
+		unitType.set("isMineralField", &UnitType::isMineralField);
+		unitType.set("isCritter", &UnitType::isCritter);
+		unitType.set("canBuildAddon", &UnitType::canBuildAddon);
+		unitType.set("buildsWhat", &UnitType::buildsWhat);
+		unitType.set("researchesWhat", &UnitType::researchesWhat);
+		unitType.set("upgradesWhat", &UnitType::upgradesWhat);
+		module.set_usertype("UnitType", unitType);
+
+		auto unitTypeSet = module.create_simple_usertype<UnitType::set>();
+		bindSetContainer<UnitType::set, UnitType>(unitTypeSet);
+		module.set_usertype("UnitTypeset", unitTypeSet);
 
 		auto unitTypes = module.create_named("UnitTypes");
 		unitTypes["Terran_Firebat"] = &UnitTypes::Terran_Firebat;
@@ -470,6 +558,7 @@ namespace BWAPI_Lua
 		unitTypesEnum["Powerup_Terran_Gas_Tank_Type_1"] = UnitTypes::Enum::Powerup_Terran_Gas_Tank_Type_1;
 		unitTypesEnum["Powerup_Terran_Gas_Tank_Type_2"] = UnitTypes::Enum::Powerup_Terran_Gas_Tank_Type_2;
 
+		unitTypesEnum["None"] = UnitTypes::Enum::None;
 		unitTypesEnum["AllUnits"] = UnitTypes::Enum::AllUnits;
 		unitTypesEnum["Men"] = UnitTypes::Enum::Men;
 		unitTypesEnum["Buildings"] = UnitTypes::Enum::Buildings;
