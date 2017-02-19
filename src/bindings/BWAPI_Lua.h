@@ -1,5 +1,8 @@
 #pragma once
 #include <sol.hpp>
+#include "Point.h"
+#include "SetContainer.h"
+#include "Type.h"
 
 namespace BWAPI_Lua
 {

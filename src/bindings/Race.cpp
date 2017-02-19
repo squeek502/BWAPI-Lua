@@ -1,6 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
-#include "CommonBindings.h"
+#include "BWAPI_Lua.h"
 
 using namespace BWAPI;
 

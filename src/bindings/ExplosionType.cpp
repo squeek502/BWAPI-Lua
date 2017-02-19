@@ -1,6 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
-#include "CommonBindings.h"
+#include "BWAPI_Lua.h"
 
 using namespace BWAPI;
 
@@ -9,7 +9,7 @@ namespace BWAPI_Lua
 	void bindExplosionType(sol::table module)
 	{
 		auto explosionType = module.create_simple_usertype<ExplosionType>();
-		bindType<ExplosionType>(explosionType);
+		bindType(explosionType);
 		module.set_usertype("ExplosionType", explosionType);
 
 		auto explosionTypeSet = module.create_simple_usertype<ExplosionType::set>();

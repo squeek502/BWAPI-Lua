@@ -1,6 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
-#include "CommonBindings.h"
+#include "BWAPI_Lua.h"
 
 using namespace BWAPI;
 
@@ -9,7 +9,7 @@ namespace BWAPI_Lua
 	void bindError(sol::table module)
 	{
 		auto error = module.create_simple_usertype<Error>();
-		bindType<Error>(error);
+		bindType(error);
 		module.set_usertype("Error", error);
 
 		auto errors = module.create_named("Errors",

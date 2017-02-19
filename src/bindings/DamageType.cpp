@@ -1,6 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
-#include "CommonBindings.h"
+#include "BWAPI_Lua.h"
 
 using namespace BWAPI;
 
@@ -9,7 +9,7 @@ namespace BWAPI_Lua
 	void bindDamageType(sol::table module)
 	{
 		auto damageType = module.create_simple_usertype<DamageType>();
-		bindType<DamageType>(damageType);
+		bindType(damageType);
 		module.set_usertype("DamageType", damageType);
 
 		auto damageTypes = module.create_named("DamageTypes",
