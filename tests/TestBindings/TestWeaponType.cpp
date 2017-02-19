@@ -7,11 +7,11 @@
 using namespace BWAPI;
 using namespace BWAPI_Lua;
 
-TEST_CASE("upgrade type bindings", "[upgradetype]")
+TEST_CASE("weapon type bindings", "[weapontype]")
 {
 	sol::state lua;
 	lua.open_libraries(sol::lib::base);
-	bindUpgradeType(lua.create_named_table("BWAPI"));
+	bindWeaponType(lua.create_named_table("BWAPI"));
 	lua.script_file(TestBindings::getLuaTestPath(__FILE__));
 
 	SECTION("constructors")
@@ -32,24 +32,26 @@ TEST_CASE("upgrade type bindings", "[upgradetype]")
 		REQUIRE_NOTHROW(test());
 	}
 
-	SECTION("upgrade type values")
+	SECTION("weapon type values")
 	{
 		bindRace(lua["BWAPI"]);
 		bindTechType(lua["BWAPI"]);
+		bindUpgradeType(lua["BWAPI"]);
 		bindUnitSizeType(lua["BWAPI"]);
 		bindPosition(lua["BWAPI"]);
-		bindWeaponType(lua["BWAPI"]);
 		bindUnitType(lua["BWAPI"]);
+		bindDamageType(lua["BWAPI"]);
+		bindExplosionType(lua["BWAPI"]);
 
-		SECTION("weapons")
+		SECTION("Gauss_Rifle")
 		{
-			sol::function test = lua["valuesOfTheWeaponsUpgradeType"];
+			sol::function test = lua["valuesOfTheGaussRifleType"];
 			REQUIRE_NOTHROW(test());
 		}
 
-		SECTION("unknown")
+		SECTION("Unknown")
 		{
-			sol::function test = lua["valuesOfTheUnknownUpgradeType"];
+			sol::function test = lua["valuesOfTheUnknownType"];
 			REQUIRE_NOTHROW(test());
 		}
 	}

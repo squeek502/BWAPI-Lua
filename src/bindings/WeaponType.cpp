@@ -8,7 +8,31 @@ namespace BWAPI_Lua
 {
 	void bindWeaponType(sol::table module)
 	{
-		auto weaponType = module.create_simple_usertype<WeaponType>();
+		auto weaponType = module.create_simple_usertype<WeaponType>(
+			"getTech", &WeaponType::getTech,
+			"whatUses", &WeaponType::whatUses,
+			"damageAmount", &WeaponType::damageAmount,
+			"damageBonus", &WeaponType::damageBonus,
+			"damageCooldown", &WeaponType::damageCooldown,
+			"damageFactor", &WeaponType::damageFactor,
+			"upgradeType", &WeaponType::upgradeType,
+			"damageType", &WeaponType::damageType,
+			"explosionType", &WeaponType::explosionType,
+			"minRange", &WeaponType::minRange,
+			"maxRange", &WeaponType::maxRange,
+			"innerSplashRadius", &WeaponType::innerSplashRadius,
+			"medianSplashRadius", &WeaponType::medianSplashRadius,
+			"outerSplashRadius", &WeaponType::outerSplashRadius,
+			"targetsAir", &WeaponType::targetsAir,
+			"targetsGround", &WeaponType::targetsGround,
+			"targetsMechanical", &WeaponType::targetsMechanical,
+			"targetsOrganic", &WeaponType::targetsOrganic,
+			"targetsNonBuilding", &WeaponType::targetsNonBuilding,
+			"targetsNonRobotic", &WeaponType::targetsNonRobotic,
+			"targetsTerrain", &WeaponType::targetsTerrain,
+			"targetsOrgOrMech", &WeaponType::targetsOrgOrMech,
+			"targetsOwn", &WeaponType::targetsOwn
+		);
 		bindType<WeaponType>(weaponType);
 		module.set_usertype("WeaponType", weaponType);
 
