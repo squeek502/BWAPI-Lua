@@ -8,8 +8,15 @@ namespace BWAPI_Lua
 {
 	void bindColor(sol::table module)
 	{
-		auto color = module.create_simple_usertype<Color>();
+		auto color = module.create_simple_usertype<Color>(
+			"red", &Color::red,
+			"green", &Color::green,
+			"blue", &Color::blue
+		);
 		bindType(color);
+		auto constructors = sol::constructors<sol::types<int>, sol::types<int, int, int>>();
+		color.set(sol::meta_function::construct, constructors);
+		color.set(sol::call_constructor, constructors);
 		module.set_usertype("Color", color);
 
 		auto colors = module.create_named("Colors",
