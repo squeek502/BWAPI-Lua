@@ -65,6 +65,7 @@ namespace BWAPI_Lua
 		bindExplosionType(module);
 		bindForceset(module);
 		bindForce(module);
+		bindBulletType(module);
 
 		module["Broodwar"] = BroodwarPtr;
 
