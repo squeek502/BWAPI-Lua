@@ -68,6 +68,7 @@ namespace BWAPI_Lua
 		bindBulletType(module);
 		bindGameType(module);
 		bindOrder(module);
+		bindPlayerType(module);
 
 		module["Broodwar"] = BroodwarPtr;
 
