@@ -45,9 +45,9 @@ namespace BWAPI_Lua
 			module.set_function(callback, noop);
 		}
 
-		bindFlag(module);
 		bindGame(module);
 		bindUnit(module);
+		bindFlag(module);
 		bindDamageType(module);
 		bindUnitType(module);
 		bindColor(module);
@@ -58,6 +58,12 @@ namespace BWAPI_Lua
 		bindUnitset(module);
 		bindFilters(module);
 		bindPosition(module);
+		bindTechType(module);
+		bindUpgradeType(module);
+		bindUnitSizeType(module);
+		bindWeaponType(module);
+		bindExplosionType(module);
+		bindForceset(module);
 
 		module["Broodwar"] = BroodwarPtr;
 
