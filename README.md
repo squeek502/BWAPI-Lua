@@ -33,6 +33,7 @@ end
 
 ## Compiling and Testing
 
+- Install [cmake](https://cmake.org/) and make sure it is available in the `PATH`
 - Clone this repository
 - Run `make.bat` to build. The resulting files can be found in `build/Release`
 - Run `make.bat test` to build and run the available tests of the Lua bindings
