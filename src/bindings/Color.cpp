@@ -1,6 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
-#include "BWAPI_Lua.h"
+#include "Type.h"
 
 using namespace BWAPI;
 

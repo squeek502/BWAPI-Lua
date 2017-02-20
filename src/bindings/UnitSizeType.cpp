@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
-#include "BWAPI_Lua.h"
+#include "Type.h"
+#include "SetContainer.h"
 
 using namespace BWAPI;
 

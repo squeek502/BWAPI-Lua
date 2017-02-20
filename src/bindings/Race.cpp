@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
-#include "BWAPI_Lua.h"
+#include "Type.h"
+#include "SetContainer.h"
 
 using namespace BWAPI;
 
@@ -17,6 +18,10 @@ namespace BWAPI_Lua
 		);
 		bindType<Race>(race);
 		module.set_usertype("Race", race);
+
+		auto raceSet = module.create_simple_usertype<Race::set>();
+		bindSetContainer<Race::set, Race>(raceSet);
+		module.set_usertype("Raceset", raceSet);
 
 		auto races = module.create_named("Races",
 			"Zerg", &Races::Zerg,

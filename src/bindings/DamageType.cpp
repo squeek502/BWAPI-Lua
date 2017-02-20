@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
-#include "BWAPI_Lua.h"
+#include "Type.h"
+#include "SetContainer.h"
 
 using namespace BWAPI;
 
@@ -11,6 +12,10 @@ namespace BWAPI_Lua
 		auto damageType = module.create_simple_usertype<DamageType>();
 		bindType(damageType);
 		module.set_usertype("DamageType", damageType);
+
+		auto damageTypeSet = module.create_simple_usertype<DamageType::set>();
+		bindSetContainer<DamageType::set, DamageType>(damageTypeSet);
+		module.set_usertype("DamageTypeset", damageTypeSet);
 
 		auto damageTypes = module.create_named("DamageTypes",
 			"Independent", &DamageTypes::Independent,
