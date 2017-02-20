@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "Interface.h"
 
 using namespace BWAPI;
 
@@ -7,7 +8,7 @@ namespace BWAPI_Lua
 {
 	void bindRegion(sol::table module)
 	{
-		module.new_simple_usertype<RegionInterface>("Region",
+		sol::simple_usertype<RegionInterface> region = module.create_simple_usertype<RegionInterface>(
 			sol::meta_function::construct, sol::nil,
 			"getID", &RegionInterface::getID,
 			"getRegionGroupID", &RegionInterface::getRegionGroupID,
@@ -34,5 +35,7 @@ namespace BWAPI_Lua
 				}
 			)
 		);
+		bindInterface(region);
+		module.set_usertype("Region", region);
 	}
 }

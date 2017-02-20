@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "Interface.h"
 
 using namespace BWAPI;
 
@@ -7,8 +8,8 @@ namespace BWAPI_Lua
 {
 	void bindGame(sol::table module)
 	{
-		module.new_simple_usertype<Game>("Game",
-			"new", sol::nil,
+		sol::simple_usertype<Game> game = module.create_simple_usertype<Game>(
+			sol::meta_function::construct, sol::nil,
 			"getForces", &Game::getForces,
 			"setCommandOptimizationLevel", &Game::setCommandOptimizationLevel,
 			"enableFlag", &Game::enableFlag,
@@ -63,34 +64,9 @@ namespace BWAPI_Lua
 					return game->drawBoxMap(leftTop, rightBottom, color, isSolid);
 				}
 			),
-			"sendText", [](Game* game, const char *msg) { game->sendText("%s", msg); },
-			"registerEvent", sol::overload(
-				[](Game* game, const sol::function &action)
-				{
-					return game->registerEvent(sol::protected_function(action));
-				},
-				[](Game* game, const sol::function &action, const sol::function& condition)
-				{
-					if (condition.valid())
-						return game->registerEvent(sol::protected_function(action), sol::protected_function(condition));
-					else
-						return game->registerEvent(sol::protected_function(action), nullptr);
-				},
-				[](Game* game, const sol::function &action, const sol::function& condition, int timesToRun)
-				{
-					if (condition.valid())
-						return game->registerEvent(sol::protected_function(action), sol::protected_function(condition), timesToRun);
-					else
-						return game->registerEvent(sol::protected_function(action), nullptr, timesToRun);
-				},
-				[](Game* game, const sol::function &action, const sol::function& condition, int timesToRun, int framesToCheck)
-				{
-					if (condition.valid())
-						return game->registerEvent(sol::protected_function(action), sol::protected_function(condition), timesToRun, framesToCheck);
-					else
-						return game->registerEvent(sol::protected_function(action), nullptr, timesToRun, framesToCheck);
-				}
-			)
+			"sendText", [](Game* game, const char *msg) { game->sendText("%s", msg); }
 		);
+		bindInterface(game);
+		module.set_usertype("Game", game);
 	}
 }

@@ -13,7 +13,9 @@ namespace BWAPI_Lua
 		public:
 			virtual int getID() const override
 			{
-				return 0;
+				static int id = 0;
+				++id;
+				return id;
 			}
 			virtual bool exists() const override
 			{

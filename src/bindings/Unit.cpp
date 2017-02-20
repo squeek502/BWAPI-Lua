@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "Interface.h"
 
 using namespace BWAPI;
 
@@ -7,7 +8,7 @@ namespace BWAPI_Lua
 {
 	void bindUnit(sol::table module)
 	{
-		module.new_simple_usertype<UnitInterface>("Unit",
+		sol::simple_usertype<UnitInterface> unit = module.create_simple_usertype<UnitInterface>(
 			"new", sol::nil,
 			"getID", &UnitInterface::getID,
 			"exists", &UnitInterface::exists,
@@ -51,5 +52,7 @@ namespace BWAPI_Lua
 				}
 			)
 		);
+		bindInterface(unit);
+		module.set_usertype("Unit", unit);
 	}
 }
