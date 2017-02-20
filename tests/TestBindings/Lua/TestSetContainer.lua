@@ -1,26 +1,26 @@
 function defaultConstructor()
-	local set = BWAPI.UnitTypeset.new()
+	local set = BWAPI.UnitTypeset()
 	assert(#set == 0)
 end
 
 function tableConstructor()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 	assert(#set == 2)
 
-	set = BWAPI.UnitTypeset.new({"strings", "ignored"})
+	set = BWAPI.UnitTypeset({"strings", "ignored"})
 	assert(#set == 0)
 end
 
 function copyConstructor()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 	assert(#set == 2)
 
-	local copy = BWAPI.UnitTypeset.new(set)
+	local copy = BWAPI.UnitTypeset(set)
 	assert(#copy == 2)
 end
 
 function iterator()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 
 	local scvFound, firebatFound = false, false
 	for v in set:iterator() do
@@ -32,7 +32,7 @@ function iterator()
 end
 
 function asTable()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 	local setTable = set:asTable()
 	assert(#setTable == 2)
 
@@ -46,7 +46,7 @@ function asTable()
 end
 
 function count()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 
 	assert(set:count(BWAPI.UnitTypes.Terran_SCV) == 1)
 	assert(set:count(BWAPI.UnitTypes.Terran_Firebat) == 1)
@@ -54,12 +54,12 @@ function count()
 end
 
 function size()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 	assert(set:size() == 2)
 end
 
 function contains()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 
 	assert(set:contains(BWAPI.UnitTypes.Terran_SCV) == true)
 	assert(set:contains(BWAPI.UnitTypes.Terran_Firebat) == true)
@@ -67,15 +67,15 @@ function contains()
 end
 
 function empty()
-	local emptySet = BWAPI.UnitTypeset.new()
+	local emptySet = BWAPI.UnitTypeset()
 	assert(emptySet:empty())
 
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 	assert(not set:empty())
 end
 
 function insert()
-	local set = BWAPI.UnitTypeset.new()
+	local set = BWAPI.UnitTypeset()
 	set:insert(BWAPI.UnitTypes.Terran_SCV)
 	assert(#set == 1)
 	set:insert(BWAPI.UnitTypes.Terran_Firebat)
@@ -83,7 +83,7 @@ function insert()
 end
 
 function erase()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 	assert(#set == 2)
 	set:erase(BWAPI.UnitTypes.Terran_SCV)
 	assert(#set == 1)
@@ -92,7 +92,7 @@ function erase()
 end
 
 function clear()
-	local set = BWAPI.UnitTypeset.new({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+	local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
 	assert(#set == 2)
 	set:clear()
 	assert(#set == 0)
