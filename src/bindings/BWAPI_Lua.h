@@ -25,6 +25,7 @@ namespace BWAPI_Lua
 	void bindWeaponType(sol::table module);
 	void bindExplosionType(sol::table module);
 	void bindForceset(sol::table module);
+	void bindForce(sol::table module);
 
 	sol::table requireBWAPI(sol::state_view& s);
 	sol::table openBWAPI(sol::this_state s);
