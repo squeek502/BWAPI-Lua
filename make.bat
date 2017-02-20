@@ -21,4 +21,10 @@ GOTO :end
 IF EXIST build RMDIR /S /Q build
 GOTO :end
 
+:test
+cmake -H. -Bbuild -G"%GENERATOR%"
+cmake --build build --config Release
+call "build/Release/TestLua51Bindings.exe"
+GOTO :end
+
 :end
