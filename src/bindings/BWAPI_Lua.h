@@ -30,6 +30,7 @@ namespace BWAPI_Lua
 	void bindGameType(sol::table module);
 	void bindOrder(sol::table module);
 	void bindPlayerType(sol::table module);
+	void bindPositionOrUnit(sol::table module);
 
 	sol::table requireBWAPI(sol::state_view& s);
 	sol::table openBWAPI(sol::this_state s);
