@@ -70,6 +70,8 @@ namespace BWAPI_Lua
 		bindOrder(module);
 		bindPlayerType(module);
 		bindPositionOrUnit(module);
+		bindRegion(module);
+		bindRegionset(module);
 
 		module["Broodwar"] = BroodwarPtr;
 
