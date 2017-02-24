@@ -21,7 +21,7 @@ Currently supports BWAPI version 4.1.2 and Lua 5.1.5 (with planned support for L
 ## Important Links
 
 - [Your first Lua AI]() *(coming soon)*
-- [Documentation]() *(coming soon)*
+- [Documentation](http://bwapi-lua.readthedocs.io/en/latest/index.html) *(work in progress)*
 
 ## Preview: 'Hello World' AI
 
