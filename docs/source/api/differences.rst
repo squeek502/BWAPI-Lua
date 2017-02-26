@@ -28,10 +28,10 @@ Takes Lua functions for its ``action`` and ``condition`` parameters (note: ``con
    end
    Broodwar:registerEvent(action, nil, Broodwar:getLatencyFrames())
 
-getClientInfo and setClientInfo
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+:meth:`~BWAPI.Interface.getClientInfo` and :meth:`~BWAPI.Interface.setClientInfo`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``getClientInfo``/``setClientInfo`` have been removed in favor of a ``clientInfo`` property that is a Lua table.
+``getClientInfo``/``setClientInfo`` have been removed in favor of a ``clientInfo`` property that is a Lua table. This allows for storing arbitrary data in a more user-friendly way.
 
 .. code-block:: lua
    :caption: Example usage
@@ -47,6 +47,33 @@ All C++ functions that take variable amounts of strings now expect only a single
 
 .. note::
    All formatting now needs to be done in Lua first (``string.format``), and then the formatted string can be passed into the function like normal.
+
+
+Unit
+----
+
+.. _differences-unit-train:
+
+:meth:`~BWAPI.Unit.cancelTrain` and :meth:`~BWAPI.Unit.getTrainingQueue`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:meth:`~BWAPI.Unit.cancelTrain`'s slot parameter has been changed to be one-indexed (like Lua), rather than zero-indexed (like C++). For example, to cancel the first unit being trained, you would now pass a slot of ``1``, whereas in C++ you'd pass a slot of ``0``
+
+Similarly, :meth:`~BWAPI.Unit.getTrainingQueue` returns a Lua array-like table (which is one-indexed) instead of a ``std::list`` (which is zero-indexed). This allows for the following:
+
+.. code-block:: lua
+
+   -- cancel the first dragoon found in the queue
+   local queue = building:getTrainingQueue()
+   for slot, unitType in ipairs(queue) do
+     if unitType == BWAPI.UnitTypes.Protoss_Dragoon then
+      building:cancelTrain(slot)
+      break
+     end
+   end
+
+.. warning::
+   Iterating a training queue and canceling multiple slots while in the loop will result in unexpected behavior, as the slots will shift as things are canceled. For example, if you cancel slot 1 and then iterate to slot 2 and also cancel it, then you'll actually be canceling what was originally in slot 3.
 
 
 UnitType
@@ -91,6 +118,8 @@ The set can be iterated one of two ways:
 - ``for x in set:iterator() do``
 - ``for i, x in ipairs(set:asTable()) do``
 
+
+.. _differences-unitfilter:
 
 UnitFilter
 ----------
