@@ -9,7 +9,8 @@ namespace BWAPI_Lua
 	void bindUnit(sol::table module)
 	{
 		sol::simple_usertype<UnitInterface> unit = module.create_simple_usertype<UnitInterface>(
-			"new", sol::nil
+			sol::meta_function::construct, sol::no_constructor,
+			sol::meta_function::equal_to, [](UnitInterface* a, UnitInterface* b) { return a->getID() == b->getID();  }
 		);
 		unit.set("getID", &UnitInterface::getID);
 		unit.set("exists", &UnitInterface::exists);
