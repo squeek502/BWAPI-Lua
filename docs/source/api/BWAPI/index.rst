@@ -16,10 +16,19 @@ Classes
 
    classes/*
 
-Properties
-----------
+Data
+----
 
-.. attribute:: Broodwar
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   data/*
+
+Constants
+---------
+
+.. data:: Broodwar
 
    The currently running :class:`Game` instance
 
