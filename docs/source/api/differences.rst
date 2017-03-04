@@ -46,8 +46,14 @@ Functions that take a variable amount of string parameters in C++
 All C++ functions that take variable amounts of strings now expect only a single string.
 
 .. note::
-   All formatting now needs to be done in Lua first (``string.format``), and then the formatted string can be passed into the function like normal.
+   Any formatting must be done in Lua first (``string.format``), and then the formatted string can be passed into the function like normal.
 
+:meth:`Game::sendTextEx`
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+A new convenience function has been added to send text to allies: :meth:`~BWAPI.Game.sendTextToAllies`, which fowards the method to :meth:`~BWAPI.Game.sendTextEx` with ``true`` as the first parameter. The following two snippets are exactly equivalent:
+- ``BWAPI.Broodwar:sendTextEx(true, "your message")``
+- ``BWAPI.Broodwar:sendTextToAllies("your message")``
 
 Unit
 ----
@@ -121,10 +127,25 @@ The set can be iterated one of two ways:
 
 .. _differences-unitfilter:
 
+All lists (std::list, Position::list, UnitType::list, etc)
+----------------------------------------------------------
+
+All C++ functions that return lists now return array-like Lua tables.
+
+.. code-block:: lua
+   :caption: Example
+
+   local nukeDots = BWAPI.Broodwar:getNukeDots()
+   for i, pos in ipairs(nukeDots) do
+      print(string.format("There's a nuke at %s", tostring(pos)))
+   end
+
 UnitFilter
 ----------
 
-All functions that take a UnitFilter parameter now expect a Lua function that takes a unit and returns a boolean
+All functions that take a UnitFilter parameter now expect either:
+- A Lua function that takes a unit and returns a boolean.
+- A UnitFilter instance from :mod:`BWAPI.Filter`
 
 .. note::
 
@@ -138,3 +159,19 @@ All functions that take a UnitFilter parameter now expect a Lua function that ta
         return BWAPI.Filter.CanAttack(unit) and not BWAPI.Filter.IsOrganic(unit)
       end
       local closest = unit:getClosestUnit(myFilter)
+
+BestUnitFilter
+--------------
+
+All functions that take a BestUnitFIlter parameter now expect a Lua function that takes two parameters: the current best unit, and the unit to compare to, and returns the best unit out of the two.
+
+.. code-block:: lua
+   :caption: Example
+
+   local bestFilter = function(a, b)
+     if b:getHitPoints() > a:getHitPoints() then
+       return b
+     end
+     return a
+   end
+   local best = BWAPI.Broodwar:getBestUnit(bestFilter, BWAPI.Filter.IsOrganic)

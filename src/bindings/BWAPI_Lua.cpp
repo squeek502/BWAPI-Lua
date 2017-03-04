@@ -74,6 +74,7 @@ namespace BWAPI_Lua
 		bindRegionset(module);
 		bindUnitCommand(module);
 		bindUnitCommandType(module);
+		bindCoordinateType(module);
 
 		module["Broodwar"] = BroodwarPtr;
 

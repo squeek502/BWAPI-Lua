@@ -35,6 +35,7 @@ namespace BWAPI_Lua
 	void bindRegionset(sol::table module);
 	void bindUnitCommand(sol::table module);
 	void bindUnitCommandType(sol::table module);
+	void bindCoordinateType(sol::table module);
 
 	sol::table requireBWAPI(sol::state_view& s);
 	sol::table openBWAPI(sol::this_state s);
