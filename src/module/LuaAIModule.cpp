@@ -4,11 +4,32 @@
 
 using namespace BWAPI;
 
+std::string LuaAIModule::onError(std::string msg)
+{
+	if (lua["BWAPI"].valid() && lua["BWAPI"]["onError"].valid())
+	{
+		try
+		{
+			lua["BWAPI"]["onError"](msg);
+		}
+		catch (const sol::error& e)
+		{
+			Broodwar << "Error when calling BWAPI.onError: " << e.what() << std::endl;
+			Broodwar << "  Original error: " << msg << std::endl;
+		}
+	}
+	else
+	{
+		Broodwar << msg << std::endl;
+	}
+	return msg;
+}
+
 void LuaAIModule::onStart()
 {
 	// Start Lua VM and load BWAPI module as global 'BWAPI'
 	lua = sol::state();
-	lua.set_function("__protectederrorhandler", [](std::string msg) { Broodwar << msg << std::endl;  return msg; });
+	lua.set_function("__protectederrorhandler", &LuaAIModule::onError);
 	sol::protected_function::set_default_handler(lua["__protectederrorhandler"]);
 	lua.open_libraries();
 	BWAPI_Lua::requireBWAPI(lua);
@@ -39,7 +60,7 @@ end
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -51,7 +72,7 @@ void LuaAIModule::onEnd(bool isWinner)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -63,7 +84,7 @@ void LuaAIModule::onFrame()
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -75,7 +96,7 @@ void LuaAIModule::onSendText(std::string text)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 
 }
@@ -88,7 +109,7 @@ void LuaAIModule::onReceiveText(BWAPI::Player player, std::string text)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -100,7 +121,7 @@ void LuaAIModule::onPlayerLeft(BWAPI::Player player)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -112,7 +133,7 @@ void LuaAIModule::onNukeDetect(BWAPI::Position target)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -124,7 +145,7 @@ void LuaAIModule::onUnitDiscover(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -136,7 +157,7 @@ void LuaAIModule::onUnitEvade(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -148,7 +169,7 @@ void LuaAIModule::onUnitShow(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -160,7 +181,7 @@ void LuaAIModule::onUnitHide(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -172,7 +193,7 @@ void LuaAIModule::onUnitCreate(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -184,7 +205,7 @@ void LuaAIModule::onUnitDestroy(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -196,7 +217,7 @@ void LuaAIModule::onUnitMorph(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -208,7 +229,7 @@ void LuaAIModule::onUnitRenegade(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -220,7 +241,7 @@ void LuaAIModule::onSaveGame(std::string gameName)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }
 
@@ -232,6 +253,6 @@ void LuaAIModule::onUnitComplete(BWAPI::Unit unit)
 	}
 	catch (const sol::error& e)
 	{
-		Broodwar << e.what() << std::endl;
+		onError(e.what());
 	}
 }

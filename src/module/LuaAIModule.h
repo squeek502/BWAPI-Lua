@@ -7,6 +7,7 @@ class LuaAIModule : public BWAPI::AIModule
 protected:
 	sol::state lua;
 	std::string dllPath;
+	std::string onError(std::string msg);
 public:
 	virtual void onStart();
 	virtual void onEnd(bool isWinner);

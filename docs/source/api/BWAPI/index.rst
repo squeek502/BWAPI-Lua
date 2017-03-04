@@ -69,6 +69,17 @@ Callbacks
 
    :param boolean isWinner: A boolean value to determine if the current player has won the match. This value will be true if the current player has won, and false if either the player has lost or the game is actually a replay.
 
+.. method:: onError(msg)
+
+   If defined, then all Lua error messages will be redirected to this function (instead of the default functionality of the error message being printed to the screen). Can be used for custom error handling/logging errors to file/etc.
+
+   :param string msg: The error message.
+
+   .. literalinclude:: ../../../../examples/LogErrorsToFile/init.lua
+      :language: lua
+      :caption: `examples/LoggingErrorsToFile/init.lua <https://github.com/squeek502/BWAPI-Lua/blob/master/examples/LoggingErrorsToFile/init.lua>`_
+
+
 .. method:: onNukeDetect(target)
 
    Called when a :attr:`Nuke <BWAPI.UnitTypes.Terran_Nuclear_Missile>` has been launched somewhere on the map.
