@@ -92,7 +92,7 @@ void LuaAIModule::onSendText(std::string text)
 {
 	try
 	{
-		lua.script(text);
+		lua["BWAPI"]["onSendText"](text);
 	}
 	catch (const sol::error& e)
 	{

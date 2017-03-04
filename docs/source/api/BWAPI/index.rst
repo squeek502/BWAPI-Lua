@@ -79,7 +79,6 @@ Callbacks
       :language: lua
       :caption: `examples/LoggingErrorsToFile/init.lua <https://github.com/squeek502/BWAPI-Lua/blob/master/examples/LoggingErrorsToFile/init.lua>`_
 
-
 .. method:: onNukeDetect(target)
 
    Called when a :attr:`Nuke <BWAPI.UnitTypes.Terran_Nuclear_Missile>` has been launched somewhere on the map.
@@ -118,6 +117,10 @@ Callbacks
    :param string text: The exact text message that was sent by the user.
 
    .. note:: If :attr:`BWAPI.Flag.UserInput` is disabled, then this function is not called.
+
+   .. literalinclude:: ../../../../examples/SendTextREPL/init.lua
+      :language: lua
+      :caption: `examples/SendTextREPL/init.lua <https://github.com/squeek502/BWAPI-Lua/blob/master/examples/SendTextREPL/init.lua>`_
 
 .. method:: onUnitComplete(unit)
 
