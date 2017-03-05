@@ -77,6 +77,7 @@ namespace BWAPI_Lua
 		bindCoordinateType(module);
 		bindBullet(module);
 		bindBulletset(module);
+		bindInput(module);
 
 		module["getRevision"] = &BWAPI::BWAPI_getRevision;
 		module["isDebug"] = &BWAPI::BWAPI_isDebug;
