@@ -187,3 +187,8 @@ All functions that take a BestUnitFIlter parameter now expect a Lua function tha
      return a
    end
    local best = BWAPI.Broodwar:getBestUnit(bestFilter, BWAPI.Filter.IsOrganic)
+
+Event and Game::getEvents
+-------------------------
+
+For now, the ``getEvents`` function of :class:`BWAPI.Game` has been removed, and there are no bindings for the ``BWAPI.Event`` class. This is subject to change if it's shown to be necessary.

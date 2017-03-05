@@ -27,12 +27,14 @@ namespace BWAPI_Lua
 				return sol::as_table(game->getNukeDots());
 			}
 		);
+		/* Binding removed because I'm not sure of it's applicability
 		game.set("getEvents",
 			[](Game* game)
 			{
 				return sol::as_table(game->getEvents());
 			}
 		);
+		*/
 		game.set("getForce", &Game::getForce);
 		game.set("getPlayer", &Game::getPlayer);
 		game.set("getUnit", &Game::getUnit);
