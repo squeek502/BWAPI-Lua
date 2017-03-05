@@ -39,6 +39,18 @@ Takes Lua functions for its ``action`` and ``condition`` parameters (note: ``con
    unit.clientInfo["test"] = 5
    print(unit.clientInfo["test"])
 
+.. important::
+
+   ``setClientInfo`` has also been removed from :class:`~BWAPI.Unitset`. Instead, you should simply iterate the ``Unitset`` and operate on the clientInfo of each unit as needed.
+
+   .. code-block:: lua
+      :caption: Example
+
+      local value = 5
+      for unit in set:iterator() do
+        unit.clientInfo["key"] = value
+      end
+
 
 Functions that take a variable amount of string parameters in C++
 -----------------------------------------------------------------
