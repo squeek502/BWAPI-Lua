@@ -10,7 +10,18 @@ namespace BWAPI_Lua
 	void bindTechType(sol::table module)
 	{
 		auto techType = module.create_simple_usertype<TechType>(
-			"getRace", &TechType::getRace
+			"getRace", &TechType::getRace,
+			"mineralPrice", &TechType::mineralPrice,
+			"gasPrice", &TechType::gasPrice,
+			"researchTime", &TechType::researchTime,
+			"energyCost", &TechType::energyCost,
+			"whatResearches", &TechType::whatResearches,
+			"getWeapon", &TechType::getWeapon,
+			"targetsUnit", &TechType::targetsUnit,
+			"targetsPosition", &TechType::targetsPosition,
+			"whatUses", &TechType::whatUses,
+			"getOrder", &TechType::getOrder,
+			"requiredUnit", &TechType::requiredUnit
 		);
 		bindType<TechType>(techType);
 		module.set_usertype("TechType", techType);
