@@ -9,7 +9,7 @@ namespace BWAPI_Lua
 	void bindRegion(sol::table module)
 	{
 		sol::simple_usertype<RegionInterface> region = module.create_simple_usertype<RegionInterface>(
-			sol::meta_function::construct, sol::nil,
+			sol::meta_function::construct, sol::no_constructor,
 			"getID", &RegionInterface::getID,
 			"getRegionGroupID", &RegionInterface::getRegionGroupID,
 			"getCenter", &RegionInterface::getCenter,
@@ -32,7 +32,8 @@ namespace BWAPI_Lua
 					if (pred.valid())
 						filter = UnitFilter(sol::protected_function(pred));
 					return region->getUnits(filter);
-				}
+				},
+				&RegionInterface::getUnits
 			)
 		);
 		bindInterface(region);

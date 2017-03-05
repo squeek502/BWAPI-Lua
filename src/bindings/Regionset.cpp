@@ -17,7 +17,8 @@ namespace BWAPI_Lua
 					if (pred.valid())
 						filter = UnitFilter(sol::protected_function(pred));
 					return regionset.getUnits(filter);
-				}
+				},
+				&Regionset::getUnits
 			),
 			"getCenter", &Regionset::getCenter
 		);
