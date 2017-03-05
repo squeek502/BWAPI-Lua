@@ -64,10 +64,7 @@ namespace BWAPI_Lua
 			static_cast<bool (Unitset::*)(UnitType, TilePosition) const>(&Unitset::build)
 		));
 		unitset.set("buildAddon", &Unitset::buildAddon);
-		unitset.set("train", sol::overload(
-			[](const Unitset& set) { return set.train(); },
-			static_cast<bool (Unitset::*)(UnitType) const>(&Unitset::train)
-		));
+		unitset.set("train", &Unitset::train);
 		unitset.set("morph", &Unitset::morph);
 		unitset.set("setRallyPoint", &Unitset::setRallyPoint);
 		unitset.set("move", sol::overload(
