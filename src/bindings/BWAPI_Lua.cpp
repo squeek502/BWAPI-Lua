@@ -78,6 +78,8 @@ namespace BWAPI_Lua
 		bindBullet(module);
 		bindBulletset(module);
 
+		module["getRevision"] = &BWAPI::BWAPI_getRevision;
+		module["isDebug"] = &BWAPI::BWAPI_isDebug;
 		module["Broodwar"] = BroodwarPtr;
 
 		return module;

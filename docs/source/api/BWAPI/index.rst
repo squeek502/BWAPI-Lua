@@ -43,6 +43,20 @@ Functions
 
    .. note:: This function does not automatically append a newline to the output
 
+.. staticmethod:: getRevision()
+
+   Retrieves the revision of the BWAPILIB module currently being used.
+
+   :return: An integer representing the revision number of the library.
+   :rtype: number
+
+.. staticmethod:: isDebug()
+
+   Checks if the BWAPILIB module was compiled in DEBUG mode.
+
+   :return: ``true`` if this is a DEBUG build, or ``false`` if this is a RELEASE build
+   :rtype: boolean
+
 Callbacks
 ---------
 
