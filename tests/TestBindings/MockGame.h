@@ -118,10 +118,22 @@ namespace BWAPI_Lua
 			}
 			virtual bool getMouseState(MouseButton button) const override
 			{
+				switch (button)
+				{
+				case MouseButton::M_LEFT:
+					return true;
+					break;
+				}
 				return false;
 			}
 			virtual bool getKeyState(Key key) const override
 			{
+				switch (key)
+				{
+				case Key::K_4:
+					return true;
+					break;
+				}
 				return false;
 			}
 			virtual BWAPI::Position getScreenPosition() const override
