@@ -10,29 +10,29 @@ namespace BWAPI_Lua
 		auto factories = sol::factories(
 			[] { return SetClass(); },
 			[](const sol::object& obj)
-		{
-			if (obj.get_type() == sol::type::table)
 			{
-				auto tbl = obj.as<sol::table>();
-				SetClass set = SetClass();
-				for (auto v : tbl)
+				if (obj.get_type() == sol::type::table)
 				{
-					if (v.second.valid() && v.second.is<ContainedClass>())
+					auto tbl = obj.as<sol::table>();
+					SetClass set = SetClass();
+					for (auto v : tbl)
 					{
-						set.insert(v.second.as<ContainedClass>());
+						if (v.second.valid() && v.second.is<ContainedClass>())
+						{
+							set.insert(v.second.as<ContainedClass>());
+						}
 					}
+					return set;
 				}
-				return set;
+				else if (obj.is<SetClass>())
+				{
+					return SetClass(obj.as<SetClass>());
+				}
+				else
+				{
+					return SetClass();
+				}
 			}
-			else if (obj.is<SetClass>())
-			{
-				return SetClass(obj.as<SetClass>());
-			}
-			else
-			{
-				return SetClass();
-			}
-		}
 		);
 		userType.set(sol::meta_function::construct, factories);
 		userType.set(sol::call_constructor, factories);
