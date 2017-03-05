@@ -78,6 +78,7 @@ namespace BWAPI_Lua
 		bindBullet(module);
 		bindBulletset(module);
 		bindInput(module);
+		bindLatency(module);
 
 		module["getRevision"] = &BWAPI::BWAPI_getRevision;
 		module["isDebug"] = &BWAPI::BWAPI_isDebug;
