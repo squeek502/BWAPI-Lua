@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -11,10 +12,12 @@ namespace BWAPI_Lua
 	{
 		auto explosionType = module.create_simple_usertype<ExplosionType>();
 		bindType(explosionType);
+		bindIsInstance(explosionType);
 		module.set_usertype("ExplosionType", explosionType);
 
 		auto explosionTypeSet = module.create_simple_usertype<ExplosionType::set>();
 		bindSetContainer<ExplosionType::set, ExplosionType>(explosionTypeSet);
+		bindIsInstance(explosionTypeSet);
 		module.set_usertype("ExplosionTypeset", explosionTypeSet);
 
 		auto explosionTypes = module.create_named("ExplosionTypes");

@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -9,12 +10,14 @@ namespace BWAPI_Lua
 {
 	void bindUnitSizeType(sol::table module)
 	{
-		auto unitSizeType = module.create_simple_usertype<UnitSizeType>();
+		sol::simple_usertype<UnitSizeType> unitSizeType = module.create_simple_usertype<UnitSizeType>();
 		bindType<UnitSizeType>(unitSizeType);
+		bindIsInstance(unitSizeType);
 		module.set_usertype("UnitSizeType", unitSizeType);
 
-		auto unitSizeTypeSet = module.create_simple_usertype<UnitSizeType::set>();
+		sol::simple_usertype<UnitSizeType::set> unitSizeTypeSet = module.create_simple_usertype<UnitSizeType::set>();
 		bindSetContainer<UnitSizeType::set, UnitSizeType>(unitSizeTypeSet);
+		bindIsInstance(unitSizeTypeSet);
 		module.set_usertype("UnitSizeTypeset", unitSizeTypeSet);
 
 		auto unitSizeTypes = module.create_named("UnitSizeTypes");

@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -11,10 +12,12 @@ namespace BWAPI_Lua
 	{
 		auto error = module.create_simple_usertype<Error>();
 		bindType(error);
+		bindIsInstance(error);
 		module.set_usertype("Error", error);
 
 		auto errorSet = module.create_simple_usertype<Error::set>();
 		bindSetContainer<Error::set, Error>(errorSet);
+		bindIsInstance(errorSet);
 		module.set_usertype("Errorset", errorSet);
 
 		auto errors = module.create_named("Errors",

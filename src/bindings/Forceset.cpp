@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -12,6 +13,7 @@ namespace BWAPI_Lua
 			"getPlayers", &Forceset::getPlayers
 		);
 		bindSetContainer<Forceset, Force>(forceset);
+		bindIsInstance(forceset);
 		module.set_usertype("Forceset", forceset);
 	}
 }

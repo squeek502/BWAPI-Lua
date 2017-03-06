@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -14,10 +15,12 @@ namespace BWAPI_Lua
 			"isGameType", &PlayerType::isGameType
 		);
 		bindType(playerType);
+		bindIsInstance(playerType);
 		module.set_usertype("PlayerType", playerType);
 
 		auto playerTypeSet = module.create_simple_usertype<PlayerType::set>();
 		bindSetContainer<PlayerType::set, PlayerType>(playerTypeSet);
+		bindIsInstance(playerTypeSet);
 		module.set_usertype("PlayerTypeset", playerTypeSet);
 
 		auto playerTypes = module.create_named("PlayerTypes");

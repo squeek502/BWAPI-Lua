@@ -8,6 +8,25 @@ Most of the API follows the conventions of the C++ API and can be used in exactl
 
 This page documents all such differences.
 
+All classes
+-----------
+
+Every bound class has a static member function ``isInstance`` which can be used to determine if a ``userdata`` value (an instance of a C++ class) is an instance of that class.
+
+.. code-block:: lua
+   :caption: Example
+
+   function determineType(unknown)
+     if BWAPI.Position.isInstance(unknown) then
+       print("It's a Position")
+     elseif BWAPI.TilePosition.isInstance(unknown) then
+       print("It's a TilePosition")
+     elseif BWAPI.Unit.isInstance(unknown) then
+       print("It's a Unit")
+     else
+       print("It's something else")
+     end
+   end
 
 Interface derived classes (Game, Player, Unit, etc)
 ---------------------------------------------------

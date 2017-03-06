@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -7,30 +8,42 @@ namespace BWAPI_Lua
 {
 	void bindFilters(sol::table module)
 	{
-		module.new_simple_usertype<UnitFilter>("UnitFilter",
-			"new", sol::nil,
+		auto unitFilter = module.create_simple_usertype<UnitFilter>(
+			sol::meta_function::construct, sol::no_constructor,
 			sol::meta_function::call, [](const UnitFilter& filter, Unit unit) {
 				return filter(unit);
 			}
 		);
-		module.new_simple_usertype<PtrUnitFilter>("PtrUnitFilter",
-			"new", sol::nil,
+		bindIsInstance(unitFilter);
+		module.set_usertype("UnitFilter", unitFilter);
+
+		auto ptrUnitFilter = module.create_simple_usertype<PtrUnitFilter>(
+			sol::meta_function::construct, sol::no_constructor,
 			sol::meta_function::call, [](const PtrUnitFilter& filter, Unit unit) {
 				return filter(unit);
 			}
 		);
-		module.new_simple_usertype<BestUnitFilter>("BestUnitFilter",
-			"new", sol::nil,
+		bindIsInstance(ptrUnitFilter);
+		module.set_usertype("PtrUnitFilter", ptrUnitFilter);
+
+		auto bestUnitFilter = module.create_simple_usertype<BestUnitFilter>(
+			sol::meta_function::construct, sol::no_constructor,
 			sol::meta_function::call, [](const BestUnitFilter& filter, Unit unit1, Unit unit2) {
 				return filter(unit1, unit2);
 			}
 		);
-		module.new_simple_usertype<CompareFilter<Unit, UnitType, UnitType(*)(Unit)>>("UnitTypeCompareFilter",
-			"new", sol::nil,
+		bindIsInstance(bestUnitFilter);
+		module.set_usertype("BestUnitFilter", bestUnitFilter);
+
+		auto unitTypeCompareFilter = module.create_simple_usertype<CompareFilter<Unit, UnitType, UnitType(*)(Unit)>>(
+			sol::meta_function::construct, sol::no_constructor,
 			sol::meta_function::call, [](const CompareFilter<Unit, UnitType, UnitType(*)(Unit)>& filter, Unit unit) {
 				return filter(unit);
 			}
 		);
+		bindIsInstance(unitTypeCompareFilter);
+		module.set_usertype("UnitTypeCompareFilter", unitTypeCompareFilter);
+
 		auto filter = module.create_named("Filter");
 		filter["IsTransport"] = &Filter::IsTransport;
 		filter["CanProduce"] = &Filter::CanProduce;

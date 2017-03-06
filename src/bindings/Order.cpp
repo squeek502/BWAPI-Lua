@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -11,10 +12,12 @@ namespace BWAPI_Lua
 	{
 		auto order = module.create_simple_usertype<Order>();
 		bindType(order);
+		bindIsInstance(order);
 		module.set_usertype("Order", order);
 
 		auto orderSet = module.create_simple_usertype<Order::set>();
 		bindSetContainer<Order::set, Order>(orderSet);
+		bindIsInstance(orderSet);
 		module.set_usertype("Orderset", orderSet);
 
 		auto orders = module.create_named("Orders");

@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -35,10 +36,12 @@ namespace BWAPI_Lua
 			"targetsOwn", &WeaponType::targetsOwn
 		);
 		bindType<WeaponType>(weaponType);
+		bindIsInstance(weaponType);
 		module.set_usertype("WeaponType", weaponType);
 
 		auto weaponTypeSet = module.create_simple_usertype<WeaponType::set>();
 		bindSetContainer<WeaponType::set, WeaponType>(weaponTypeSet);
+		bindIsInstance(weaponTypeSet);
 		module.set_usertype("WeaponTypeset", weaponTypeSet);
 
 		auto weaponTypes = module.create_named("WeaponTypes");

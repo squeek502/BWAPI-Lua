@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -10,6 +11,7 @@ namespace BWAPI_Lua
 	{
 		auto unitset = module.create_simple_usertype<Unitset>();
 		bindSetContainer<Unitset, Unit>(unitset);
+		bindIsInstance(unitset);
 
 		// static
 		unitset.set("none", &Unitset::none);

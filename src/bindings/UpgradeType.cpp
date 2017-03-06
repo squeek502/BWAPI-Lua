@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -9,7 +10,7 @@ namespace BWAPI_Lua
 {
 	void bindUpgradeType(sol::table module)
 	{
-		auto upgradeType = module.create_simple_usertype<UpgradeType>(
+		sol::simple_usertype<UpgradeType> upgradeType = module.create_simple_usertype<UpgradeType>(
 			"getRace", &UpgradeType::getRace,
 			"mineralPrice", sol::overload(
 				[](const UpgradeType& upgrade) { return upgrade.mineralPrice(); },
@@ -35,10 +36,12 @@ namespace BWAPI_Lua
 			"whatUses", &UpgradeType::whatUses
 		);
 		bindType<UpgradeType>(upgradeType);
+		bindIsInstance(upgradeType);
 		module.set_usertype("UpgradeType", upgradeType);
 
 		auto upgradeTypeSet = module.create_simple_usertype<UpgradeType::set>();
 		bindSetContainer<UpgradeType::set, UpgradeType>(upgradeTypeSet);
+		bindIsInstance(upgradeTypeSet);
 		module.set_usertype("UpgradeTypeset", upgradeTypeSet);
 
 		auto upgradeTypes = module.create_named("UpgradeTypes");

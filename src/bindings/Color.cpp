@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "Type.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -14,6 +15,7 @@ namespace BWAPI_Lua
 			"blue", &Color::blue
 		);
 		bindType(color);
+		bindIsInstance(color);
 		auto constructors = sol::constructors<sol::types<int>, sol::types<int, int, int>>();
 		color.set(sol::meta_function::construct, constructors);
 		color.set(sol::call_constructor, constructors);

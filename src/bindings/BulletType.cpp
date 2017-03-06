@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -11,10 +12,12 @@ namespace BWAPI_Lua
 	{
 		auto bulletType = module.create_simple_usertype<BulletType>();
 		bindType(bulletType);
+		bindIsInstance(bulletType);
 		module.set_usertype("BulletType", bulletType);
 
 		auto bulletTypeSet = module.create_simple_usertype<BulletType::set>();
 		bindSetContainer<BulletType::set, BulletType>(bulletTypeSet);
+		bindIsInstance(bulletTypeSet);
 		module.set_usertype("BulletTypeset", bulletTypeSet);
 
 		auto bulletTypes = module.create_named("BulletTypes");

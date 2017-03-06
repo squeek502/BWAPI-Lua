@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -11,10 +12,12 @@ namespace BWAPI_Lua
 	{
 		auto damageType = module.create_simple_usertype<DamageType>();
 		bindType(damageType);
+		bindIsInstance(damageType);
 		module.set_usertype("DamageType", damageType);
 
 		auto damageTypeSet = module.create_simple_usertype<DamageType::set>();
 		bindSetContainer<DamageType::set, DamageType>(damageTypeSet);
+		bindIsInstance(damageTypeSet);
 		module.set_usertype("DamageTypeset", damageTypeSet);
 
 		auto damageTypes = module.create_named("DamageTypes",

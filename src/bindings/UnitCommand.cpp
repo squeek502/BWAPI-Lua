@@ -1,5 +1,6 @@
 #include <sol.hpp>
 #include <BWAPI.h>
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -107,6 +108,7 @@ namespace BWAPI_Lua
 		));
 		unitCommand.set("placeCOP", &UnitCommand::placeCOP);
 
+		bindIsInstance(unitCommand);
 		module.set_usertype("UnitCommand", unitCommand);
 	}
 }

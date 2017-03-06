@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -9,7 +10,7 @@ namespace BWAPI_Lua
 {
 	void bindUnitType(sol::table module)
 	{
-		auto unitType = module.create_simple_usertype<UnitType>(
+		sol::simple_usertype<UnitType> unitType = module.create_simple_usertype<UnitType>(
 			"whatBuilds", [](const UnitType& unitType) {
 				auto pair = unitType.whatBuilds();
 				return std::make_tuple(pair.first, pair.second);
@@ -26,6 +27,7 @@ namespace BWAPI_Lua
 			}
 		);
 		bindType<UnitType>(unitType);
+		bindIsInstance(unitType);
 		unitType.set("isWorker", &UnitType::isWorker);
 		unitType.set("isResourceDepot", &UnitType::isResourceDepot);
 		unitType.set("getRace", &UnitType::getRace);
@@ -113,6 +115,7 @@ namespace BWAPI_Lua
 
 		auto unitTypeSet = module.create_simple_usertype<UnitType::set>();
 		bindSetContainer<UnitType::set, UnitType>(unitTypeSet);
+		bindIsInstance(unitTypeSet);
 		module.set_usertype("UnitTypeset", unitTypeSet);
 
 		auto unitTypes = module.create_named("UnitTypes");

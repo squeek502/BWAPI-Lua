@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "Point.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -14,14 +15,17 @@ namespace BWAPI_Lua
 
 		auto position = module.create_simple_usertype<Position>();
 		bindPoint<Position>(position);
+		bindIsInstance(position);
 		module.set_usertype("Position", position);
 
 		auto walkPosition = module.create_simple_usertype<WalkPosition>();
 		bindPoint<WalkPosition>(walkPosition);
+		bindIsInstance(walkPosition);
 		module.set_usertype("WalkPosition", walkPosition);
 
 		auto tilePosition = module.create_simple_usertype<TilePosition>();
 		bindPoint<TilePosition>(tilePosition);
+		bindIsInstance(tilePosition);
 		module.set_usertype("TilePosition", tilePosition);
 
 		module.create_named("Positions",

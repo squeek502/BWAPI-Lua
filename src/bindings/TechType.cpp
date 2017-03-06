@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -24,10 +25,12 @@ namespace BWAPI_Lua
 			"requiredUnit", &TechType::requiredUnit
 		);
 		bindType<TechType>(techType);
+		bindIsInstance(techType);
 		module.set_usertype("TechType", techType);
 
 		auto techTypeSet = module.create_simple_usertype<TechType::set>();
 		bindSetContainer<TechType::set, TechType>(techTypeSet);
+		bindIsInstance(techTypeSet);
 		module.set_usertype("TechTypeset", techTypeSet);
 
 		auto techTypes = module.create_named("TechTypes");

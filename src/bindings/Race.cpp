@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -17,10 +18,12 @@ namespace BWAPI_Lua
 			"getSupplyProvider", &Race::getSupplyProvider
 		);
 		bindType<Race>(race);
+		bindIsInstance(race);
 		module.set_usertype("Race", race);
 
 		auto raceSet = module.create_simple_usertype<Race::set>();
 		bindSetContainer<Race::set, Race>(raceSet);
+		bindIsInstance(raceSet);
 		module.set_usertype("Raceset", raceSet);
 
 		auto races = module.create_named("Races",

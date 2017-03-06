@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Type.h"
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -9,12 +10,14 @@ namespace BWAPI_Lua
 {
 	void bindUnitCommandType(sol::table module)
 	{
-		auto unitCommandType = module.create_simple_usertype<UnitCommandType>();
+		sol::simple_usertype<UnitCommandType> unitCommandType = module.create_simple_usertype<UnitCommandType>();
 		bindType(unitCommandType);
+		bindIsInstance(unitCommandType);
 		module.set_usertype("UnitCommandType", unitCommandType);
 
-		auto unitCommandTypeSet = module.create_simple_usertype<UnitCommandType::set>();
+		sol::simple_usertype<UnitCommandType::set> unitCommandTypeSet = module.create_simple_usertype<UnitCommandType::set>();
 		bindSetContainer<UnitCommandType::set, UnitCommandType>(unitCommandTypeSet);
+		bindIsInstance(unitCommandTypeSet);
 		module.set_usertype("UnitCommandTypeset", unitCommandTypeSet);
 
 		auto unitCommandTypes = module.create_named("UnitCommandTypes");

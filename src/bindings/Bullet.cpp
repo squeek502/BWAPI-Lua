@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "Interface.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -28,6 +29,7 @@ namespace BWAPI_Lua
 			)
 		);
 		bindInterface(bullet);
+		bindIsInstance(bullet);
 		module.set_usertype("Bullet", bullet);
 	}
 }

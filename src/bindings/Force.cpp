@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "Interface.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -16,6 +17,7 @@ namespace BWAPI_Lua
 			sol::meta_function::to_string, &ForceInterface::getName
 		);
 		bindInterface(force);
+		bindIsInstance(force);
 		module.set_usertype("Force", force);
 	}
 }

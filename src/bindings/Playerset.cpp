@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "SetContainer.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -8,7 +9,7 @@ namespace BWAPI_Lua
 {
 	void bindPlayerset(sol::table module)
 	{
-		auto userTypePlayerset = module.create_simple_usertype<Playerset>(
+		sol::simple_usertype<Playerset> userTypePlayerset = module.create_simple_usertype<Playerset>(
 			"getUnits", &Playerset::getUnits,
 			"getRaces", &Playerset::getRaces,
 			"setAlliance", sol::overload(
@@ -18,6 +19,7 @@ namespace BWAPI_Lua
 			)
 		);
 		bindSetContainer<Playerset, Player>(userTypePlayerset);
+		bindIsInstance(userTypePlayerset);
 		module.set_usertype("Playerset", userTypePlayerset);
 	}
 }

@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "Interface.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -37,6 +38,7 @@ namespace BWAPI_Lua
 			)
 		);
 		bindInterface(region);
+		bindIsInstance(region);
 		module.set_usertype("Region", region);
 	}
 }

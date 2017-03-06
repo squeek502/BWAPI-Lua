@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "Interface.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -742,6 +743,7 @@ namespace BWAPI_Lua
 		));
 
 		bindInterface(unit);
+		bindIsInstance(unit);
 		module.set_usertype("Unit", unit);
 	}
 }

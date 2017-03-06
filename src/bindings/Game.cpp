@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "Interface.h"
+#include "IsInstance.h"
 
 using namespace BWAPI;
 
@@ -655,6 +656,7 @@ namespace BWAPI_Lua
 			&Game::getDamageTo
 		));
 		bindInterface(game);
+		bindIsInstance(game);
 		module.set_usertype("Game", game);
 	}
 }
