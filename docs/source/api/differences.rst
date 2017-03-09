@@ -147,7 +147,7 @@ Returns a Lua table of the format ``{ [<unitTypeID>] = <howMany> }``, where ``<u
    end
 
 
-SetContainer implemenations (Unitset, Playerset, etc)
+SetContainer implementations (Unitset, Playerset, etc)
 -----------------------------------------------------
 
 The set can be iterated one of two ways:
