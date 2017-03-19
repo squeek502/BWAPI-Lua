@@ -13,9 +13,6 @@ namespace BWAPI_Lua
 		bindSetContainer<Unitset, Unit>(unitset);
 		bindIsInstance(unitset);
 
-		// static
-		unitset.set("none", &Unitset::none);
-
 		// member functions
 		unitset.set("getPosition", &Unitset::getPosition);
 		unitset.set("getLoadedUnits", &Unitset::getLoadedUnits);
