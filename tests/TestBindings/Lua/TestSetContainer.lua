@@ -97,3 +97,17 @@ function clear()
 	set:clear()
 	assert(#set == 0)
 end
+
+-- sets are equal if they are of the same type and have the same contents
+function equality()
+  local set1 = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat})
+  local set2 = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_Firebat, BWAPI.UnitTypes.Terran_SCV})
+  local set3 = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_Marine})
+  local set4 = BWAPI.DamageTypeset()
+
+  assert(set1 == set1)
+  assert(set1 == set2)
+  assert(set1 ~= set3)
+  assert(set2 ~= set3)
+  assert(set4 ~= set1)
+end

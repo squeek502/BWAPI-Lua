@@ -66,6 +66,7 @@ namespace BWAPI_Lua
 		userType.set("erase", sol::resolve<SetClass::size_type(const ContainedClass&)>(&SetClass::erase));
 		userType.set("clear", &SetClass::clear);
 		userType.set(sol::meta_function::length, &SetClass::size);
+		userType.set(sol::meta_function::equal_to, [](const SetClass& a, const SetClass& b) { return a == b; });
 		return userType;
 	}
 }

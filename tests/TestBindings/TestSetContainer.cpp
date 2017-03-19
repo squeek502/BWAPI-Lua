@@ -86,4 +86,11 @@ TEST_CASE("setcontainer bindings", "[setcontainer]")
 		REQUIRE_NOTHROW(test());
 	}
 
+	SECTION("equality")
+	{
+		bindDamageType(lua["BWAPI"]);
+		sol::function test = lua["equality"];
+		REQUIRE_NOTHROW(test());
+	}
+
 }
