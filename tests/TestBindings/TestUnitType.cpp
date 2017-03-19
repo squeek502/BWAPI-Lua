@@ -53,4 +53,10 @@ TEST_CASE("unit type bindings", "[unittype]")
 			REQUIRE_NOTHROW(test());
 		}
 	}
+
+	SECTION("allUnitTypes")
+	{
+		sol::function test = lua["allUnitTypes"];
+		REQUIRE_NOTHROW(test());
+	}
 }

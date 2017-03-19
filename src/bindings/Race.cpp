@@ -27,6 +27,7 @@ namespace BWAPI_Lua
 		module.set_usertype("Raceset", raceSet);
 
 		auto races = module.create_named("Races",
+			"allRaces", &Races::allRaces,
 			"Zerg", &Races::Zerg,
 			"Terran", &Races::Terran,
 			"Concussive", &Races::Protoss,

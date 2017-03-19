@@ -21,21 +21,22 @@ namespace BWAPI_Lua
 		module.set_usertype("GameTypeset", gameTypeSet);
 
 		auto gameTypes = module.create_named("GameTypes");
-		gameTypes["Melee"] = GameTypes::Melee;
-		gameTypes["Free_For_All"] = GameTypes::Free_For_All;
-		gameTypes["One_on_One"] = GameTypes::One_on_One;
-		gameTypes["Capture_The_Flag"] = GameTypes::Capture_The_Flag;
-		gameTypes["Greed"] = GameTypes::Greed;
-		gameTypes["Slaughter"] = GameTypes::Slaughter;
-		gameTypes["Sudden_Death"] = GameTypes::Sudden_Death;
-		gameTypes["Ladder"] = GameTypes::Ladder;
-		gameTypes["Use_Map_Settings"] = GameTypes::Use_Map_Settings;
-		gameTypes["Team_Melee"] = GameTypes::Team_Melee;
-		gameTypes["Team_Free_For_All"] = GameTypes::Team_Free_For_All;
-		gameTypes["Team_Capture_The_Flag"] = GameTypes::Team_Capture_The_Flag;
-		gameTypes["Top_vs_Bottom"] = GameTypes::Top_vs_Bottom;
-		gameTypes["None"] = GameTypes::None;
-		gameTypes["Unknown"] = GameTypes::Unknown;
+		gameTypes["allGameTypes"] = &GameTypes::allGameTypes;
+		gameTypes["Melee"] = &GameTypes::Melee;
+		gameTypes["Free_For_All"] = &GameTypes::Free_For_All;
+		gameTypes["One_on_One"] = &GameTypes::One_on_One;
+		gameTypes["Capture_The_Flag"] = &GameTypes::Capture_The_Flag;
+		gameTypes["Greed"] = &GameTypes::Greed;
+		gameTypes["Slaughter"] = &GameTypes::Slaughter;
+		gameTypes["Sudden_Death"] = &GameTypes::Sudden_Death;
+		gameTypes["Ladder"] = &GameTypes::Ladder;
+		gameTypes["Use_Map_Settings"] = &GameTypes::Use_Map_Settings;
+		gameTypes["Team_Melee"] = &GameTypes::Team_Melee;
+		gameTypes["Team_Free_For_All"] = &GameTypes::Team_Free_For_All;
+		gameTypes["Team_Capture_The_Flag"] = &GameTypes::Team_Capture_The_Flag;
+		gameTypes["Top_vs_Bottom"] = &GameTypes::Top_vs_Bottom;
+		gameTypes["None"] = &GameTypes::None;
+		gameTypes["Unknown"] = &GameTypes::Unknown;
 
 		auto gameTypesEnum = gameTypes.create_named("Enum");
 		gameTypesEnum["None"] = GameTypes::Enum::None;

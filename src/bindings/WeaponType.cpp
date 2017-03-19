@@ -45,6 +45,7 @@ namespace BWAPI_Lua
 		module.set_usertype("WeaponTypeset", weaponTypeSet);
 
 		auto weaponTypes = module.create_named("WeaponTypes");
+		weaponTypes["allWeaponTypes"] = &WeaponTypes::allWeaponTypes;
 		weaponTypes["Gauss_Rifle"] = &WeaponTypes::Gauss_Rifle;
 		weaponTypes["Gauss_Rifle_Jim_Raynor"] = &WeaponTypes::Gauss_Rifle_Jim_Raynor;
 		weaponTypes["C_10_Canister_Rifle"] = &WeaponTypes::C_10_Canister_Rifle;

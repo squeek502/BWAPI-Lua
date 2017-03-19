@@ -21,6 +21,7 @@ namespace BWAPI_Lua
 		module.set_usertype("UnitSizeTypeset", unitSizeTypeSet);
 
 		auto unitSizeTypes = module.create_named("UnitSizeTypes");
+		unitSizeTypes["allUnitSizeTypes"] = &UnitSizeTypes::allUnitSizeTypes;
 		unitSizeTypes["Independent"] = &UnitSizeTypes::Independent;
 		unitSizeTypes["Small"] = &UnitSizeTypes::Small;
 		unitSizeTypes["Medium"] = &UnitSizeTypes::Medium;

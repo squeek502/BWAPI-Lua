@@ -21,6 +21,7 @@ namespace BWAPI_Lua
 		module.set_usertype("ExplosionTypeset", explosionTypeSet);
 
 		auto explosionTypes = module.create_named("ExplosionTypes");
+		explosionTypes["allExplosionTypes"] = &ExplosionTypes::allExplosionTypes;
 		explosionTypes["None"] = &ExplosionTypes::None;
 		explosionTypes["Normal"] = &ExplosionTypes::Normal;
 		explosionTypes["Radial_Splash"] = &ExplosionTypes::Radial_Splash;

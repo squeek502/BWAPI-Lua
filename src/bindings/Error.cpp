@@ -21,6 +21,7 @@ namespace BWAPI_Lua
 		module.set_usertype("Errorset", errorSet);
 
 		auto errors = module.create_named("Errors",
+			"allErrors", &Errors::allErrors,
 			"Unit_Does_Not_Exist", &Errors::Unit_Does_Not_Exist,
 			"Unit_Not_Visible", &Errors::Unit_Not_Visible,
 			"Unit_Not_Owned", &Errors::Unit_Not_Owned,

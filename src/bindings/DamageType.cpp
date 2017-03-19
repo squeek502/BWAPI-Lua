@@ -21,6 +21,7 @@ namespace BWAPI_Lua
 		module.set_usertype("DamageTypeset", damageTypeSet);
 
 		auto damageTypes = module.create_named("DamageTypes",
+			"allDamageTypes", &DamageTypes::allDamageTypes,
 			"Independent", &DamageTypes::Independent,
 			"Explosive", &DamageTypes::Explosive,
 			"Concussive", &DamageTypes::Concussive,

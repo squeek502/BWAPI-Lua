@@ -21,6 +21,7 @@ namespace BWAPI_Lua
 		module.set_usertype("BulletTypeset", bulletTypeSet);
 
 		auto bulletTypes = module.create_named("BulletTypes");
+		bulletTypes["allBulletTypes"] = &BulletTypes::allBulletTypes;
 		bulletTypes["Melee"] = &BulletTypes::Melee;
 		bulletTypes["Fusion_Cutter_Hit"] = &BulletTypes::Fusion_Cutter_Hit;
 		bulletTypes["Gauss_Rifle_Hit"] = &BulletTypes::Gauss_Rifle_Hit;

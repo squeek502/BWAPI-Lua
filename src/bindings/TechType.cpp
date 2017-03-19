@@ -34,6 +34,7 @@ namespace BWAPI_Lua
 		module.set_usertype("TechTypeset", techTypeSet);
 
 		auto techTypes = module.create_named("TechTypes");
+		techTypes["allTechTypes"] = &TechTypes::allTechTypes;
 		techTypes["Stim_Packs"] = &TechTypes::Stim_Packs;
 		techTypes["Lockdown"] = &TechTypes::Lockdown;
 		techTypes["EMP_Shockwave"] = &TechTypes::EMP_Shockwave;

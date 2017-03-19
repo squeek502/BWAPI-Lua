@@ -24,17 +24,18 @@ namespace BWAPI_Lua
 		module.set_usertype("PlayerTypeset", playerTypeSet);
 
 		auto playerTypes = module.create_named("PlayerTypes");
-		playerTypes["None"] = PlayerTypes::None;
-		playerTypes["Computer"] = PlayerTypes::Computer;
-		playerTypes["Player"] = PlayerTypes::Player;
-		playerTypes["RescuePassive"] = PlayerTypes::RescuePassive;
-		playerTypes["EitherPreferComputer"] = PlayerTypes::EitherPreferComputer;
-		playerTypes["EitherPreferHuman"] = PlayerTypes::EitherPreferHuman;
-		playerTypes["Neutral"] = PlayerTypes::Neutral;
-		playerTypes["Closed"] = PlayerTypes::Closed;
-		playerTypes["PlayerLeft"] = PlayerTypes::PlayerLeft;
-		playerTypes["ComputerLeft"] = PlayerTypes::ComputerLeft;
-		playerTypes["Unknown"] = PlayerTypes::Unknown;
+		playerTypes["allPlayerTypes"] = &PlayerTypes::allPlayerTypes;
+		playerTypes["None"] = &PlayerTypes::None;
+		playerTypes["Computer"] = &PlayerTypes::Computer;
+		playerTypes["Player"] = &PlayerTypes::Player;
+		playerTypes["RescuePassive"] = &PlayerTypes::RescuePassive;
+		playerTypes["EitherPreferComputer"] = &PlayerTypes::EitherPreferComputer;
+		playerTypes["EitherPreferHuman"] = &PlayerTypes::EitherPreferHuman;
+		playerTypes["Neutral"] = &PlayerTypes::Neutral;
+		playerTypes["Closed"] = &PlayerTypes::Closed;
+		playerTypes["PlayerLeft"] = &PlayerTypes::PlayerLeft;
+		playerTypes["ComputerLeft"] = &PlayerTypes::ComputerLeft;
+		playerTypes["Unknown"] = &PlayerTypes::Unknown;
 
 		auto playerTypesEnum = playerTypes.create_named("Enum");
 		playerTypesEnum["None"] = PlayerTypes::Enum::None;

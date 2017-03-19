@@ -20,6 +20,27 @@ function toStringTest()
   assert(tostring(scv) == 'Terran_SCV')
 end
 
+function allUnitTypes()
+  local unitTypes = BWAPI.UnitTypes.allUnitTypes()
+  assert(BWAPI.UnitTypeset.isInstance(unitTypes))
+  assert(unitTypes:size() == 207, unitTypes:size())
+  local excluded = {
+    [BWAPI.UnitTypes.AllUnits] = true,
+    [BWAPI.UnitTypes.Men] = true,
+    [BWAPI.UnitTypes.Buildings] = true,
+    [BWAPI.UnitTypes.Factories] = true
+  }
+  for k, v in pairs(BWAPI.UnitTypes) do
+    if k ~= "Enum" and k ~= "allUnitTypes" then
+      if excluded[v] then
+        assert(not unitTypes:contains(v), k)
+      else
+        assert(unitTypes:contains(v), k)
+      end
+    end
+  end
+end
+
 function valuesOfTheSCVUnitType()
   scv = BWAPI.UnitTypes.Terran_SCV
 

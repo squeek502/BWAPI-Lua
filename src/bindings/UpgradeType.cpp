@@ -45,6 +45,7 @@ namespace BWAPI_Lua
 		module.set_usertype("UpgradeTypeset", upgradeTypeSet);
 
 		auto upgradeTypes = module.create_named("UpgradeTypes");
+		upgradeTypes["allUpgradeTypes"] = &UpgradeTypes::allUpgradeTypes;
 		upgradeTypes["Terran_Infantry_Armor"] = &UpgradeTypes::Terran_Infantry_Armor;
 		upgradeTypes["Terran_Vehicle_Plating"] = &UpgradeTypes::Terran_Vehicle_Plating;
 		upgradeTypes["Terran_Ship_Plating"] = &UpgradeTypes::Terran_Ship_Plating;
