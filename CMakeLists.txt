@@ -11,11 +11,12 @@ add_subdirectory(dependencies/bwapi)
 
 # Lua 5.1
 file(GLOB LUA_5_1_SOURCE_FILES ${LUA_5_1_SRC_DIR}/*.h ${LUA_5_1_SRC_DIR}/*.c)
-add_library ( Lua51 ${LUA_5_1_SOURCE_FILES} )
+add_library ( Lua51 SHARED ${LUA_5_1_SOURCE_FILES} )
 set_source_files_properties(${LUA_5_1_SOURCE_FILES} PROPERTIES LANGUAGE CXX) # Compile as C++
-set_target_properties ( Lua51 PROPERTIES COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS )
-target_include_directories( Lua51 INTERFACE ${LUA_5_1_SRC_DIR} )
+target_compile_definitions ( Lua51 PRIVATE _CRT_SECURE_NO_WARNINGS LUA_BUILD_AS_DLL )
 target_compile_definitions ( Lua51 INTERFACE SOL_USING_CXX_LUA SOL_CHECK_ARGUMENTS )
+target_include_directories( Lua51 INTERFACE ${LUA_5_1_SRC_DIR} )
+set_target_properties( Lua51 PROPERTIES OUTPUT_NAME lua51 )
 
 # Bindings for Lua 5.1
 set(LUA_BINDINGS_DIR ${PROJECT_SOURCE_DIR}/src/bindings)
