@@ -69,7 +69,6 @@ namespace BWAPI_Lua
 		bindGameType(module);
 		bindOrder(module);
 		bindPlayerType(module);
-		bindPositionOrUnit(module);
 		bindRegion(module);
 		bindRegionset(module);
 		bindUnitCommand(module);

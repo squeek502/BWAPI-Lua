@@ -55,8 +55,10 @@ namespace BWAPI_Lua
 
 		// commands
 		unitset.set("attack", sol::overload(
-			[](const Unitset& set, const PositionOrUnit& pos) { return set.attack(pos); },
-			static_cast<bool (Unitset::*)(PositionOrUnit, bool) const>(&Unitset::attack)
+			[](const Unitset& set, const Position& pos) { return set.attack(PositionOrUnit(pos)); },
+			[](const Unitset& set, const Position& pos, bool flag1) { return set.attack(PositionOrUnit(pos), flag1); },
+			[](const Unitset& set, Unit pos) { return set.attack(PositionOrUnit(pos)); },
+			[](const Unitset& set, Unit pos, bool flag1) { return set.attack(PositionOrUnit(pos), flag1); }
 		));
 		unitset.set("build", sol::overload(
 			[](const Unitset& set, UnitType type) { return set.build(type); },
@@ -65,7 +67,10 @@ namespace BWAPI_Lua
 		unitset.set("buildAddon", &Unitset::buildAddon);
 		unitset.set("train", &Unitset::train);
 		unitset.set("morph", &Unitset::morph);
-		unitset.set("setRallyPoint", &Unitset::setRallyPoint);
+		unitset.set("setRallyPoint", sol::overload(
+			[](const Unitset& set, const Position& pos) { return set.setRallyPoint(PositionOrUnit(pos)); },
+			[](const Unitset& set, Unit pos) { return set.setRallyPoint(PositionOrUnit(pos)); }
+		));
 		unitset.set("move", sol::overload(
 			[](const Unitset& set, const Position& pos) { return set.move(pos); },
 			static_cast<bool (Unitset::*)(Position, bool) const>(&Unitset::move)
@@ -116,8 +121,10 @@ namespace BWAPI_Lua
 			static_cast<bool (Unitset::*)(Position, bool) const>(&Unitset::unloadAll)
 		));
 		unitset.set("rightClick", sol::overload(
-			[](const Unitset& set, const PositionOrUnit& pos) { return set.rightClick(pos); },
-			static_cast<bool (Unitset::*)(PositionOrUnit, bool) const>(&Unitset::rightClick)
+			[](const Unitset& set, const Position& pos) { return set.rightClick(PositionOrUnit(pos)); },
+			[](const Unitset& set, const Position& pos, bool flag1) { return set.rightClick(PositionOrUnit(pos), flag1); },
+			[](const Unitset& set, Unit pos) { return set.rightClick(PositionOrUnit(pos)); },
+			[](const Unitset& set, Unit pos, bool flag1) { return set.rightClick(PositionOrUnit(pos), flag1); }
 		));
 		unitset.set("haltConstruction", &Unitset::haltConstruction);
 		unitset.set("cancelConstruction", &Unitset::cancelConstruction);
@@ -138,7 +145,8 @@ namespace BWAPI_Lua
 		unitset.set("cancelUpgrade", &Unitset::cancelUpgrade);
 		unitset.set("useTech", sol::overload(
 			[](const Unitset& set, const TechType& type) { return set.useTech(type); },
-			static_cast<bool (Unitset::*)(TechType, PositionOrUnit) const>(&Unitset::useTech)
+			[](const Unitset& set, const TechType& tech, const Position& pos) { return set.useTech(tech, PositionOrUnit(pos)); },
+			[](const Unitset& set, const TechType& tech, Unit pos) { return set.useTech(tech, PositionOrUnit(pos)); }
 		));
 
 		module.set_usertype("Unitset", unitset);

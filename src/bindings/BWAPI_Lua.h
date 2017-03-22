@@ -30,7 +30,6 @@ namespace BWAPI_Lua
 	void bindGameType(sol::table module);
 	void bindOrder(sol::table module);
 	void bindPlayerType(sol::table module);
-	void bindPositionOrUnit(sol::table module);
 	void bindRegion(sol::table module);
 	void bindRegionset(sol::table module);
 	void bindUnitCommand(sol::table module);

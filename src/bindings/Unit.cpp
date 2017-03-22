@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "Interface.h"
 #include "IsInstance.h"
+#include "UnitMembers.h"
 
 using namespace BWAPI;
 
@@ -33,8 +34,14 @@ namespace BWAPI_Lua
 		unit.set("getEnergy", &UnitInterface::getEnergy);
 		unit.set("getResources", &UnitInterface::getResources);
 		unit.set("getResourceGroup", &UnitInterface::getResourceGroup);
-		unit.set("getDistance", &UnitInterface::getDistance);
-		unit.set("hasPath", &UnitInterface::hasPath);
+		unit.set("getDistance", sol::overload(
+			[](Unit unit, const Position& pos) { return unit->getDistance(PositionOrUnit(pos)); },
+			[](Unit unit, Unit unit2) { return unit->getDistance(PositionOrUnit(unit2)); }
+		));
+		unit.set("hasPath", sol::overload(
+			[](Unit unit, const Position& pos) { return unit->hasPath(PositionOrUnit(pos)); },
+			[](Unit unit, Unit unit2) { return unit->hasPath(PositionOrUnit(unit2)); }
+		));
 		unit.set("getLastCommandFrame", &UnitInterface::getLastCommandFrame);
 		unit.set("getLastCommand", &UnitInterface::getLastCommand);
 		unit.set("getLastAttackingPlayer", &UnitInterface::getLastAttackingPlayer);
@@ -204,12 +211,17 @@ namespace BWAPI_Lua
 		unit.set("isUnderStorm", &UnitInterface::isUnderStorm);
 		unit.set("isPowered", &UnitInterface::isPowered);
 		unit.set("isUpgrading", &UnitInterface::isUpgrading);
-		unit.set("isVisible", &UnitInterface::isVisible);
+		unit.set("isVisible", sol::overload(
+			[](UnitInterface* unit) { return unit->isVisible(); },
+			&UnitInterface::isVisible
+		));
 		unit.set("isTargetable", &UnitInterface::isTargetable);
 		unit.set("issueCommand", &UnitInterface::issueCommand);
 		unit.set("attack", sol::overload(
-			[](UnitInterface* unit, const PositionOrUnit& pos) { return unit->attack(pos); },
-			static_cast<bool (UnitInterface::*)(PositionOrUnit, bool)>(&UnitInterface::attack)
+			[](UnitInterface* unit, const Position& pos) { return unit->attack(PositionOrUnit(pos)); },
+			[](UnitInterface* unit, const Position& pos, bool shiftQueue) { return unit->attack(PositionOrUnit(pos), shiftQueue); },
+			[](UnitInterface* unit, Unit pos) { return unit->attack(PositionOrUnit(pos)); },
+			[](UnitInterface* unit, Unit pos, bool shiftQueue) { return unit->attack(PositionOrUnit(pos), shiftQueue); }
 		));
 		unit.set("build", sol::overload(
 			[](UnitInterface* unit, UnitType type) { return unit->build(type); },
@@ -223,7 +235,10 @@ namespace BWAPI_Lua
 		unit.set("morph", &UnitInterface::morph);
 		unit.set("research", &UnitInterface::research);
 		unit.set("upgrade", &UnitInterface::upgrade);
-		unit.set("setRallyPoint", &UnitInterface::setRallyPoint);
+		unit.set("setRallyPoint", sol::overload(
+			[](UnitInterface* unit, const Position& pos) { return unit->setRallyPoint(PositionOrUnit(pos)); },
+			[](UnitInterface* unit, Unit pos) { return unit->setRallyPoint(PositionOrUnit(pos)); }
+		));
 		unit.set("move", sol::overload(
 			[](UnitInterface* unit, const Position& pos) { return unit->move(pos); },
 			static_cast<bool (UnitInterface::*)(Position, bool)>(&UnitInterface::move)
@@ -276,8 +291,10 @@ namespace BWAPI_Lua
 			static_cast<bool (UnitInterface::*)(Position, bool)>(&UnitInterface::unloadAll)
 		));
 		unit.set("rightClick", sol::overload(
-			[](UnitInterface* unit, const PositionOrUnit& pos) { return unit->rightClick(pos); },
-			static_cast<bool (UnitInterface::*)(PositionOrUnit, bool)>(&UnitInterface::rightClick)
+			[](UnitInterface* unit, const Position& pos) { return unit->rightClick(pos); },
+			[](UnitInterface* unit, const Position& pos, bool shiftQueue) { return unit->rightClick(pos, shiftQueue); },
+			[](UnitInterface* unit, Unit pos) { return unit->rightClick(pos); },
+			[](UnitInterface* unit, Unit pos, bool shiftQueue) { return unit->rightClick(pos, shiftQueue); }
 		));
 		unit.set("haltConstruction", &UnitInterface::haltConstruction);
 		unit.set("cancelConstruction", &UnitInterface::cancelConstruction);
@@ -298,7 +315,8 @@ namespace BWAPI_Lua
 		unit.set("cancelUpgrade", &UnitInterface::cancelUpgrade);
 		unit.set("useTech", sol::overload(
 			[](UnitInterface* unit, const TechType& type) { return unit->useTech(type); },
-			static_cast<bool (UnitInterface::*)(TechType, PositionOrUnit)>(&UnitInterface::useTech)
+			[](UnitInterface* unit, const TechType& type, const Position& pos) { return unit->useTech(type, pos); },
+			[](UnitInterface* unit, const TechType& type, Unit pos) { return unit->useTech(type, pos); }
 		));
 		unit.set("placeCOP", &UnitInterface::placeCOP);
 		unit.set("canIssueCommand", sol::overload(
@@ -336,24 +354,6 @@ namespace BWAPI_Lua
 		unit.set("canTargetUnit", sol::overload(
 			[](UnitInterface* unit, Unit target) { return unit->canTargetUnit(target); },
 			static_cast<bool (UnitInterface::*)(Unit, bool) const>(&UnitInterface::canTargetUnit)
-		));
-		unit.set("canAttack", sol::overload(
-			[](UnitInterface* unit) { return unit->canAttack(); },
-			static_cast<bool (UnitInterface::*)(bool) const>(&UnitInterface::canAttack),
-			[](UnitInterface* unit, const PositionOrUnit& pos) { return unit->canAttack(pos); },
-			[](UnitInterface* unit, const PositionOrUnit& pos, bool flag1) { return unit->canAttack(pos, flag1); },
-			[](UnitInterface* unit, const PositionOrUnit& pos, bool flag1, bool flag2) { return unit->canAttack(pos, flag1, flag2); },
-			static_cast<bool (UnitInterface::*)(PositionOrUnit, bool, bool, bool) const>(&UnitInterface::canAttack)
-		));
-		unit.set("canAttackGrouped", sol::overload(
-			[](UnitInterface* unit) { return unit->canAttackGrouped(); },
-			[](UnitInterface* unit, bool flag1) { return unit->canAttackGrouped(flag1); },
-			static_cast<bool (UnitInterface::*)(bool, bool) const>(&UnitInterface::canAttackGrouped),
-			[](UnitInterface* unit, const PositionOrUnit& pos) { return unit->canAttackGrouped(pos); },
-			[](UnitInterface* unit, const PositionOrUnit& pos, bool flag1) { return unit->canAttackGrouped(pos, flag1); },
-			[](UnitInterface* unit, const PositionOrUnit& pos, bool flag1, bool flag2) { return unit->canAttackGrouped(pos, flag1, flag2); },
-			[](UnitInterface* unit, const PositionOrUnit& pos, bool flag1, bool flag2, bool flag3) { return unit->canAttackGrouped(pos, flag1, flag2, flag3); },
-			static_cast<bool (UnitInterface::*)(PositionOrUnit, bool, bool, bool, bool) const>(&UnitInterface::canAttackGrouped)
 		));
 		unit.set("canAttackMove", sol::overload(
 			[](UnitInterface* unit) { return unit->canAttackMove(); },
@@ -432,15 +432,6 @@ namespace BWAPI_Lua
 
 			[](UnitInterface* unit, UpgradeType target) { return unit->canUpgrade(target); },
 			static_cast<bool (UnitInterface::*)(UpgradeType, bool) const>(&UnitInterface::canUpgrade)
-		));
-		unit.set("canSetRallyPoint", sol::overload(
-			[](UnitInterface* unit) { return unit->canSetRallyPoint(); },
-			static_cast<bool (UnitInterface::*)(bool) const>(&UnitInterface::canSetRallyPoint),
-
-			[](UnitInterface* unit, PositionOrUnit target) { return unit->canSetRallyPoint(target); },
-			[](UnitInterface* unit, PositionOrUnit target, bool flag1) { return unit->canSetRallyPoint(target, flag1); },
-			[](UnitInterface* unit, PositionOrUnit target, bool flag1, bool flag2) { return unit->canSetRallyPoint(target, flag1, flag2); },
-			static_cast<bool (UnitInterface::*)(PositionOrUnit, bool, bool, bool) const>(&UnitInterface::canSetRallyPoint)
 		));
 		unit.set("canSetRallyPosition", sol::overload(
 			[](UnitInterface* unit) { return unit->canSetRallyPosition(); },
@@ -588,26 +579,6 @@ namespace BWAPI_Lua
 			[](UnitInterface* unit, Position target, bool flag1) { return unit->canUnloadAllPosition(target, flag1); },
 			static_cast<bool (UnitInterface::*)(Position, bool, bool) const>(&UnitInterface::canUnloadAllPosition)
 		));
-		unit.set("canRightClick", sol::overload(
-			[](UnitInterface* unit) { return unit->canRightClick(); },
-			static_cast<bool (UnitInterface::*)(bool) const>(&UnitInterface::canRightClick),
-
-			[](UnitInterface* unit, PositionOrUnit target) { return unit->canRightClick(target); },
-			[](UnitInterface* unit, PositionOrUnit target, bool flag1) { return unit->canRightClick(target, flag1); },
-			[](UnitInterface* unit, PositionOrUnit target, bool flag1, bool flag2) { return unit->canRightClick(target, flag1, flag2); },
-			static_cast<bool (UnitInterface::*)(PositionOrUnit, bool, bool, bool) const>(&UnitInterface::canRightClick)
-		));
-		unit.set("canRightClickGrouped", sol::overload(
-			[](UnitInterface* unit) { return unit->canRightClickGrouped(); },
-			[](UnitInterface* unit, bool flag1) { return unit->canRightClickGrouped(flag1); },
-			static_cast<bool (UnitInterface::*)(bool, bool) const>(&UnitInterface::canRightClickGrouped),
-
-			[](UnitInterface* unit, PositionOrUnit target) { return unit->canRightClickGrouped(target); },
-			[](UnitInterface* unit, PositionOrUnit target, bool flag1) { return unit->canRightClickGrouped(target, flag1); },
-			[](UnitInterface* unit, PositionOrUnit target, bool flag1, bool flag2) { return unit->canRightClickGrouped(target, flag1, flag2); },
-			[](UnitInterface* unit, PositionOrUnit target, bool flag1, bool flag2, bool flag3) { return unit->canRightClickGrouped(target, flag1, flag2, flag3); },
-			static_cast<bool (UnitInterface::*)(PositionOrUnit, bool, bool, bool, bool) const>(&UnitInterface::canRightClickGrouped)
-		));
 		unit.set("canRightClickPosition", sol::overload(
 			[](UnitInterface* unit) { return unit->canRightClickPosition(); },
 			static_cast<bool (UnitInterface::*)(bool) const>(&UnitInterface::canRightClickPosition)
@@ -699,14 +670,6 @@ namespace BWAPI_Lua
 			[](UnitInterface* unit, TechType target, bool flag1) { return unit->canUseTechWithOrWithoutTarget(target, flag1); },
 			static_cast<bool (UnitInterface::*)(TechType, bool, bool) const>(&UnitInterface::canUseTechWithOrWithoutTarget)
 		));
-		unit.set("canUseTech", sol::overload(
-			[](UnitInterface* unit, TechType target) { return unit->canUseTech(target); },
-			[](UnitInterface* unit, TechType target, PositionOrUnit pos) { return unit->canUseTech(target, pos); },
-			[](UnitInterface* unit, TechType target, PositionOrUnit pos, bool flag1) { return unit->canUseTech(target, pos, flag1); },
-			[](UnitInterface* unit, TechType target, PositionOrUnit pos, bool flag1, bool flag2) { return unit->canUseTech(target, pos, flag1, flag2); },
-			[](UnitInterface* unit, TechType target, PositionOrUnit pos, bool flag1, bool flag2, bool flag3) { return unit->canUseTech(target, pos, flag1, flag2, flag3); },
-			static_cast<bool (UnitInterface::*)(TechType, PositionOrUnit, bool, bool, bool, bool) const>(&UnitInterface::canUseTech)
-		));
 		unit.set("canUseTechWithoutTarget", sol::overload(
 			[](UnitInterface* unit, TechType target) { return unit->canUseTechWithoutTarget(target); },
 			[](UnitInterface* unit, TechType target, bool flag1) { return unit->canUseTechWithoutTarget(target, flag1); },
@@ -741,6 +704,12 @@ namespace BWAPI_Lua
 			[](UnitInterface* unit, TilePosition target, bool flag1) { return unit->canPlaceCOP(target, flag1); },
 			static_cast<bool (UnitInterface::*)(TilePosition, bool, bool) const>(&UnitInterface::canPlaceCOP)
 		));
+		bindUnit_canAttack(unit);
+		bindUnit_canAttackGrouped(unit);
+		bindUnit_canRightClick(unit);
+		bindUnit_canRightClickGrouped(unit);
+		bindUnit_canSetRallyPoint(unit);
+		bindUnit_canUseTech(unit);
 
 		bindInterface(unit);
 		bindIsInstance(unit);

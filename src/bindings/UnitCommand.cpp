@@ -27,8 +27,10 @@ namespace BWAPI_Lua
 
 		// static functions
 		unitCommand.set("attack", sol::overload(
-			[](Unit unit, const PositionOrUnit& posOrUnit) { return UnitCommand::attack(unit, posOrUnit); },
-			&UnitCommand::attack
+			[](Unit unit, const Position& pos) { return UnitCommand::attack(unit, PositionOrUnit(pos)); },
+			[](Unit unit, const Position& pos, bool flag1) { return UnitCommand::attack(unit, PositionOrUnit(pos), flag1); },
+			[](Unit unit, Unit pos) { return UnitCommand::attack(unit, PositionOrUnit(pos)); },
+			[](Unit unit, Unit pos, bool flag1) { return UnitCommand::attack(unit, PositionOrUnit(pos), flag1); }
 		));
 		unitCommand.set("build", &UnitCommand::build);
 		unitCommand.set("buildAddon", &UnitCommand::buildAddon);
@@ -36,7 +38,11 @@ namespace BWAPI_Lua
 		unitCommand.set("morph", &UnitCommand::morph);
 		unitCommand.set("research", &UnitCommand::research);
 		unitCommand.set("upgrade", &UnitCommand::upgrade);
-		unitCommand.set("setRallyPoint", &UnitCommand::setRallyPoint);
+		unitCommand.set("setRallyPoint", sol::overload(
+			&UnitCommand::setRallyPoint,
+			[](Unit unit, const Position& pos) { return UnitCommand::setRallyPoint(unit, PositionOrUnit(pos)); },
+			[](Unit unit, Unit pos) { return UnitCommand::setRallyPoint(unit, PositionOrUnit(pos)); }
+		));
 		unitCommand.set("move", sol::overload(
 			[](Unit unit, const Position& pos) { return UnitCommand::move(unit, pos); },
 			&UnitCommand::move
@@ -89,8 +95,10 @@ namespace BWAPI_Lua
 			sol::resolve<UnitCommand(Unit, Position, bool)>(&UnitCommand::unloadAll)
 		));
 		unitCommand.set("rightClick", sol::overload(
-			[](Unit unit, PositionOrUnit target) { return UnitCommand::rightClick(unit, target); },
-			&UnitCommand::rightClick
+			[](Unit unit, const Position& pos) { return UnitCommand::rightClick(unit, PositionOrUnit(pos)); },
+			[](Unit unit, const Position& pos, bool flag1) { return UnitCommand::rightClick(unit, PositionOrUnit(pos), flag1); },
+			[](Unit unit, Unit pos) { return UnitCommand::rightClick(unit, PositionOrUnit(pos)); },
+			[](Unit unit, Unit pos, bool flag1) { return UnitCommand::rightClick(unit, PositionOrUnit(pos), flag1); }
 		));
 		unitCommand.set("haltConstruction", &UnitCommand::haltConstruction);
 		unitCommand.set("cancelConstruction", &UnitCommand::cancelConstruction);
@@ -103,8 +111,8 @@ namespace BWAPI_Lua
 		unitCommand.set("cancelResearch", &UnitCommand::cancelResearch);
 		unitCommand.set("cancelUpgrade", &UnitCommand::cancelUpgrade);
 		unitCommand.set("useTech", sol::overload(
-			sol::resolve<UnitCommand(Unit, TechType)>(&UnitCommand::useTech), 
-			sol::resolve<UnitCommand(Unit, TechType, PositionOrUnit)>(&UnitCommand::useTech)
+			[](Unit unit, const TechType& tech, const Position& pos) { return UnitCommand::useTech(unit, tech, PositionOrUnit(pos)); },
+			[](Unit unit, const TechType& tech, Unit pos) { return UnitCommand::useTech(unit, tech, PositionOrUnit(pos)); }
 		));
 		unitCommand.set("placeCOP", &UnitCommand::placeCOP);
 
