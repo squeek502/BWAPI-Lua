@@ -35,7 +35,7 @@ namespace BWAPI_Lua
 			"Black", &Colors::Black,
 			"Grey", &Colors::Grey
 		);
-		auto text = module.new_enum("Text",
+		auto text = module.create_named("Text",
 			"Previous", Text::Previous,
 			"Default", Text::Default,
 			"Yellow", Text::Yellow,
@@ -64,7 +64,7 @@ namespace BWAPI_Lua
 			"GreyCyan", Text::GreyCyan,
 			"Turquoise", Text::Turquoise
 		);
-		text.new_enum("Size",
+		text.create_named("Size",
 			"Small", Text::Size::Small,
 			"Default", Text::Size::Default,
 			"Large", Text::Size::Large,
