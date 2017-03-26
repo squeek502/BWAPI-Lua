@@ -30,8 +30,8 @@ namespace BWAPI_Lua
 			"allRaces", &Races::allRaces,
 			"Zerg", &Races::Zerg,
 			"Terran", &Races::Terran,
-			"Concussive", &Races::Protoss,
-			"Normal", &Races::Random,
+			"Protoss", &Races::Protoss,
+			"Random", &Races::Random,
 			"None", &Races::None,
 			"Unknown", &Races::Unknown
 		);
