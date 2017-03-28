@@ -3,6 +3,7 @@
 #include <sol.hpp>
 #include <BWAPI_Lua.h>
 #include "BindingTestHelpers.h"
+#include "MockUnit.h"
 
 using namespace BWAPI;
 using namespace BWAPI_Lua;
@@ -91,6 +92,17 @@ TEST_CASE("setcontainer bindings", "[setcontainer]")
 		bindDamageType(lua["BWAPI"]);
 		sol::function test = lua["equality"];
 		REQUIRE_NOTHROW(test());
+	}
+
+	SECTION("pointer set")
+	{
+		static const TestBindings::MockUnitImpl mockUnit;
+
+		bindUnitset(lua["BWAPI"]);
+		bindUnit(lua["BWAPI"]);
+		TestBindings::bindMockUnitImpl(lua["BWAPI"]);
+		sol::function test = lua["pointerSet"];
+		REQUIRE_NOTHROW(test(&mockUnit));
 	}
 
 }

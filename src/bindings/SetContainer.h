@@ -4,6 +4,29 @@
 
 namespace BWAPI_Lua
 {
+	// we can use a stateless iterator here because we know the values will only occur once, as
+	// SetContainer uses an unordered_set, so we can get the iterator by looking up the current val
+	template <typename SetClass, typename ContainedClass>
+	inline sol::object statelessSetContainerIterator(const SetClass& set, sol::stack_object currentValue, sol::this_state s)
+	{
+		std::list<ContainedClass>::const_iterator it;
+
+		if (currentValue.valid())
+		{
+			it = set.find(currentValue.as<ContainedClass>());
+			++it;
+		}
+		else
+			it = set.begin();
+
+		if (it != set.end())
+		{
+			ContainedClass ret = *it;
+			return sol::make_object(s, ret);
+		}
+		return sol::make_object(s, sol::nil);
+	}
+
 	template <typename SetClass, typename ContainedClass>
 	inline sol::simple_usertype<SetClass>& bindSetContainer(sol::simple_usertype<SetClass>& userType)
 	{
@@ -36,20 +59,9 @@ namespace BWAPI_Lua
 		);
 		userType.set(sol::meta_function::construct, factories);
 		userType.set(sol::call_constructor, factories);
-		userType.set("iterator", [](const SetClass& set)
+		userType.set("iterator", [](const SetClass& set, sol::this_state s)
 		{
-			static std::list<ContainedClass>::const_iterator it;
-			it = set.begin();
-			return sol::as_function([&set](sol::this_state s)
-			{
-				if (it != set.end())
-				{
-					ContainedClass ret = *it;
-					++it;
-					return sol::make_object(s, ret);
-				}
-				return sol::make_object(s, sol::nil);
-			});
+			return std::make_tuple(sol::as_function(&statelessSetContainerIterator<SetClass, ContainedClass>), set, sol::make_object(s, sol::nil));
 		});
 		userType.set("asTable", [](const SetClass& set, sol::this_state s)
 		{
