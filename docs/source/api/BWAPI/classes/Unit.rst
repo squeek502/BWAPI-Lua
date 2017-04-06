@@ -16,6 +16,14 @@ Unit
 
    If a Unit is not accessible, then only the ``getInitial*`` functions will be available to the AI. However for units that were owned by the player, :meth:`Unit.getPlayer` and :meth:`Unit.getType` will continue to work for units that have been destroyed.
 
+   .. rubric:: Constructors
+
+   This class is not constructable through Lua.
+
+   .. rubric:: Member Variables
+
+   .. include:: /_include/interface-clientinfo.rst
+
    .. rubric:: Member Functions
 
    .. method:: getID() -> id
@@ -44,7 +52,6 @@ Unit
 
       .. seealso::
          :meth:`isVisible`, :meth:`isCompleted`
-
 
    .. method:: getReplayID() -> id
 
@@ -265,7 +272,8 @@ Unit
       .. note::
          Distance is calculated from the edge of this unit, using Starcraft's own distance algorithm.
 
-      :param BWAPI.PositionOrUnit target: If it is a unit, then it will calculate the distance to the edge of the target unit.
+      :param target: Can be either a :class:`Position` or :class:`Unit`. If it is a unit, then it will calculate the distance to the edge of the target unit.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
       :return: An integer representation of the number of pixels between this unit and the ``target``.
       :rtype: number
 
@@ -279,7 +287,8 @@ Unit
       .. note::
          If the current unit is an air unit, then this function will always return true.
 
-      :param BWAPI.PositionOrUnit target: A Position or a Unit that is used to determine if this unit has a path to the target.
+      :param target: Can be either a :class:`Position` or :class:`Unit`. A Position or a Unit that is used to determine if this unit has a path to the target.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
       :return: ``true`` if there is a path between this unit and the target or ``false`` if the target is on a different piece of land than this one (such as an island).
       :rtype: boolean
 
@@ -1573,7 +1582,8 @@ Unit
 
       Orders the unit(s) to attack move to the specified position or attack the specified unit.
 
-      :param BWAPI.PositionOrUnit target: If a Position is used, the unit will perform an Attack Move command.
+      :param target: Can be either a :class:`Position` or :class:`Unit`. If a Position is used, the unit will perform an Attack Move command.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
       :param bool shiftQueueCommand: (optional) If this value is true, then the order will be queued instead of immediately executed. If this value is omitted, then the order will be executed immediately by default.
       :returns: ``true`` if the command was passed to Broodwar, and ``false`` if BWAPI determined that the command would fail.
       :rtype: boolean
@@ -1586,7 +1596,7 @@ Unit
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canAttack`
 
-   .. method:: build(UnitType type, [target]) -> wasIssued
+   .. method:: build(type, [target]) -> wasIssued
 
       Orders the worker unit(s) to construct a structure at a target position.
 
@@ -1658,7 +1668,7 @@ Unit
       .. seealso::
          :meth:`Game.getLastError`, :meth:`build`, :meth:`morph`, :meth:`canMorph`
 
-   .. method:: research(TechType tech) -> wasIssued
+   .. method:: research(tech) -> wasIssued
 
       Orders the unit to research the given tech type.
 
@@ -1686,11 +1696,12 @@ Unit
       .. seealso::
          :meth:`cancelUpgrade`, :meth:`isUpgrading`, :meth:`getRemainingUpgradeTime`, :meth:`getUpgrade`, :meth:`canUpgrade`
 
-   .. method:: setRallyPoint(PositionOrUnit target) -> wasIssued
+   .. method:: setRallyPoint(target) -> wasIssued
 
       Orders the unit to set its rally position to the specified position or unit.
 
-      :param BWAPI.PositionOrUnit target: The target position or target unit that this structure will rally to.
+      :param target: Can be either a :class:`Position` or :class:`Unit`. The target position or target unit that this structure will rally to.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
       :return: ``true`` if the command was passed to Broodwar, and ``false`` if BWAPI determined that the command would fail.
       :rtype: boolean
 
@@ -2006,7 +2017,8 @@ Unit
 
       Works like the right click in the GUI.
 
-      :param BWAPI.PositionOrUnit target: The target position or target unit to right click.
+      :param target: Can be either a :class:`Position` or :class:`Unit`. The target position or target unit to right click.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
       :param boolean shiftQueueCommand: (optional) If this value is true, then the order will be queued instead of immediately executed. If this value is omitted, then the order will be executed immediately by default.
       :return: ``true`` if the command was passed to Broodwar, and ``false`` if BWAPI determined that the command would fail.
       :rtype: boolean
@@ -2121,7 +2133,8 @@ Unit
       Orders the unit to use a technology.
 
       :param BWAPI.TechType tech: The technology type to use.
-      :param BWAPI.PositionOrUnit target: (optional) If specified, indicates the target location or unit to use the tech on. If unspecified, causes the ``tech`` to be used without a target (i.e. :attr:`Stim Packs <BWAPI.TechTypes.Stim_Packs>`).
+      :param target: (optional) Can be either a :class:`Position` or :class:`Unit`. If specified, indicates the target location or unit to use the tech on. If unspecified, causes the ``tech`` to be used without a target (i.e. :attr:`Stim Packs <BWAPI.TechTypes.Stim_Packs>`).
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
       :return: ``true`` if the command was passed to Broodwar, and ``false`` if BWAPI determined that the command would fail.
       :rtype: boolean
 
@@ -2253,7 +2266,8 @@ Unit
 
       Checks whether the unit is able to execute an attack command to attack-move or attack a (non-null) unit.
 
-      :param BWAPI.PositionOrUnit target:
+      :param target: Can be either a :class:`Position` or :class:`Unit`.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
 
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommand`, :meth:`attack`, :meth:`canAttackMove`, :meth:`canAttackUnit`
@@ -2269,7 +2283,8 @@ Unit
 
       Checks whether the unit is able to execute an attack command to attack-move or attack a (non-null) unit, as part of a :class:`Unitset`.
 
-      :param BWAPI.PositionOrUnit target:
+      :param target: Can be either a :class:`Position` or :class:`Unit`.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
 
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommandGrouped`, :meth:`canAttack`
@@ -2437,7 +2452,8 @@ Unit
 
       Checks whether the unit is able to execute a setRallyPoint command to a position or (non-null) unit.
 
-      :param BWAPI.PositionOrUnit target:
+      :param target: Can be either a :class:`Position` or :class:`Unit`.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
 
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommand`, :meth:`setRallyPoint`, :meth:`canSetRallyPosition`, :meth:`canSetRallyUnit`.
@@ -2634,7 +2650,7 @@ Unit
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommand`, :meth:`load`
 
-   .. method:: canLoad(Unit targetUnit, [checkCanTargetUnit = true, checkCanIssueCommandType = true, checkCommandibility = true]) -> bool
+   .. method:: canLoad(targetUnit, [checkCanTargetUnit = true, checkCanIssueCommandType = true, checkCommandibility = true]) -> bool
 
       Checks whether the unit is able to execute a load command.
 
@@ -2650,7 +2666,7 @@ Unit
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommand`, :meth:`unload`, :meth:`unloadAll`
 
-   .. method:: canUnloadAtPosition(Position target, [checkCanIssueCommandType = true, checkCommandibility = true]) -> bool
+   .. method:: canUnloadAtPosition(target, [checkCanIssueCommandType = true, checkCommandibility = true]) -> bool
 
       Cheap checks for whether the unit is able to execute an unload command or unloadAll at current position command or unloadAll at a different position command, for a given position.
 
@@ -2709,7 +2725,8 @@ Unit
 
       Checks whether the unit is able to execute a rightClick command to a position or (non-null) unit.
 
-      :param BWAPI.PositionOrUnit target:
+      :param target: Can be either a :class:`Position` or :class:`Unit`.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
 
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommand`, :meth:`rightClick`, :meth:`canRightClickPosition`, :meth:`canRightClickUnit`.
@@ -2725,7 +2742,8 @@ Unit
 
       Checks whether the unit is able to execute a rightClick command to a position or (non-null) unit, as part of a :class:`Unitset`.
 
-      :param BWAPI.PositionOrUnit target:
+      :param target: Can be either a :class:`Position` or :class:`Unit`.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
 
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommandGrouped`, :meth:`canRightClickUnit`
@@ -2865,7 +2883,8 @@ Unit
       Checks whether the unit is able to execute a useTech command for a specified position or unit (only specify nullptr if the :class:`TechType` does not target another position/unit).
 
       :param BWAPI.TechType tech:
-      :param BWAPI.PositionOrUnit target:
+      :param target: Can be either a :class:`Position` or :class:`Unit`.
+      :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
 
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommand`, :meth:`useTech`, :meth:`canUseTechWithoutTarget`, :meth:`canUseTechUnit`, :meth:`canUseTechPosition`
@@ -2932,3 +2951,5 @@ Unit
 
       .. seealso::
          :meth:`Game.getLastError`, :meth:`Unit.canIssueCommand`, :meth:`placeCOP`
+
+   .. include:: /_include/interface-functions.rst

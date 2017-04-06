@@ -47,6 +47,8 @@ Takes Lua functions for its ``action`` and ``condition`` parameters (note: ``con
    end
    Broodwar:registerEvent(action, nil, Broodwar:getLatencyFrames())
 
+.. _differences-clientInfo:
+
 :meth:`~BWAPI.Interface.getClientInfo` and :meth:`~BWAPI.Interface.setClientInfo`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -70,6 +72,7 @@ Takes Lua functions for its ``action`` and ``condition`` parameters (note: ``con
         unit.clientInfo["key"] = value
       end
 
+.. _differences-string-format:
 
 Functions that take a variable amount of string parameters in C++
 -----------------------------------------------------------------
@@ -79,8 +82,10 @@ All C++ functions that take variable amounts of strings now expect only a single
 .. note::
    Any formatting must be done in Lua first (``string.format``), and then the formatted string can be passed into the function like normal.
 
-:meth:`Game::sendTextEx`
-^^^^^^^^^^^^^^^^^^^^^^^^
+.. _differences-sendTextEx:
+
+:meth:`Game.sendTextEx`
+^^^^^^^^^^^^^^^^^^^^^^^
 
 A new convenience function has been added to send text to allies: :meth:`~BWAPI.Game.sendTextToAllies`, which fowards the method to :meth:`~BWAPI.Game.sendTextEx` with ``true`` as the first parameter. The following two snippets are exactly equivalent:
 - ``BWAPI.Broodwar:sendTextEx(true, "your message")``
@@ -94,7 +99,14 @@ Unit
 :meth:`~BWAPI.Unit.cancelTrain` and :meth:`~BWAPI.Unit.getTrainingQueue`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:meth:`~BWAPI.Unit.cancelTrain`'s slot parameter has been changed to be one-indexed (like Lua), rather than zero-indexed (like C++). For example, to cancel the first unit being trained, you would now pass a slot of ``1``, whereas in C++ you'd pass a slot of ``0``
+All methods that deal with training slots have been changed to be one-indexed (like Lua), rather than zero-indexed (like C++). For example, to cancel the first unit being trained, you would now pass a slot of ``1``, whereas in C++ you'd pass a slot of ``0``. List of affected methods:
+
+* :meth:`BWAPI.Unit.canCancelTrainSlot`
+* :meth:`BWAPI.Unit.cancelTrain`
+* :meth:`BWAPI.Unit.getTrainingQueue`
+* :meth:`BWAPI.UnitCommand.getSlot`
+* :meth:`BWAPI.UnitCommand.cancelTrain`
+* :meth:`BWAPI.Unitset.cancelTrain`
 
 Similarly, :meth:`~BWAPI.Unit.getTrainingQueue` returns a Lua array-like table (which is one-indexed) instead of a ``std::list`` (which is zero-indexed). This allows for the following:
 
@@ -116,6 +128,8 @@ Similarly, :meth:`~BWAPI.Unit.getTrainingQueue` returns a Lua array-like table (
 UnitType
 --------
 
+.. _differences-whatBuilds:
+
 :meth:`~BWAPI.UnitType.whatBuilds`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -125,6 +139,8 @@ Returns two values instead of a ``std::pair``
    :caption: Example usage
 
    local unitType, howMany = ut:whatBuilds()
+
+.. _differences-requiredUnits:
 
 :meth:`~BWAPI.UnitType.requiredUnits`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -146,14 +162,17 @@ Returns a Lua table of the format ``{ [<unitTypeID>] = <howMany> }``, where ``<u
      print(str)
    end
 
+.. _differences-sets:
 
 SetContainer implementations (Unitset, Playerset, etc)
------------------------------------------------------
+------------------------------------------------------
 
 The set can be iterated one of two ways:
 
 - ``for x in set:iterator() do``
 - ``for i, x in ipairs(set:asTable()) do``
+
+Also, any SetContainer types of the format ``ClassName::set`` are bound as ``ClassNameset``, to match the naming convention of the other SetContainer types (``Playerset``, ``Unitset``, etc). For example, ``UnitType::set`` is bound as :class:`BWAPI.UnitTypeset`.
 
 
 .. _differences-unitfilter:
