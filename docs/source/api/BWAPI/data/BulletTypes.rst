@@ -18,12 +18,12 @@ Functions
    Retrieves a set of all BulletTypes.
 
    :return: Set of all BulletTypes.
-   :rtype: :class:`BulletTypeset`
+   :rtype: :class:`~BWAPI.BulletTypeset`
 
 Constants
 ---------
 
-All constants are instances of the :class:`BulletType` class
+All constants are instances of the :class:`~BWAPI.BulletType` class
 
 .. data:: Melee
 .. data:: Fusion_Cutter_Hit
