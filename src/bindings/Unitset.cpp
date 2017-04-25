@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "SetContainer.h"
 #include "IsInstance.h"
+#include "TrainingSlot.h"
 
 using namespace BWAPI;
 
@@ -133,10 +134,7 @@ namespace BWAPI_Lua
 			[](const Unitset& set) { return set.cancelTrain(); },
 			[](const Unitset& set, int slot)
 			{
-				// convert from Lua index to C++ index for slots >= 1
-				if (slot >= 1)
-					slot -= 1;
-
+				slot = toActualTrainingSlot(slot);
 				return set.cancelTrain(slot);
 			}
 		));

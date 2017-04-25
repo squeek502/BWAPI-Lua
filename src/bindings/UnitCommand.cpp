@@ -1,6 +1,7 @@
 #include <sol.hpp>
 #include <BWAPI.h>
 #include "IsInstance.h"
+#include "TrainingSlot.h"
 
 using namespace BWAPI;
 
@@ -20,7 +21,7 @@ namespace BWAPI_Lua
 			"getUnitType", &UnitCommand::getUnitType,
 			"getTechType", &UnitCommand::getTechType,
 			"getUpgradeType", &UnitCommand::getUpgradeType,
-			"getSlot", &UnitCommand::getSlot,
+			"getSlot", [](const UnitCommand& unitCommand) { return toLuaTrainingSlot(unitCommand.getSlot()); },
 			"isQueued", &UnitCommand::isQueued,
 			sol::meta_function::equal_to, &UnitCommand::operator==
 		);
@@ -105,7 +106,7 @@ namespace BWAPI_Lua
 		unitCommand.set("cancelAddon", &UnitCommand::cancelAddon);
 		unitCommand.set("cancelTrain", sol::overload(
 			[](Unit unit) { return UnitCommand::cancelTrain(unit); },
-			&UnitCommand::cancelTrain
+			[](Unit unit, int slot) { return UnitCommand::cancelTrain(unit, toActualTrainingSlot(slot)); }
 		));
 		unitCommand.set("cancelMorph", &UnitCommand::cancelMorph);
 		unitCommand.set("cancelResearch", &UnitCommand::cancelResearch);

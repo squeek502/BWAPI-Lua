@@ -3,6 +3,7 @@
 #include "Interface.h"
 #include "IsInstance.h"
 #include "UnitMembers.h"
+#include "TrainingSlot.h"
 
 using namespace BWAPI;
 
@@ -303,10 +304,7 @@ namespace BWAPI_Lua
 			[](UnitInterface* unit) { return unit->cancelTrain(); },
 			[](UnitInterface* unit, int slot)
 			{
-				// convert from Lua index to C++ index for slots >= 1
-				if (slot >= 1)
-					slot -= 1;
-
+				slot = toActualTrainingSlot(slot);
 				return unit->cancelTrain(slot);
 			}
 		));
@@ -629,24 +627,15 @@ namespace BWAPI_Lua
 			static_cast<bool (UnitInterface::*)(bool) const>(&UnitInterface::canCancelTrainSlot),
 
 			[](UnitInterface* unit, int slot) {
-				// convert from Lua index to C++ index for slots >= 1
-				if (slot >= 1)
-					slot -= 1;
-
+				slot = toActualTrainingSlot(slot);
 				return unit->canCancelTrainSlot(slot);
 			},
 			[](UnitInterface* unit, int slot, bool flag1) {
-				// convert from Lua index to C++ index for slots >= 1
-				if (slot >= 1)
-					slot -= 1;
-
+				slot = toActualTrainingSlot(slot);
 				return unit->canCancelTrainSlot(slot, flag1);
 			},
 			[](UnitInterface* unit, int slot, bool flag1, bool flag2) {
-				// convert from Lua index to C++ index for slots >= 1
-				if (slot >= 1)
-					slot -= 1;
-
+				slot = toActualTrainingSlot(slot);
 				return unit->canCancelTrainSlot(slot, flag1, flag2);
 			}
 		));
