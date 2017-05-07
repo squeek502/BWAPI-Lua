@@ -31,7 +31,7 @@ function allUnitTypes()
     [BWAPI.UnitTypes.Factories] = true
   }
   for k, v in pairs(BWAPI.UnitTypes) do
-    if k ~= "Enum" and k ~= "allUnitTypes" then
+    if k ~= "Enum" and type(v) ~= "function" then
       if excluded[v] then
         assert(not unitTypes:contains(v), k)
       else
