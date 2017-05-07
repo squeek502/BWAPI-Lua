@@ -120,6 +120,10 @@ namespace BWAPI_Lua
 
 		auto unitTypes = module.create_named("UnitTypes");
 		unitTypes["allUnitTypes"] = &UnitTypes::allUnitTypes;
+		unitTypes["allMacroTypes"] = &UnitTypes::allMacroTypes;
+		unitTypes["maxUnitHeight"] = &UnitTypes::maxUnitHeight;
+		unitTypes["maxUnitWidth"] = &UnitTypes::maxUnitWidth;
+
 		unitTypes["Terran_Firebat"] = &UnitTypes::Terran_Firebat;
 		unitTypes["Terran_Ghost"] = &UnitTypes::Terran_Ghost;
 		unitTypes["Terran_Goliath"] = &UnitTypes::Terran_Goliath;
