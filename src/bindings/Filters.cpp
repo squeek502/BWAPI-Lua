@@ -6,191 +6,169 @@ using namespace BWAPI;
 
 namespace BWAPI_Lua
 {
+	template<typename Type>
+	auto unaryFilterAsFunction(const UnaryFilter<Type, bool(*)(Type)>& filter)
+	{
+		return sol::as_function([&filter](const Unit val) { return filter(val); });
+	}
+
+	template<typename Type, typename CompareType>
+	auto compareFilterAsFunction(const CompareFilter<Type, CompareType, CompareType(*)(Type)>& filter)
+	{
+		return sol::as_function([&filter](const Unit val) { return filter(val); });
+	}
+
 	void bindFilters(sol::table module)
 	{
-		auto unitFilter = module.create_simple_usertype<UnitFilter>(
-			sol::meta_function::construct, sol::no_constructor,
-			sol::meta_function::call, [](const UnitFilter& filter, Unit unit) {
-				return filter(unit);
-			}
-		);
-		bindIsInstance(unitFilter);
-		module.set_usertype("UnitFilter", unitFilter);
-
-		auto ptrUnitFilter = module.create_simple_usertype<PtrUnitFilter>(
-			sol::meta_function::construct, sol::no_constructor,
-			sol::meta_function::call, [](const PtrUnitFilter& filter, Unit unit) {
-				return filter(unit);
-			}
-		);
-		bindIsInstance(ptrUnitFilter);
-		module.set_usertype("PtrUnitFilter", ptrUnitFilter);
-
-		auto bestUnitFilter = module.create_simple_usertype<BestUnitFilter>(
-			sol::meta_function::construct, sol::no_constructor,
-			sol::meta_function::call, [](const BestUnitFilter& filter, Unit unit1, Unit unit2) {
-				return filter(unit1, unit2);
-			}
-		);
-		bindIsInstance(bestUnitFilter);
-		module.set_usertype("BestUnitFilter", bestUnitFilter);
-
-		auto unitTypeCompareFilter = module.create_simple_usertype<CompareFilter<Unit, UnitType, UnitType(*)(Unit)>>(
-			sol::meta_function::construct, sol::no_constructor,
-			sol::meta_function::call, [](const CompareFilter<Unit, UnitType, UnitType(*)(Unit)>& filter, Unit unit) {
-				return filter(unit);
-			}
-		);
-		bindIsInstance(unitTypeCompareFilter);
-		module.set_usertype("UnitTypeCompareFilter", unitTypeCompareFilter);
-
 		auto filter = module.create_named("Filter");
-		filter["IsTransport"] = &Filter::IsTransport;
-		filter["CanProduce"] = &Filter::CanProduce;
-		filter["CanAttack"] = &Filter::CanAttack;
-		filter["CanMove"] = &Filter::CanMove;
-		filter["IsFlyer"] = &Filter::IsFlyer;
-		filter["IsFlying"] = &Filter::IsFlying;
-		filter["RegeneratesHP"] = &Filter::RegeneratesHP;
-		filter["IsSpellcaster"] = &Filter::IsSpellcaster;
-		filter["HasPermanentCloak"] = &Filter::HasPermanentCloak;
-		filter["IsOrganic"] = &Filter::IsOrganic;
-		filter["IsMechanical"] = &Filter::IsMechanical;
-		filter["IsRobotic"] = &Filter::IsRobotic;
-		filter["IsDetector"] = &Filter::IsDetector;
-		filter["IsResourceContainer"] = &Filter::IsResourceContainer;
-		filter["IsResourceDepot"] = &Filter::IsResourceDepot;
-		filter["IsRefinery"] = &Filter::IsRefinery;
-		filter["IsWorker"] = &Filter::IsWorker;
-		filter["RequiresPsi"] = &Filter::RequiresPsi;
-		filter["RequiresCreep"] = &Filter::RequiresCreep;
-		filter["IsBurrowable"] = &Filter::IsBurrowable;
-		filter["IsCloakable"] = &Filter::IsCloakable;
-		filter["IsBuilding"] = &Filter::IsBuilding;
-		filter["IsAddon"] = &Filter::IsAddon;
-		filter["IsFlyingBuilding"] = &Filter::IsFlyingBuilding;
-		filter["IsNeutral"] = &Filter::IsNeutral;
-		filter["IsHero"] = &Filter::IsHero;
-		filter["IsPowerup"] = &Filter::IsPowerup;
-		filter["IsBeacon"] = &Filter::IsBeacon;
-		filter["IsFlagBeacon"] = &Filter::IsFlagBeacon;
-		filter["IsSpecialBuilding"] = &Filter::IsSpecialBuilding;
-		filter["IsSpell"] = &Filter::IsSpell;
-		filter["ProducesLarva"] = &Filter::ProducesLarva;
-		filter["IsMineralField"] = &Filter::IsMineralField;
-		filter["IsCritter"] = &Filter::IsCritter;
-		filter["CanBuildAddon"] = &Filter::CanBuildAddon;
-		filter["HP"] = &Filter::HP;
-		filter["MaxHP"] = &Filter::MaxHP;
-		filter["HP_Percent"] = &Filter::HP_Percent;
-		filter["Shields"] = &Filter::Shields;
-		filter["MaxShields"] = &Filter::MaxShields;
-		filter["Shields_Percent"] = &Filter::Shields_Percent;
-		filter["Energy"] = &Filter::Energy;
-		filter["MaxEnergy"] = &Filter::MaxEnergy;
-		filter["Energy_Percent"] = &Filter::Energy_Percent;
-		filter["Armor"] = &Filter::Armor;
-		filter["ArmorUpgrade"] = &Filter::ArmorUpgrade;
-		filter["MineralPrice"] = &Filter::MineralPrice;
-		filter["GasPrice"] = &Filter::GasPrice;
-		filter["BuildTime"] = &Filter::BuildTime;
-		filter["SupplyRequired"] = &Filter::SupplyRequired;
-		filter["SupplyProvided"] = &Filter::SupplyProvided;
-		filter["SpaceRequired"] = &Filter::SpaceRequired;
-		filter["SpaceRemaining"] = &Filter::SpaceRemaining;
-		filter["SpaceProvided"] = &Filter::SpaceProvided;
-		filter["BuildScore"] = &Filter::BuildScore;
-		filter["DestroyScore"] = &Filter::DestroyScore;
-		filter["TopSpeed"] = &Filter::TopSpeed;
-		filter["SightRange"] = &Filter::SightRange;
-		filter["WeaponCooldown"] = &Filter::WeaponCooldown;
-		filter["SizeType"] = &Filter::SizeType;
-		filter["GroundWeapon"] = &Filter::GroundWeapon;
-		filter["AirWeapon"] = &Filter::AirWeapon;
-		filter["GetType"] = &Filter::GetType;
-		filter["GetRace"] = &Filter::GetRace;
-		filter["GetPlayer"] = &Filter::GetPlayer;
-		filter["Resources"] = &Filter::Resources;
-		filter["ResourceGroup"] = &Filter::ResourceGroup;
-		filter["AcidSporeCount"] = &Filter::AcidSporeCount;
-		filter["InterceptorCount"] = &Filter::InterceptorCount;
-		filter["ScarabCount"] = &Filter::ScarabCount;
-		filter["SpiderMineCount"] = &Filter::SpiderMineCount;
-		filter["MaxWeaponCooldown"] = &Filter::MaxWeaponCooldown;
-		filter["SpellCooldown"] = &Filter::SpellCooldown;
-		filter["DefenseMatrixPoints"] = &Filter::DefenseMatrixPoints;
-		filter["DefenseMatrixTime"] = &Filter::DefenseMatrixTime;
-		filter["EnsnareTime"] = &Filter::EnsnareTime;
-		filter["IrradiateTime"] = &Filter::IrradiateTime;
-		filter["LockdownTime"] = &Filter::LockdownTime;
-		filter["MaelstromTime"] = &Filter::MaelstromTime;
-		filter["OrderTime"] = &Filter::OrderTime;
-		filter["PlagueTimer"] = &Filter::PlagueTimer;
-		filter["RemoveTime"] = &Filter::RemoveTime;
-		filter["StasisTime"] = &Filter::StasisTime;
-		filter["StimTime"] = &Filter::StimTime;
-		filter["BuildType"] = &Filter::BuildType;
-		filter["RemainingBuildTime"] = &Filter::RemainingBuildTime;
-		filter["RemainingTrainTime"] = &Filter::RemainingTrainTime;
-		filter["Target"] = &Filter::Target;
-		filter["CurrentOrder"] = &Filter::CurrentOrder;
-		filter["SecondaryOrder"] = &Filter::SecondaryOrder;
-		filter["OrderTarget"] = &Filter::OrderTarget;
-		filter["GetLeft"] = &Filter::GetLeft;
-		filter["GetTop"] = &Filter::GetTop;
-		filter["GetRight"] = &Filter::GetRight;
-		filter["GetBottom"] = &Filter::GetBottom;
-		filter["Exists"] = &Filter::Exists;
-		filter["IsAttacking"] = &Filter::IsAttacking;
-		filter["IsBeingConstructed"] = &Filter::IsBeingConstructed;
-		filter["IsBeingGathered"] = &Filter::IsBeingGathered;
-		filter["IsBeingHealed"] = &Filter::IsBeingHealed;
-		filter["IsBlind"] = &Filter::IsBlind;
-		filter["IsBraking"] = &Filter::IsBraking;
-		filter["IsBurrowed"] = &Filter::IsBurrowed;
-		filter["IsCarryingGas"] = &Filter::IsCarryingGas;
-		filter["IsCarryingMinerals"] = &Filter::IsCarryingMinerals;
-		filter["IsCarryingSomething"] = &Filter::IsCarryingSomething;
-		filter["IsCloaked"] = &Filter::IsCloaked;
-		filter["IsCompleted"] = &Filter::IsCompleted;
-		filter["IsConstructing"] = &Filter::IsConstructing;
-		filter["IsDefenseMatrixed"] = &Filter::IsDefenseMatrixed;
-		filter["IsDetected"] = &Filter::IsDetected;
-		filter["IsEnsnared"] = &Filter::IsEnsnared;
-		filter["IsFollowing"] = &Filter::IsFollowing;
-		filter["IsGatheringGas"] = &Filter::IsGatheringGas;
-		filter["IsGatheringMinerals"] = &Filter::IsGatheringMinerals;
-		filter["IsHallucination"] = &Filter::IsHallucination;
-		filter["IsHoldingPosition"] = &Filter::IsHoldingPosition;
-		filter["IsIdle"] = &Filter::IsIdle;
-		filter["IsInterruptible"] = &Filter::IsInterruptible;
-		filter["IsInvincible"] = &Filter::IsInvincible;
-		filter["IsIrradiated"] = &Filter::IsIrradiated;
-		filter["IsLifted"] = &Filter::IsLifted;
-		filter["IsLoaded"] = &Filter::IsLoaded;
-		filter["IsLockedDown"] = &Filter::IsLockedDown;
-		filter["IsMaelstrommed"] = &Filter::IsMaelstrommed;
-		filter["IsMorphing"] = &Filter::IsMorphing;
-		filter["IsMoving"] = &Filter::IsMoving;
-		filter["IsParasited"] = &Filter::IsParasited;
-		filter["IsPatrolling"] = &Filter::IsPatrolling;
-		filter["IsPlagued"] = &Filter::IsPlagued;
-		filter["IsRepairing"] = &Filter::IsRepairing;
-		filter["IsResearching"] = &Filter::IsResearching;
-		filter["IsSieged"] = &Filter::IsSieged;
-		filter["IsStartingAttack"] = &Filter::IsStartingAttack;
-		filter["IsStasised"] = &Filter::IsStasised;
-		filter["IsStimmed"] = &Filter::IsStimmed;
-		filter["IsStuck"] = &Filter::IsStuck;
-		filter["IsTraining"] = &Filter::IsTraining;
-		filter["IsUnderAttack"] = &Filter::IsUnderAttack;
-		filter["IsUnderDarkSwarm"] = &Filter::IsUnderDarkSwarm;
-		filter["IsUnderDisruptionWeb"] = &Filter::IsUnderDisruptionWeb;
-		filter["IsUnderStorm"] = &Filter::IsUnderStorm;
-		filter["IsPowered"] = &Filter::IsPowered;
-		filter["IsVisible"] = &Filter::IsVisible;
-		filter["IsEnemy"] = &Filter::IsEnemy;
-		filter["IsAlly"] = &Filter::IsAlly;
-		filter["IsOwned"] = &Filter::IsOwned;
+		filter["IsTransport"] = unaryFilterAsFunction(Filter::IsTransport);
+		filter["CanProduce"] = unaryFilterAsFunction(Filter::CanProduce);
+		filter["CanAttack"] = unaryFilterAsFunction(Filter::CanAttack);
+		filter["CanMove"] = unaryFilterAsFunction(Filter::CanMove);
+		filter["IsFlyer"] = unaryFilterAsFunction(Filter::IsFlyer);
+		filter["IsFlying"] = unaryFilterAsFunction(Filter::IsFlying);
+		filter["RegeneratesHP"] = unaryFilterAsFunction(Filter::RegeneratesHP);
+		filter["IsSpellcaster"] = unaryFilterAsFunction(Filter::IsSpellcaster);
+		filter["HasPermanentCloak"] = unaryFilterAsFunction(Filter::HasPermanentCloak);
+		filter["IsOrganic"] = unaryFilterAsFunction(Filter::IsOrganic);
+		filter["IsMechanical"] = unaryFilterAsFunction(Filter::IsMechanical);
+		filter["IsRobotic"] = unaryFilterAsFunction(Filter::IsRobotic);
+		filter["IsDetector"] = unaryFilterAsFunction(Filter::IsDetector);
+		filter["IsResourceContainer"] = unaryFilterAsFunction(Filter::IsResourceContainer);
+		filter["IsResourceDepot"] = unaryFilterAsFunction(Filter::IsResourceDepot);
+		filter["IsRefinery"] = unaryFilterAsFunction(Filter::IsRefinery);
+		filter["IsWorker"] = unaryFilterAsFunction(Filter::IsWorker);
+		filter["RequiresPsi"] = unaryFilterAsFunction(Filter::RequiresPsi);
+		filter["RequiresCreep"] = unaryFilterAsFunction(Filter::RequiresCreep);
+		filter["IsBurrowable"] = unaryFilterAsFunction(Filter::IsBurrowable);
+		filter["IsCloakable"] = unaryFilterAsFunction(Filter::IsCloakable);
+		filter["IsBuilding"] = unaryFilterAsFunction(Filter::IsBuilding);
+		filter["IsAddon"] = unaryFilterAsFunction(Filter::IsAddon);
+		filter["IsFlyingBuilding"] = unaryFilterAsFunction(Filter::IsFlyingBuilding);
+		filter["IsNeutral"] = unaryFilterAsFunction(Filter::IsNeutral);
+		filter["IsHero"] = unaryFilterAsFunction(Filter::IsHero);
+		filter["IsPowerup"] = unaryFilterAsFunction(Filter::IsPowerup);
+		filter["IsBeacon"] = unaryFilterAsFunction(Filter::IsBeacon);
+		filter["IsFlagBeacon"] = unaryFilterAsFunction(Filter::IsFlagBeacon);
+		filter["IsSpecialBuilding"] = unaryFilterAsFunction(Filter::IsSpecialBuilding);
+		filter["IsSpell"] = unaryFilterAsFunction(Filter::IsSpell);
+		filter["ProducesLarva"] = unaryFilterAsFunction(Filter::ProducesLarva);
+		filter["IsMineralField"] = unaryFilterAsFunction(Filter::IsMineralField);
+		filter["IsCritter"] = unaryFilterAsFunction(Filter::IsCritter);
+		filter["CanBuildAddon"] = unaryFilterAsFunction(Filter::CanBuildAddon);
+
+		filter["HP"] = compareFilterAsFunction(Filter::HP);
+		filter["MaxHP"] = compareFilterAsFunction(Filter::MaxHP);
+		filter["HP_Percent"] = compareFilterAsFunction(Filter::HP_Percent);
+		filter["Shields"] = compareFilterAsFunction(Filter::Shields);
+		filter["MaxShields"] = compareFilterAsFunction(Filter::MaxShields);
+		filter["Shields_Percent"] = compareFilterAsFunction(Filter::Shields_Percent);
+		filter["Energy"] = compareFilterAsFunction(Filter::Energy);
+		filter["MaxEnergy"] = compareFilterAsFunction(Filter::MaxEnergy);
+		filter["Energy_Percent"] = compareFilterAsFunction(Filter::Energy_Percent);
+		filter["Armor"] = compareFilterAsFunction(Filter::Armor);
+		filter["ArmorUpgrade"] = compareFilterAsFunction(Filter::ArmorUpgrade);
+		filter["MineralPrice"] = compareFilterAsFunction(Filter::MineralPrice);
+		filter["GasPrice"] = compareFilterAsFunction(Filter::GasPrice);
+		filter["BuildTime"] = compareFilterAsFunction(Filter::BuildTime);
+		filter["SupplyRequired"] = compareFilterAsFunction(Filter::SupplyRequired);
+		filter["SupplyProvided"] = compareFilterAsFunction(Filter::SupplyProvided);
+		filter["SpaceRequired"] = compareFilterAsFunction(Filter::SpaceRequired);
+		filter["SpaceRemaining"] = compareFilterAsFunction(Filter::SpaceRemaining);
+		filter["SpaceProvided"] = compareFilterAsFunction(Filter::SpaceProvided);
+		filter["BuildScore"] = compareFilterAsFunction(Filter::BuildScore);
+		filter["DestroyScore"] = compareFilterAsFunction(Filter::DestroyScore);
+		filter["TopSpeed"] = compareFilterAsFunction(Filter::TopSpeed);
+		filter["SightRange"] = compareFilterAsFunction(Filter::SightRange);
+		filter["WeaponCooldown"] = compareFilterAsFunction(Filter::WeaponCooldown);
+		filter["SizeType"] = compareFilterAsFunction(Filter::SizeType);
+		filter["GroundWeapon"] = compareFilterAsFunction(Filter::GroundWeapon);
+		filter["AirWeapon"] = compareFilterAsFunction(Filter::AirWeapon);
+		filter["GetType"] = compareFilterAsFunction(Filter::GetType);
+		filter["GetRace"] = compareFilterAsFunction(Filter::GetRace);
+		filter["GetPlayer"] = compareFilterAsFunction(Filter::GetPlayer);
+		filter["Resources"] = compareFilterAsFunction(Filter::Resources);
+		filter["ResourceGroup"] = compareFilterAsFunction(Filter::ResourceGroup);
+		filter["AcidSporeCount"] = compareFilterAsFunction(Filter::AcidSporeCount);
+		filter["InterceptorCount"] = compareFilterAsFunction(Filter::InterceptorCount);
+		filter["ScarabCount"] = compareFilterAsFunction(Filter::ScarabCount);
+		filter["SpiderMineCount"] = compareFilterAsFunction(Filter::SpiderMineCount);
+		filter["MaxWeaponCooldown"] = compareFilterAsFunction(Filter::MaxWeaponCooldown);
+		filter["SpellCooldown"] = compareFilterAsFunction(Filter::SpellCooldown);
+		filter["DefenseMatrixPoints"] = compareFilterAsFunction(Filter::DefenseMatrixPoints);
+		filter["DefenseMatrixTime"] = compareFilterAsFunction(Filter::DefenseMatrixTime);
+		filter["EnsnareTime"] = compareFilterAsFunction(Filter::EnsnareTime);
+		filter["IrradiateTime"] = compareFilterAsFunction(Filter::IrradiateTime);
+		filter["LockdownTime"] = compareFilterAsFunction(Filter::LockdownTime);
+		filter["MaelstromTime"] = compareFilterAsFunction(Filter::MaelstromTime);
+		filter["OrderTime"] = compareFilterAsFunction(Filter::OrderTime);
+		filter["PlagueTimer"] = compareFilterAsFunction(Filter::PlagueTimer);
+		filter["RemoveTime"] = compareFilterAsFunction(Filter::RemoveTime);
+		filter["StasisTime"] = compareFilterAsFunction(Filter::StasisTime);
+		filter["StimTime"] = compareFilterAsFunction(Filter::StimTime);
+		filter["BuildType"] = compareFilterAsFunction(Filter::BuildType);
+		filter["RemainingBuildTime"] = compareFilterAsFunction(Filter::RemainingBuildTime);
+		filter["RemainingTrainTime"] = compareFilterAsFunction(Filter::RemainingTrainTime);
+		filter["Target"] = compareFilterAsFunction(Filter::Target);
+		filter["CurrentOrder"] = compareFilterAsFunction(Filter::CurrentOrder);
+		filter["SecondaryOrder"] = compareFilterAsFunction(Filter::SecondaryOrder);
+		filter["OrderTarget"] = compareFilterAsFunction(Filter::OrderTarget);
+		filter["GetLeft"] = compareFilterAsFunction(Filter::GetLeft);
+		filter["GetTop"] = compareFilterAsFunction(Filter::GetTop);
+		filter["GetRight"] = compareFilterAsFunction(Filter::GetRight);
+		filter["GetBottom"] = compareFilterAsFunction(Filter::GetBottom);
+
+		filter["Exists"] = unaryFilterAsFunction(Filter::Exists);
+		filter["IsAttacking"] = unaryFilterAsFunction(Filter::IsAttacking);
+		filter["IsBeingConstructed"] = unaryFilterAsFunction(Filter::IsBeingConstructed);
+		filter["IsBeingGathered"] = unaryFilterAsFunction(Filter::IsBeingGathered);
+		filter["IsBeingHealed"] = unaryFilterAsFunction(Filter::IsBeingHealed);
+		filter["IsBlind"] = unaryFilterAsFunction(Filter::IsBlind);
+		filter["IsBraking"] = unaryFilterAsFunction(Filter::IsBraking);
+		filter["IsBurrowed"] = unaryFilterAsFunction(Filter::IsBurrowed);
+		filter["IsCarryingGas"] = unaryFilterAsFunction(Filter::IsCarryingGas);
+		filter["IsCarryingMinerals"] = unaryFilterAsFunction(Filter::IsCarryingMinerals);
+		filter["IsCarryingSomething"] = unaryFilterAsFunction(Filter::IsCarryingSomething);
+		filter["IsCloaked"] = unaryFilterAsFunction(Filter::IsCloaked);
+		filter["IsCompleted"] = unaryFilterAsFunction(Filter::IsCompleted);
+		filter["IsConstructing"] = unaryFilterAsFunction(Filter::IsConstructing);
+		filter["IsDefenseMatrixed"] = unaryFilterAsFunction(Filter::IsDefenseMatrixed);
+		filter["IsDetected"] = unaryFilterAsFunction(Filter::IsDetected);
+		filter["IsEnsnared"] = unaryFilterAsFunction(Filter::IsEnsnared);
+		filter["IsFollowing"] = unaryFilterAsFunction(Filter::IsFollowing);
+		filter["IsGatheringGas"] = unaryFilterAsFunction(Filter::IsGatheringGas);
+		filter["IsGatheringMinerals"] = unaryFilterAsFunction(Filter::IsGatheringMinerals);
+		filter["IsHallucination"] = unaryFilterAsFunction(Filter::IsHallucination);
+		filter["IsHoldingPosition"] = unaryFilterAsFunction(Filter::IsHoldingPosition);
+		filter["IsIdle"] = unaryFilterAsFunction(Filter::IsIdle);
+		filter["IsInterruptible"] = unaryFilterAsFunction(Filter::IsInterruptible);
+		filter["IsInvincible"] = unaryFilterAsFunction(Filter::IsInvincible);
+		filter["IsIrradiated"] = unaryFilterAsFunction(Filter::IsIrradiated);
+		filter["IsLifted"] = unaryFilterAsFunction(Filter::IsLifted);
+		filter["IsLoaded"] = unaryFilterAsFunction(Filter::IsLoaded);
+		filter["IsLockedDown"] = unaryFilterAsFunction(Filter::IsLockedDown);
+		filter["IsMaelstrommed"] = unaryFilterAsFunction(Filter::IsMaelstrommed);
+		filter["IsMorphing"] = unaryFilterAsFunction(Filter::IsMorphing);
+		filter["IsMoving"] = unaryFilterAsFunction(Filter::IsMoving);
+		filter["IsParasited"] = unaryFilterAsFunction(Filter::IsParasited);
+		filter["IsPatrolling"] = unaryFilterAsFunction(Filter::IsPatrolling);
+		filter["IsPlagued"] = unaryFilterAsFunction(Filter::IsPlagued);
+		filter["IsRepairing"] = unaryFilterAsFunction(Filter::IsRepairing);
+		filter["IsResearching"] = unaryFilterAsFunction(Filter::IsResearching);
+		filter["IsSieged"] = unaryFilterAsFunction(Filter::IsSieged);
+		filter["IsStartingAttack"] = unaryFilterAsFunction(Filter::IsStartingAttack);
+		filter["IsStasised"] = unaryFilterAsFunction(Filter::IsStasised);
+		filter["IsStimmed"] = unaryFilterAsFunction(Filter::IsStimmed);
+		filter["IsStuck"] = unaryFilterAsFunction(Filter::IsStuck);
+		filter["IsTraining"] = unaryFilterAsFunction(Filter::IsTraining);
+		filter["IsUnderAttack"] = unaryFilterAsFunction(Filter::IsUnderAttack);
+		filter["IsUnderDarkSwarm"] = unaryFilterAsFunction(Filter::IsUnderDarkSwarm);
+		filter["IsUnderDisruptionWeb"] = unaryFilterAsFunction(Filter::IsUnderDisruptionWeb);
+		filter["IsUnderStorm"] = unaryFilterAsFunction(Filter::IsUnderStorm);
+		filter["IsPowered"] = unaryFilterAsFunction(Filter::IsPowered);
+		filter["IsVisible"] = unaryFilterAsFunction(Filter::IsVisible);
+		filter["IsEnemy"] = unaryFilterAsFunction(Filter::IsEnemy);
+		filter["IsAlly"] = unaryFilterAsFunction(Filter::IsAlly);
+		filter["IsOwned"] = unaryFilterAsFunction(Filter::IsOwned);
 	}
 }
