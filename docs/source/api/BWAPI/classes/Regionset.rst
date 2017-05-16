@@ -42,7 +42,7 @@ Regionset
 
       Also has the ability to filter the units before the creation of the :class:`~BWAPI.Unitset`.
 
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
 
       :return: A :class:`~BWAPI.Unitset` containing all units in this region that have met the requirements of ``pred``.
       :rtype: :class:`BWAPI.Unitset`

@@ -20,6 +20,34 @@ namespace BWAPI_Lua
 
 	void bindFilters(sol::table module)
 	{
+		sol::state_view lua(module.lua_state());
+
+		sol::function Lowest = lua.do_string(R"(
+return function(filter)
+	return function(a, b)
+		if filter(b) < filter(a) then
+			return b
+		else
+			return a
+		end
+	end
+end
+		)");
+		module.set("Lowest", Lowest);
+
+		sol::function Highest = lua.do_string(R"(
+return function(filter)
+	return function(a, b)
+		if filter(b) > filter(a) then
+			return b
+		else
+			return a
+		end
+	end
+end
+		)");
+		module.set("Highest", Highest);
+
 		auto filter = module.create_named("Filter");
 		filter["IsTransport"] = unaryFilterAsFunction(Filter::IsTransport);
 		filter["CanProduce"] = unaryFilterAsFunction(Filter::CanProduce);

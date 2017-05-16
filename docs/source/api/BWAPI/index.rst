@@ -57,6 +57,28 @@ Functions
    :return: ``true`` if this is a DEBUG build, or ``false`` if this is a RELEASE build
    :rtype: boolean
 
+.. staticmethod:: Lowest(filter) -> bestFilter
+
+   Takes a :ref:`comparison filter <comparison-filters>` (or similar function) and converts it into a 'best' function intended for use with :meth:`Game.getBestUnit`.
+
+   :param function filter: A function that takes a :class:`~BWAPI.Unit` and returns a value that will be used for comparison. The returned value must be of a type that can be compared using the less than operator.
+   :return: A function that takes two :class:`~BWAPI.Unit` objects, and returns the object with the lowest value returned when passing it into ``filter``.
+   :rtype: function
+
+   .. seealso::
+      :ref:`The differences between the C++ and Lua implementations of BestFilter <differences-bestfilter>`, :meth:`Game.getBestUnit`
+
+.. staticmethod:: Highest(filter) -> bestFilter
+
+   Takes a :ref:`comparison filter <comparison-filters>` (or similar function) and converts it into a 'best' function intended for use with :meth:`Game.getBestUnit`.
+
+   :param function filter: A function that takes a :class:`~BWAPI.Unit` and returns a value that will be used for comparison. The returned value must be of a type that can be compared using the greater than operator.
+   :return: A function that takes two :class:`~BWAPI.Unit` objects, and returns the object with the highest value returned when passing it into ``filter``.
+   :rtype: function
+
+   .. seealso::
+      :ref:`The differences between the C++ and Lua implementations of BestFilter <differences-bestfilter>`, :meth:`Game.getBestUnit`
+
 Callbacks
 ---------
 

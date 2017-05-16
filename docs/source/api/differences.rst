@@ -199,7 +199,7 @@ All functions that take a UnitFilter parameter now expect a Lua function that ta
 
    :mod:`BWAPI.Filter` functions can be used by calling them with a :class:`Unit` as the parameter (e.g. ``BWAPI.Filter.CanAttack(unit)``)
 
-   These filters can also be combined by using the normal Lua boolean operators and wrapping/returning the result in a function. The function can then be passed as an argument to functions that would normally take a :class:`UnitFilter` in C++, like so:
+   These filters can also be combined by using the normal Lua boolean operators and wrapping/returning the result in a function. The function can then be passed as an argument to functions that would normally take a ``UnitFilter`` in C++, like so:
 
    .. code-block:: lua
 
@@ -213,7 +213,7 @@ All functions that take a UnitFilter parameter now expect a Lua function that ta
 BestFilter
 ----------
 
-All functions that take a BestUnitFilter parameter now expect a Lua function that takes two parameters: the current best unit, and the unit to compare to, and returns the best unit out of the two.
+All functions that take a ``BestUnitFilter`` parameter now expect a Lua function that takes two parameters: the current best unit, and the unit to compare to, and returns the best unit out of the two.
 
 .. code-block:: lua
    :caption: Example

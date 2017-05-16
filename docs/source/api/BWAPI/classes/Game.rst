@@ -196,7 +196,7 @@ Game
       All units are checked. If center and radius are specified, then it will check all units that are within the radius of the position.
 
       :param function best: A function that takes two :class:`Unit` arguments and returns the best out of the two.
-      :param function pred: A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance.
+      :param function pred: A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`).
       :param BWAPI.Position center: (optional) The position to use in the search. If omitted, then the entire map is searched.
       :param int radius: (optional) The distance from ``center`` to search for units. If omitted, then the entire map is searched.
 
@@ -204,7 +204,7 @@ Game
       :rtype: :class:`BWAPI.Unit`
 
       .. seealso::
-         :meth:`getClosestUnit`, :mod:`~BWAPI.Filter`
+         :meth:`getClosestUnit`, :mod:`~BWAPI.Filter`, :meth:`BWAPI.Lowest`, :meth:`BWAPI.Highest`
 
    .. method:: getBuildLocation(type, desiredPosition, [maxRange = 64], [creep = false]) -> TilePosition
 
@@ -232,21 +232,21 @@ Game
       Retrieves the closest unit to center that matches the criteria of the callback pred within an optional radius.
 
       :param BWAPI.Position center: The position to start searching for the closest unit.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
       :param int radius: (optional) The radius to search in. If omitted, the entire map will be searched.
 
       :return: The desired unit that is closest to center. Returns ``nil`` if a suitable unit was not found.
       :rtype: :class:`BWAPI.Unit`
 
       .. seealso::
-         :meth:`getBestUnit`, :class:`~BWAPI.UnitFilter`
+         :meth:`getBestUnit`, :mod:`~BWAPI.Filter`
 
    .. method:: getClosestUnitInRectangle(center, [pred = nil], [left = 0], [top = 0], [right = 999999], [bottom = 999999]) -> Unit
 
       Retrieves the closest unit to center that matches the criteria of the callback pred within an optional rectangle.
 
       :param BWAPI.Position center: The position to start searching for the closest unit.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
       :param int left: (optional) The left position of the rectangle. This value is 0 by default.
       :param int top: (optional) The top position of the rectangle. This value is 0 by default.
       :param int right: (optional) The right position of the rectangle. This value includes the entire map width by default.
@@ -256,7 +256,7 @@ Game
       :rtype: :class:`BWAPI.Unit`
 
       .. seealso::
-         :class:`~BWAPI.UnitFilter`
+         :mod:`~BWAPI.Filter`
 
    .. method:: getDamageFrom(fromType, toType, [fromPlayer = nil], [toPlayer = nil]) -> int
 
@@ -676,7 +676,7 @@ Game
       :param int x: The x coordinate of the center, in pixels.
       :param int y: The y coordinate of the center, in pixels.
       :param int radius: The radius from the center, in pixels, to include units.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
 
       :return: A :class:`~BWAPI.Unitset` object consisting of all the units that have any part of them within the given radius from the center position.
       :rtype: :class:`BWAPI.Unitset`
@@ -687,7 +687,7 @@ Game
 
       :param BWAPI.Position center: The coordinate of the center.
       :param int radius: The radius from the center, in pixels, to include units.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
 
       :return: A :class:`~BWAPI.Unitset` object consisting of all the units that have any part of them within the given radius from the center position.
       :rtype: :class:`BWAPI.Unitset`
@@ -700,7 +700,7 @@ Game
       :param int top: The Y coordinate of the top position of the bounding box, in pixels.
       :param int right: The X coordinate of the right position of the bounding box, in pixels.
       :param int bottom: The Y coordinate of the bottom position of the bounding box, in pixels.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
 
       :return: A :class:`~BWAPI.Unitset` object consisting of all the units that have any part of them within the given rectangle bounds.
       :rtype: :class:`BWAPI.Unitset`
@@ -711,7 +711,7 @@ Game
 
       :param BWAPI.Position topLeft:
       :param BWAPI.Position bottomRight:
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
 
       :return: A :class:`~BWAPI.Unitset` object consisting of all the units that have any part of them within the given rectangle bounds.
       :rtype: :class:`BWAPI.Unitset`
@@ -722,7 +722,7 @@ Game
 
       :param int tileX: The X position, in tiles.
       :param int tileY: The Y position, in tiles.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
 
       :return: A :class:`~BWAPI.Unitset` object consisting of all the units that have any part of them on the given build tile.
       :rtype: :class:`BWAPI.Unitset`
@@ -732,7 +732,7 @@ Game
       This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 
       :param BWAPI.TilePosition tile:
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
 
       :return: A :class:`~BWAPI.Unitset` object consisting of all the units that have any part of them on the given build tile.
       :rtype: :class:`BWAPI.Unitset`

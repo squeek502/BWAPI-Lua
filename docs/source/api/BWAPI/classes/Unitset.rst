@@ -535,7 +535,7 @@ Unitset
 
       Retrieves the closest unit relative to the value of :meth:`getPosition`.
 
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
       :param int radius: (optional) The maximum radius to check for the closest unit. For performance reasons, a developer can limit the radius that is checked. If omitted, then the entire map is checked.
 
       :return: The closest unit that matches the predicate, or ``nil`` if no matching unit is found.
@@ -591,7 +591,7 @@ Unitset
       Takes into account this unit's dimensions. Can optionally specify a filter to include only specific units (such as only ground units, etc.)
 
       :param int radius: The radius, in pixels, to search for units.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
 
       :return: A :class:`~BWAPI.Unitset` containing the set of units that match the given criteria.
       :rtype: :class:`BWAPI.Unitset`

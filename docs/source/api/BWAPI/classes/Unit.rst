@@ -868,7 +868,7 @@ Unit
       Takes into account this unit's dimensions. Can optionally specify a filter to include only specific units (such as only ground units, etc.)
 
       :param number radius: The radius, in pixels, to search for units.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. Defaults to ``nil``, which means no filter.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). Defaults to ``nil``, which means no filter.
       :return: A :class:`Unitset` containing the set of units that match the given criteria.
       :rtype: :class:`Unitset`
 
@@ -902,7 +902,7 @@ Unit
       Obtains the set of units within weapon range of this unit.
 
       :param BWAPI.WeaponType weapon: The weapon type to use as a filter for distance and units that can be hit by it.
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. If omitted, no additional filter is used.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). If omitted, no additional filter is used.
       :return: The set of units within weapon range of this unit.
       :rtype: :class:`Unitset`
 
@@ -913,7 +913,7 @@ Unit
 
       Retrieves the closest unit to this one.
 
-      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise **or** a :class:`UnitFilter` instance. If ``pred`` is omitted or ``nil``, then the closest unit owned by any player will be returned.
+      :param function pred: (optional) A predicate function that takes a :class:`Unit` and returns ``true`` for units that satisfy the intended filter and ``false`` otherwise (can be a :ref:`BWAPI.Filter unary filter <unary-filters>`). If ``pred`` is omitted or ``nil``, then the closest unit owned by any player will be returned.
       :param number radius: (optional) The maximum radius to check for the closest unit. For performance reasons, a developer can limit the radius that is checked. If omitted, then the entire map is checked.
       :return: The closest unit that matches the predicate, or ``nil`` if no matching unit is found.
       :rtype: :class:`Unit`

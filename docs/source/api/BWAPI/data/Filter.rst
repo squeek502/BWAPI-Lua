@@ -1,9 +1,13 @@
 .. currentmodule:: BWAPI
 
+.. _filters:
+
 Filter
 ======
 
 .. module:: BWAPI.Filter
+
+.. _unary-filters:
 
 Unary Filters
 -------------
@@ -354,6 +358,8 @@ These functions can be used as predicates for functions that take a unit predica
 .. staticmethod:: IsVisible(unit) -> bool
 
    Equivalent to ``unit:isVisible()``
+
+.. _comparison-filters:
 
 Comparison Filters
 ------------------
