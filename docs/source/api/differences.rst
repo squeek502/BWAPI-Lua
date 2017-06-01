@@ -88,6 +88,7 @@ All C++ functions that take variable amounts of strings now expect only a single
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 A new convenience function has been added to send text to allies: :meth:`~BWAPI.Game.sendTextToAllies`, which fowards the method to :meth:`~BWAPI.Game.sendTextEx` with ``true`` as the first parameter. The following two snippets are exactly equivalent:
+
 - ``BWAPI.Broodwar:sendTextEx(true, "your message")``
 - ``BWAPI.Broodwar:sendTextToAllies("your message")``
 

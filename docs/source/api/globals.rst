@@ -13,7 +13,7 @@ The directory of the loaded LuaAIModule .dll gets appended to the front of :attr
 
 .. attribute:: package.cpath
 
-The directory of the loaded LuaAIModule .dll gets appended to the front of :attr:`package.path` (using the ``/?.dll`` variant)
+The directory of the loaded LuaAIModule .dll gets appended to the front of :attr:`package.cpath` (using the ``/?.dll`` variant)
 
 .. attribute:: BWAPI
    :noindex:

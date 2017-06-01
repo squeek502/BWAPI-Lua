@@ -5,79 +5,12 @@ The BWAPI Module
 
 The BWAPI bindings are all loaded into the :mod:`BWAPI` module, which is loaded as ``BWAPI`` into the global environment and can also be found in the ``"BWAPI"`` key in ``package.loaded`` (retrieved by doing ``require('BWAPI')``)
 
-.. contents::
-
-Classes
--------
-
-.. toctree::
-   :maxdepth: 2
-   :glob:
-
-   classes/*
-
-Data
-----
-
-.. toctree::
-   :maxdepth: 1
-   :glob:
-
-   data/*
-
 Constants
 ---------
 
 .. data:: Broodwar
 
    The currently running :class:`Game` instance
-
-Functions
----------
-
-.. staticmethod:: print(text)
-
-   Prints the text to the client chat window, with no owner
-
-   :param string text: The text to be printed
-
-   .. note:: This function does not automatically append a newline to the output
-
-.. staticmethod:: getRevision()
-
-   Retrieves the revision of the BWAPILIB module currently being used.
-
-   :return: An integer representing the revision number of the library.
-   :rtype: number
-
-.. staticmethod:: isDebug()
-
-   Checks if the BWAPILIB module was compiled in DEBUG mode.
-
-   :return: ``true`` if this is a DEBUG build, or ``false`` if this is a RELEASE build
-   :rtype: boolean
-
-.. staticmethod:: Lowest(filter) -> bestFilter
-
-   Takes a :ref:`comparison filter <comparison-filters>` (or similar function) and converts it into a 'best' function intended for use with :meth:`Game.getBestUnit`.
-
-   :param function filter: A function that takes a :class:`~BWAPI.Unit` and returns a value that will be used for comparison. The returned value must be of a type that can be compared using the less than operator.
-   :return: A function that takes two :class:`~BWAPI.Unit` objects, and returns the object with the lowest value returned when passing it into ``filter``.
-   :rtype: function
-
-   .. seealso::
-      :ref:`The differences between the C++ and Lua implementations of BestFilter <differences-bestfilter>`, :meth:`Game.getBestUnit`
-
-.. staticmethod:: Highest(filter) -> bestFilter
-
-   Takes a :ref:`comparison filter <comparison-filters>` (or similar function) and converts it into a 'best' function intended for use with :meth:`Game.getBestUnit`.
-
-   :param function filter: A function that takes a :class:`~BWAPI.Unit` and returns a value that will be used for comparison. The returned value must be of a type that can be compared using the greater than operator.
-   :return: A function that takes two :class:`~BWAPI.Unit` objects, and returns the object with the highest value returned when passing it into ``filter``.
-   :rtype: function
-
-   .. seealso::
-      :ref:`The differences between the C++ and Lua implementations of BestFilter <differences-bestfilter>`, :meth:`Game.getBestUnit`
 
 Callbacks
 ---------
@@ -218,3 +151,68 @@ Callbacks
    :param BWAPI.Unit unit: The :class:`Unit` that just had its :class:`UnitType` change.
 
    .. note:: This is NOT called if the unit type changes to or from :attr:`~BWAPI.UnitTypes.Unknown`.
+
+Functions
+---------
+
+.. staticmethod:: print(text)
+
+   Prints the text to the client chat window, with no owner
+
+   :param string text: The text to be printed
+
+   .. note:: This function does not automatically append a newline to the output
+
+.. staticmethod:: getRevision()
+
+   Retrieves the revision of the BWAPILIB module currently being used.
+
+   :return: An integer representing the revision number of the library.
+   :rtype: number
+
+.. staticmethod:: isDebug()
+
+   Checks if the BWAPILIB module was compiled in DEBUG mode.
+
+   :return: ``true`` if this is a DEBUG build, or ``false`` if this is a RELEASE build
+   :rtype: boolean
+
+.. staticmethod:: Lowest(filter) -> bestFilter
+
+   Takes a :ref:`comparison filter <comparison-filters>` (or similar function) and converts it into a 'best' function intended for use with :meth:`Game.getBestUnit`.
+
+   :param function filter: A function that takes a :class:`~BWAPI.Unit` and returns a value that will be used for comparison. The returned value must be of a type that can be compared using the less than operator.
+   :return: A function that takes two :class:`~BWAPI.Unit` objects, and returns the object with the lowest value returned when passing it into ``filter``.
+   :rtype: function
+
+   .. seealso::
+      :ref:`The differences between the C++ and Lua implementations of BestFilter <differences-bestfilter>`, :meth:`Game.getBestUnit`
+
+.. staticmethod:: Highest(filter) -> bestFilter
+
+   Takes a :ref:`comparison filter <comparison-filters>` (or similar function) and converts it into a 'best' function intended for use with :meth:`Game.getBestUnit`.
+
+   :param function filter: A function that takes a :class:`~BWAPI.Unit` and returns a value that will be used for comparison. The returned value must be of a type that can be compared using the greater than operator.
+   :return: A function that takes two :class:`~BWAPI.Unit` objects, and returns the object with the highest value returned when passing it into ``filter``.
+   :rtype: function
+
+   .. seealso::
+      :ref:`The differences between the C++ and Lua implementations of BestFilter <differences-bestfilter>`, :meth:`Game.getBestUnit`
+
+Classes
+-------
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+
+   classes/*
+
+Data
+----
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   data/*

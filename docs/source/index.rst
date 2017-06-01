@@ -1,19 +1,29 @@
-.. BWAPI-Lua documentation master file, created by
-   sphinx-quickstart on Mon Feb 20 16:44:37 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+BWAPI-Lua
+=========
 
-Welcome to BWAPI-Lua's documentation!
-=====================================
+Lua bindings for the `Brood War API <https://github.com/bwapi/bwapi>`_ using the `Sol2 <https://github.com/ThePhD/sol2>`_ Lua bindings library, for the purposes of writing StarCraft AI using the `Lua <https://www.lua.org>`_ scripting language.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-   :glob:
+    :caption: Getting Started
+    :maxdepth: 1
+    :glob:
 
-   api/index
+    getting-started/*
 
+.. toctree::
+    :caption: Extensions
+    :maxdepth: 1
+    :glob:
 
+    extensions/*
+
+.. toctree::
+    :caption: Reference
+    :maxdepth: 1
+    :glob:
+
+    api/*
+    api/BWAPI/index
 
 Indices and tables
 ==================
