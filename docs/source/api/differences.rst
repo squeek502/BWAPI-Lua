@@ -175,6 +175,7 @@ The set can be iterated one of two ways:
 
 Also, any SetContainer types of the format ``ClassName::set`` are bound as ``ClassNameset``, to match the naming convention of the other SetContainer types (``Playerset``, ``Unitset``, etc). For example, ``UnitType::set`` is bound as :class:`BWAPI.UnitTypeset`.
 
+An additional convenience method, ``filter`` (e.g. :meth:`BWAPI.Unitset.filter`), has been added to easily filter a set using a predicate function, as well as some aliases for ``filter`` and ``erase_if`` (see :meth:`~BWAPI.Unitset.eraseIf`, :meth:`~BWAPI.Unitset.keep_if`, :meth:`~BWAPI.Unitset.keepIf`).
 
 All lists (std::list, Position::list, UnitType::list, etc)
 ----------------------------------------------------------

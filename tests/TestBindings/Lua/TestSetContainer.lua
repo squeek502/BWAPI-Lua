@@ -183,3 +183,28 @@ function pointerSet(unit)
     assert(BWAPI.Unit.isInstance(x))
   end
 end
+
+function eraseIf()
+  local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat, BWAPI.UnitTypes.Zerg_Hydralisk})
+  assert(#set == 3)
+
+  set:erase_if(function(x) return x == BWAPI.UnitTypes.Terran_Firebat end)
+  assert(#set == 2)
+  assert(not set:contains(BWAPI.UnitTypes.Terran_Firebat))
+
+  -- alias
+  assert(type(set.eraseIf) == "function")
+end
+
+function keepIf()
+  local set = BWAPI.UnitTypeset({BWAPI.UnitTypes.Terran_SCV, BWAPI.UnitTypes.Terran_Firebat, BWAPI.UnitTypes.Zerg_Hydralisk})
+  assert(#set == 3)
+
+  set:keep_if(function(x) return x == BWAPI.UnitTypes.Terran_Firebat end)
+  assert(#set == 1)
+  assert(set:contains(BWAPI.UnitTypes.Terran_Firebat))
+
+  -- aliases
+  assert(type(set.keepIf) == "function")
+  assert(type(set.filter) == "function")
+end

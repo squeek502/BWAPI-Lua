@@ -59,3 +59,27 @@
 .. method:: clear()
 
    Removes all elements from the set, leaving it with a size of 0.
+
+.. method:: eraseIf(pred)
+
+   Iterates the set and erases each element x where pred(x) returns true. The set is modified in place.
+
+   :param function pred: A predicate function that takes a value and returns ``true`` for values that should be erased and ``false`` otherwise.
+
+.. method:: erase_if(pred)
+
+   Alias of :meth:`eraseIf`
+
+.. method:: filter(pred)
+
+   Iterates the set and erases each element x where pred(x) returns false. The set is modified in place.
+
+   :param function pred: A predicate function that takes a value and returns ``true`` for values that should be kept and ``false`` for elements that should be erased.
+
+.. method:: keepIf(pred)
+
+   Alias of :meth:`filter`/:meth:`keep_if`
+
+.. method:: keep_if(pred)
+
+   Alias of :meth:`filter`/:meth:`keepIf`

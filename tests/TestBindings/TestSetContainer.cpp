@@ -105,4 +105,16 @@ TEST_CASE("setcontainer bindings", "[setcontainer]")
 		REQUIRE_NOTHROW(test(&mockUnit));
 	}
 
+	SECTION("eraseIf")
+	{
+		sol::function test = lua["eraseIf"];
+		REQUIRE_NOTHROW(test());
+	}
+
+	SECTION("keepIf")
+	{
+		sol::function test = lua["keepIf"];
+		REQUIRE_NOTHROW(test());
+	}
+
 }

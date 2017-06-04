@@ -76,6 +76,29 @@ namespace BWAPI_Lua
 			set.insert(val);
 		});
 		userType.set("erase", sol::resolve<SetClass::size_type(const ContainedClass&)>(&SetClass::erase));
+
+		auto erase_if = [](SetClass& set, const sol::function& pred)
+		{
+			UnaryFilter<ContainedClass> filter(nullptr);
+			if (pred.valid())
+				filter = UnaryFilter<ContainedClass>(sol::protected_function(pred));
+			set.erase_if(filter);
+		};
+		userType.set("erase_if", erase_if);
+		userType.set("eraseIf", erase_if); // alias specific to BWAPI-Lua
+
+		// New convenience method specific to BWAPI-Lua
+		auto keep_if = [](SetClass& set, const sol::function& pred)
+		{
+			UnaryFilter<ContainedClass> filter(nullptr);
+			if (pred.valid())
+				filter = UnaryFilter<ContainedClass>(sol::protected_function(pred));
+			set.erase_if(!filter);
+		};
+		userType.set("keep_if", keep_if);
+		userType.set("keepIf", keep_if);
+		userType.set("filter", keep_if);
+
 		userType.set("clear", &SetClass::clear);
 		userType.set(sol::meta_function::length, &SetClass::size);
 		userType.set(sol::meta_function::equal_to, [](const SetClass& a, const SetClass& b) { return a == b; });
