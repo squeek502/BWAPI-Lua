@@ -7,10 +7,7 @@ Currently supports BWAPI version 4.1.2 and Lua 5.1.5 (with planned support for L
 
 ## Quick Start
 
-- Install StarCraft: Brood War and make sure its updated it to the latest version
-- Download and install [BWAPI](https://github.com/bwapi/bwapi/releases)
-- Download the [BWAPI-Lua .dll for the version of Lua you want to use](https://github.com/squeek502/BWAPI-Lua/releases) and move it to `Starcraft/bwapi-data/AI` (e.g. `C:\Program Files (x86)\StarCraft\bwapi-data\AI`)
-- Edit `Starcraft/bwapi-data/bwapi.ini` and change the line `ai = bwapi-data/AI/ExampleAIModule.dll` to point to the BWAPI-Lua dll you just installed (e.g. `ai = bwapi-data/AI/Lua51AIModule.dll`)
+- Install Starcraft, BWAPI, and BWAPI-Lua according to [the installation guide](http://bwapi-lua.readthedocs.io/en/latest/getting-started/installation.html)
 - Download [init.lua from examples/LuaExampleAI](examples/LuaExampleAI/init.lua) and move it to `Starcraft/bwapi-data/AI`
 - Run Chaoslauncher from the `Chaoslauncher` directory where BWAPI was installed (e.g. `C:\Program Files (x86)\BWAPI\Chaoslauncher`)
 - In Chaoslauncher's *Plugins* tab, enable *BWAPI Injector [RELEASE]* and (optionally) *W-MODE*
@@ -18,7 +15,8 @@ Currently supports BWAPI version 4.1.2 and Lua 5.1.5 (with planned support for L
 
 ## Important Links
 
-- [Your first Lua AI]() *(coming soon)*
+- [Installatation](http://bwapi-lua.readthedocs.io/en/latest/getting-started/installation.html)
+- [Your first Lua AI](http://bwapi-lua.readthedocs.io/en/latest/getting-started/your-first-ai.html)
 - [Documentation](http://bwapi-lua.readthedocs.io/en/latest/index.html) *(work in progress)*
 
 ## Preview: 'Hello World' AI
