@@ -12,6 +12,8 @@ Constants
 
    The currently running :class:`Game` instance
 
+.. _bwapi-callbacks:
+
 Callbacks
 ---------
 
