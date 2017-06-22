@@ -96,6 +96,9 @@ Region
       :return: The integer distance from this Region to ``other``.
       :rtype: int
 
+      .. note::
+         Ignores all collisions.
+
    .. method:: getID() -> int
 
       Retrieves a unique identifier for this region.

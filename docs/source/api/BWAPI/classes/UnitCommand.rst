@@ -73,6 +73,10 @@ UnitCommand
       :return:
       :rtype: boolean
 
+   .. method:: assignTarget(target)
+
+      :param BWAPI.Position target: The new target.
+
    .. rubric:: Static Functions
 
    .. staticmethod:: attack(unit, target, [shiftQueueCommand = false]) -> UnitCommand

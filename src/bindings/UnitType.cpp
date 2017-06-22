@@ -111,6 +111,7 @@ namespace BWAPI_Lua
 		unitType.set("buildsWhat", &UnitType::buildsWhat);
 		unitType.set("researchesWhat", &UnitType::researchesWhat);
 		unitType.set("upgradesWhat", &UnitType::upgradesWhat);
+		unitType.set("isSuccessorOf", &UnitType::isSuccessorOf);
 		module.set_usertype("UnitType", unitType);
 
 		auto unitTypeSet = module.create_simple_usertype<UnitType::set>();

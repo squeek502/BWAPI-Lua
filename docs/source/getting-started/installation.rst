@@ -4,7 +4,7 @@ Installation
 .. rubric:: Starcraft and BWAPI
 
 1. Install and update Starcraft to patch 1.16.1 (not 1.18). The 1.16.1 patch `can be downloaded here <http://ftp.blizzard.com/pub/starcraft/patches/PC/SC-1161.exe>`__, and a guide for setting up simultateous 1.16.1 and 1.18 installs `can be found here <https://iccup.com/en/starcraft/sc_start.html>`__.
-2. Download and install `BWAPI 4.1.2 <https://github.com/bwapi/bwapi/releases/tag/v4.1.2>`__
+2. Download and install `BWAPI 4.2.0 <https://github.com/bwapi/bwapi/releases/tag/v4.2.0>`__
 
 .. rubric:: BWAPI-Lua
 

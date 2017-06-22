@@ -1,8 +1,6 @@
 @echo off
 
-set GENERATOR=Visual Studio 12
-reg query HKEY_CLASSES_ROOT\VisualStudio.DTE.14.0 >nul 2>nul
-IF %errorlevel%==0 set GENERATOR=Visual Studio 14
+set GENERATOR=Visual Studio 15 2017
 
 IF NOT "x%1" == "x" GOTO :%1
 

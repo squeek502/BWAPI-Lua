@@ -36,12 +36,12 @@ namespace BWAPI_Lua
 		unit.set("getResources", &UnitInterface::getResources);
 		unit.set("getResourceGroup", &UnitInterface::getResourceGroup);
 		unit.set("getDistance", sol::overload(
-			[](Unit unit, const Position& pos) { return unit->getDistance(PositionOrUnit(pos)); },
-			[](Unit unit, Unit unit2) { return unit->getDistance(PositionOrUnit(unit2)); }
+			[](Unit unit, const Position& pos) { return unit->getDistance(pos); },
+			[](Unit unit, Unit unit2) { return unit->getDistance(unit2); }
 		));
 		unit.set("hasPath", sol::overload(
-			[](Unit unit, const Position& pos) { return unit->hasPath(PositionOrUnit(pos)); },
-			[](Unit unit, Unit unit2) { return unit->hasPath(PositionOrUnit(unit2)); }
+			[](Unit unit, const Position& pos) { return unit->hasPath(pos); },
+			[](Unit unit, Unit unit2) { return unit->hasPath(unit2); }
 		));
 		unit.set("getLastCommandFrame", &UnitInterface::getLastCommandFrame);
 		unit.set("getLastCommand", &UnitInterface::getLastCommand);
@@ -219,10 +219,10 @@ namespace BWAPI_Lua
 		unit.set("isTargetable", &UnitInterface::isTargetable);
 		unit.set("issueCommand", &UnitInterface::issueCommand);
 		unit.set("attack", sol::overload(
-			[](UnitInterface* unit, const Position& pos) { return unit->attack(PositionOrUnit(pos)); },
-			[](UnitInterface* unit, const Position& pos, bool shiftQueue) { return unit->attack(PositionOrUnit(pos), shiftQueue); },
-			[](UnitInterface* unit, Unit pos) { return unit->attack(PositionOrUnit(pos)); },
-			[](UnitInterface* unit, Unit pos, bool shiftQueue) { return unit->attack(PositionOrUnit(pos), shiftQueue); }
+			[](UnitInterface* unit, const Position& pos) { return unit->attack(pos); },
+			[](UnitInterface* unit, const Position& pos, bool shiftQueue) { return unit->attack(pos, shiftQueue); },
+			[](UnitInterface* unit, Unit pos) { return unit->attack(pos); },
+			[](UnitInterface* unit, Unit pos, bool shiftQueue) { return unit->attack(pos, shiftQueue); }
 		));
 		unit.set("build", sol::overload(
 			[](UnitInterface* unit, UnitType type) { return unit->build(type); },
@@ -237,8 +237,8 @@ namespace BWAPI_Lua
 		unit.set("research", &UnitInterface::research);
 		unit.set("upgrade", &UnitInterface::upgrade);
 		unit.set("setRallyPoint", sol::overload(
-			[](UnitInterface* unit, const Position& pos) { return unit->setRallyPoint(PositionOrUnit(pos)); },
-			[](UnitInterface* unit, Unit pos) { return unit->setRallyPoint(PositionOrUnit(pos)); }
+			[](UnitInterface* unit, const Position& pos) { return unit->setRallyPoint(pos); },
+			[](UnitInterface* unit, Unit pos) { return unit->setRallyPoint(pos); }
 		));
 		unit.set("move", sol::overload(
 			[](UnitInterface* unit, const Position& pos) { return unit->move(pos); },

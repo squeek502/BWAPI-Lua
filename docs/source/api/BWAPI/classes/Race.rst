@@ -28,15 +28,20 @@ Race
 
    .. include:: /_include/type-functions.rst
 
-   .. method:: getCenter() -> UnitType
+   .. method:: getResourceDepot() -> UnitType
 
-      Retrieves the default resource center :class:`~BWAPI.UnitType` that is used to create expansions for this :class:`~BWAPI.Race`.
+      Retrieves the default resource depot :class:`~BWAPI.UnitType` that workers of this :class:`~BWAPI.Race` can construct and return resources to.
 
       :return: :class:`~BWAPI.UnitType` of the center that this race uses.
       :rtype: :class:`BWAPI.UnitType`
 
       .. note::
          In Starcraft, the center is the very first structure of the :class:`~BWAPI.Race`'s technology tree. Also known as its base of operations or resource depot.
+
+   .. method:: getCenter() -> UnitType
+
+      .. deprecated:: BWAPI 4.2.0
+         Use :meth:`getResourceDepot` instead.
 
    .. method:: getRefinery() -> UnitType
 

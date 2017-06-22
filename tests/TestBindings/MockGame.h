@@ -430,6 +430,14 @@ namespace BWAPI_Lua
 			{
 				return false;
 			}
+			virtual int getClientVersion() const override 
+			{
+				return 0;
+			}
+			virtual unsigned getRandomSeed() const override
+			{
+				return 0;
+			}
 		};
 
 		inline void bindMockGameImpl(sol::table module)

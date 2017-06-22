@@ -73,6 +73,9 @@ WalkPosition
       Gets an accurate distance measurement from this point to the given position.
 
       .. note::
+         This is a direct distance calculation that ignores all collision.
+
+      .. note::
          This function impedes performance. In most cases you should use :meth:`getApproxDistance`.
 
       :param BWAPI.WalkPosition pos: The target position to get the distance to.
@@ -98,6 +101,9 @@ WalkPosition
    .. method:: getApproxDistance(pos) -> int
 
       Retrieves the approximate distance using an algorithm from Starcraft: Broodwar.
+
+      .. note::
+         This is a direct distance calculation that ignores all collision.
 
       .. note::
          This function is desired because it uses the same "imperfect" algorithm used in Broodwar, so that calculations will be consistent with the game. It is also optimized for performance.

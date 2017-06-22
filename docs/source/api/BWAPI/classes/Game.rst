@@ -48,6 +48,9 @@ Game
       .. note::
          If the type is an addon and a builer is provided, then the location of the addon will be placed 4 tiles to the right and 1 tile down from the given ``position``. If the builder is not given, then the check for the addon will be conducted at position.
 
+      .. note::
+         If the type is :attr:`UnitTypes.Special_Start_Location`, then the are for a resource depot (:attr:`Command Center <BWAPI.UnitTypes.Terran_Command_Center>`, :attr:`Hatchery <BWAPI.UnitTypes.Zerg_Hatchery>`, :attr:`Nexus <BWAPI.UnitTypes.Protoss_Nexus>`) is checked as normal, but any potential obstructions (existing structures, creep, units, etc.) are ignored.
+
    .. method:: canMake(type, [builder = nil]) -> boolean
 
       Checks all the requirements in order to make a given unit type for the current player.
@@ -294,6 +297,15 @@ Game
 
       .. seealso::
          :meth:`getDamageFrom`
+
+   .. method:: getRandomSeed() -> number
+
+      Retrieves the initial random seed that was used in this game's creation.
+
+      This is used to identify the seed that started this game, in case an error occurred, so that developers can deterministically reproduce the error. Works in both games and replays.
+
+      :return: This game's random seed.
+      :rtype: number
 
    .. method:: getForce(forceID) -> Force
 
@@ -762,11 +774,17 @@ Game
 
       This only checks if the source position is connected to the destination position. This function does not check if all units can actually travel from source to destination. Because of this limitation, it has an O(1) complexity, and cases where this limitation hinders gameplay is uncommon at best.
 
+      .. note::
+         If making queries on a unit, it's better to call :meth:`Unit.hasPath`, since it is a more lenient version of this function that accounts for some edge cases.
+
       :param BWAPI.Position source: The source position.
       :param BWAPI.Position destination: The destination position.
 
       :return: Returns ``true`` if there is a path between the two positions, or ``false`` if there is no path
       :rtype: boolean
+
+      .. seealso::
+         :meth:`Unit.hasPath`
 
    .. method:: hasPower(tileX, tileY, [unitType = UnitTypes.None]) -> boolean
 

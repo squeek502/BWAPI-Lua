@@ -64,6 +64,7 @@ namespace BWAPI_Lua
 			"GreyCyan", Text::GreyCyan,
 			"Turquoise", Text::Turquoise
 		);
+		text.set_function("isColor", &Text::isColor);
 		text.create_named("Size",
 			"Small", Text::Size::Small,
 			"Default", Text::Size::Default,

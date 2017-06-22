@@ -33,6 +33,9 @@ Player
       :return: The total number of units of the given type that the player owns.
       :rtype: int
 
+      .. note::
+         While in-progress Protoss and Terran units will be counted, in-progress Zerg units (i.e. inside of an egg) do not.
+
       .. seealso::
          :meth:`visibleUnitCount`, :meth:`completedUnitCount`, :meth:`incompleteUnitCount`
 
@@ -319,6 +322,9 @@ Player
 
       .. note::
          This function is a macro for ``allUnitCount() - completedUnitCount()``.
+
+      .. note::
+         Incomplete Zerg units inside of eggs are not counted.
 
       .. seealso::
          :meth:`allUnitCount`, :meth:`visibleUnitCount`, :meth:`completedUnitCount`

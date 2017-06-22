@@ -270,7 +270,7 @@ Unit
       Retrieves the distance between this unit and a target.
 
       .. note::
-         Distance is calculated from the edge of this unit, using Starcraft's own distance algorithm.
+         Distance is calculated from the edge of this unit, using Starcraft's own distance algorithm. Ignores collisions.
 
       :param target: Can be either a :class:`Position` or :class:`Unit`. If it is a unit, then it will calculate the distance to the edge of the target unit.
       :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
@@ -286,6 +286,9 @@ Unit
 
       .. note::
          If the current unit is an air unit, then this function will always return true.
+
+      .. note::
+         If the unit somehow gets stuck in unwalkable terrain, then this function may still return true if one of the unit's corners is on walkable terrain (i.e. if the unit is expected to return to the walkable terrain).
 
       :param target: Can be either a :class:`Position` or :class:`Unit`. A Position or a Unit that is used to determine if this unit has a path to the target.
       :type target: :class:`BWAPI.Position` or :class:`BWAPI.Unit`
@@ -399,10 +402,16 @@ Unit
 
       Retrieves the number of interceptors that this unit manages.
 
-      This function is only for the :attr:`Carrier <BWAPI.UnitTypes.Protoss_Carrier>`.
+      This function is only for the :attr:`Carrier <BWAPI.UnitTypes.Protoss_Carrier>` and its hero.
 
       :return: Number of interceptors in this unit.
       :rtype: number
+
+      .. note::
+         This number may differ from the number of units returned from :meth:`getInterceptors`. This occurs for cases in which you can see the number of enemy interceptors in the Carrier HUD, but don't actually have access to the individual interceptors.
+
+      .. seealso::
+         :meth:`getInterceptors`
 
    .. method:: getScarabCount() -> count
 
@@ -661,11 +670,14 @@ Unit
 
    .. method:: getBuildUnit() -> unit
 
-      Retrieves the corresponding paired unit for :attr:`SCVs <BWAPI.UnitTypes.Terran_SCV>` and :attr:`~BWAPI.Races.Terran` structures.
+      Retrieves the unit currently being trained, or the corresponding paired unit for :attr:`SCVs <BWAPI.UnitTypes.Terran_SCV>` and :attr:`~BWAPI.Races.Terran` structures, depending on the context.
 
-      For example, if this unit is a :attr:`Factory <BWAPI.UnitTypes.Terran_Factory>` under construction, this function will return the :attr:`SCV <BWAPI.UnitTypes.Terran_SCV>` that is constructing it. If this unit is a :attr:`SCV <BWAPI.UnitTypes.Terran_SCV>`, then it will return the structure it is currently constructing.
+      For example, if this unit is a :attr:`Factory <BWAPI.UnitTypes.Terran_Factory>` under construction, this function will return the :attr:`SCV <BWAPI.UnitTypes.Terran_SCV>` that is constructing it. If this unit is a :attr:`SCV <BWAPI.UnitTypes.Terran_SCV>`, then it will return the structure it is currently constructing. If this unit is a :attr:`Nexus <BWAPI.UnitTypes.Protoss_Nexus>`, and it is training a :attr:`Probe <BWAPI.UnitTypes.Protoss_Probe>`, then the probe will be returned.
 
-      :return: Paired build unit that is either constructing this unit or being constructed by this unit, or ``nil`` if there is no unit constructing this one or this unit is not constructing another unit.
+      .. warning::
+         This will return an incorrect unit when called on :attr:`Reavers <BWAPI.UnitTypes.Protoss_Reaver>`.
+
+      :return: Paired build unit that is either constructing this unit or being constructed by this unit, structure being constructed by this unit, the unit that is being trained by this structure, or ``nil`` if there is no unit constructing this one or this unit is not constructing another unit.
       :rtype: :class:`Unit`
 
    .. method:: getTarget() -> unit
@@ -838,10 +850,13 @@ Unit
 
       Retrieves the set of :attr:`Interceptors <BWAPI.UnitTypes.Protoss_Interceptor>` controlled by this unit.
 
-      This is intended for :attr:`Carriers <BWAPI.UnitTypes.Protoss_Carrier>`.
+      This is intended for :attr:`Carriers <BWAPI.UnitTypes.Protoss_Carrier>` and its hero.
 
-      :return: :class:`Unitset` containing :attr:`Interceptor <BWAPI.UnitTypes.Protoss_Interceptor>` units owned by this one.
+      :return: :class:`Unitset` containing :attr:`Interceptor <BWAPI.UnitTypes.Protoss_Interceptor>` units owned by this carrier.
       :rtype: :class:`Unitset`
+
+      .. seealso::
+         :meth:`getInterceptorCount`
 
    .. method:: getHatchery() -> unit
 
@@ -852,6 +867,9 @@ Unit
       :return: Hatchery unit that has ownership of this larva, or ``nil`` if the current unit is not a :attr:`Larva <BWAPI.UnitTypes.Zerg_Larva>` or has no parent.
       :rtype: :class:`Unit`
 
+      .. seealso::
+         :meth:`getLarva`
+
    .. method:: getLarva() -> units
 
       Retrieves the set of :attr:`Larvae <BWAPI.UnitTypes.Zerg_Larva>` that were spawned by this unit.
@@ -860,6 +878,9 @@ Unit
 
       :return: :class:`Unitset` containing :attr:`Larva <BWAPI.UnitTypes.Zerg_Larva>` units owned by this unit. The set will be empty if there are none.
       :rtype: :class:`Unitset`
+
+      .. seealso::
+         :meth:`getHatchery`
 
    .. method:: getUnitsInRadius(radius, [pred]) -> units
 

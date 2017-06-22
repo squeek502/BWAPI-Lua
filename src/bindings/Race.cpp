@@ -13,6 +13,7 @@ namespace BWAPI_Lua
 		auto race = module.create_simple_usertype<Race>(
 			"getWorker", &Race::getWorker,
 			"getCenter", &Race::getCenter,
+			"getResourceDepot", &Race::getResourceDepot,
 			"getRefinery", &Race::getRefinery,
 			"getTransport", &Race::getTransport,
 			"getSupplyProvider", &Race::getSupplyProvider

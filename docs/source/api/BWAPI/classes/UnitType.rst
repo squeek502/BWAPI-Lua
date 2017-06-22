@@ -532,6 +532,16 @@ UnitType
       :return: true if this unit type generates energy, and false if it does not have an energy pool.
       :rtype: boolean
 
+   .. method:: isSuccessorOf(unitType) -> boolean
+
+      Checks if the current type is equal to the provided type, or a successor of the provided type.
+
+      For example, a Hive is a successor of a Hatchery, since it can still research the :attr:`~BWAPI.TechTypes.Burrowing` technology.
+
+      :param BWAPI.UnitType unitType: The unit type to check.
+      :return: true if this unit type is a successor of the given unit type, and false if it is not.
+      :rtype: boolean
+
    .. method:: isTwoUnitsInOneEgg() -> boolean
 
       Checks if this unit type spawns two units when being hatched from an :attr:`~BWAPI.UnitTypes.Zerg_Egg`.

@@ -3,7 +3,7 @@
 
 Lua bindings for the [Brood War API](https://github.com/bwapi/bwapi) using the [sol2](https://github.com/ThePhD/sol2) Lua bindings library, for the purposes of writing StarCraft AI using the [Lua](https://www.lua.org) scripting language.
 
-Currently supports BWAPI version 4.1.2 and Lua 5.1.5 (with planned support for Lua 5.3 and LuaJIT)
+Currently supports BWAPI version 4.2.0 and Lua 5.1.5 (with planned support for Lua 5.3 and LuaJIT)
 
 ## Quick Start
 

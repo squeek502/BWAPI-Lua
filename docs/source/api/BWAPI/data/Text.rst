@@ -25,6 +25,17 @@ Such codes are used in calls to :meth:`BWAPI.Game.drawText`, :meth:`BWAPI.Game.p
 .. seealso::
    :meth:`BWAPI.Game.drawText`
 
+Functions
+---------
+
+.. staticmethod:: isColor(c) -> bool
+
+   Checks if the given character is a color-changing control code.
+
+   :param number c: The ``BWAPI.Text`` constant to check
+   :return: ``true`` if ``c`` is a regular color (not ``Previous``, ``Invisible*``, or ``Align*``)
+   :rtype: boolean
+
 Enum
 ----
 

@@ -655,6 +655,7 @@ namespace BWAPI_Lua
 			},
 			&Game::getDamageTo
 		));
+		game.set("getRandomSeed", &Game::getRandomSeed);
 		bindInterface(game);
 		bindIsInstance(game);
 		module.set_usertype("Game", game);
